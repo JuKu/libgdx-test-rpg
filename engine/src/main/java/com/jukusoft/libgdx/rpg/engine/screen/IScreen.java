@@ -1,7 +1,7 @@
 package com.jukusoft.libgdx.rpg.engine.screen;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.jukusoft.libgdx.rpg.engine.BaseGame;
+import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
 /**

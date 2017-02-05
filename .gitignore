@@ -21,6 +21,9 @@ $RECYCLE.BIN/
 !*.png
 !*.xcf
 
+!icon
+!*icon*
+
 .log
 *.log
 

@@ -1,5 +1,6 @@
 package com.jukusoft.libgdx.rpg.desktop;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 /**
@@ -12,7 +13,7 @@ public class DesktopLauncher {
         config.title = "Test RPG Game";
         config.height = 640;
         config.width = 960;
-        //config.addIcon("./data/assets/icon/Pentamoon-P.png", Files.FileType.Absolute);
+        config.addIcon("./data/images/icon.png", Files.FileType.Absolute);
         //new LwjglApplication(new Game(), config);
     }
 

@@ -1,4 +1,5 @@
 rootProject.name = 'libgdx-test-rpg'
-include 'desktop'
+include 'engine'
 include 'core'
+include 'desktop'
 

@@ -26,6 +26,10 @@ public interface IScreen {
 
     public void onResize ();
 
+    public void onPause ();
+
+    public void onResume ();
+
     /**
     * destroy game screen
     */

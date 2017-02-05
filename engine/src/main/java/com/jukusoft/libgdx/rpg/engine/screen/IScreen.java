@@ -1,6 +1,7 @@
 package com.jukusoft.libgdx.rpg.engine.screen;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jukusoft.libgdx.rpg.engine.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
 /**
@@ -11,7 +12,7 @@ public interface IScreen {
     /**
     * initialize game screen
     */
-    public void init ();
+    public void init (BaseGame game);
 
     /**
     * update game screen
@@ -22,6 +23,8 @@ public interface IScreen {
     * draw game screen
     */
     public void draw (GameTime time, SpriteBatch batch);
+
+    public void onResize ();
 
     /**
     * destroy game screen

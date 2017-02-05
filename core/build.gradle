@@ -13,4 +13,11 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 
     compile project(":engine")
+
+    compile "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+    //log4j
+    compile "log4j:log4j:$log4jVersion"
+
+    compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 }

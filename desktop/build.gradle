@@ -5,9 +5,10 @@ apply plugin: 'application'
 apply plugin: "java"
 apply plugin: "maven"
 apply plugin: "maven-publish"
-apply plugin: "com.diffplug.gradle.spotless"
 
 sourceCompatibility = 1.8
+
+mainClassName = "com.jukusoft.libgdx.rpg.desktop.DesktopLauncher"
 
 repositories {
     mavenCentral()

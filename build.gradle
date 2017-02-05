@@ -12,6 +12,8 @@ sourceCompatibility = 1.8
 
 ext {
     gdxVersion = "1.9.5"
+
+    mainClassName = "com.jukusoft.libgdx.rpg.desktop.DesktopLauncher"
 }
 
 repositories {

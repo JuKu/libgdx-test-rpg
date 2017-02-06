@@ -15,7 +15,7 @@ public class DesktopLauncher {
         config.title = "Test RPG Game";
         config.height = 720;
         config.width = 1280;
-        config.addIcon("./data/images/icon.png", Files.FileType.Absolute);
+        config.addIcon("./data/images/general/icon.png", Files.FileType.Absolute);
 
         //start game
         new LwjglApplication(new Game(), config);

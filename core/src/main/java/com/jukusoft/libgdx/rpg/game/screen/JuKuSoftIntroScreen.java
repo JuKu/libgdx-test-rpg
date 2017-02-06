@@ -25,7 +25,7 @@ public class JuKuSoftIntroScreen extends BaseScreen {
 
     protected long startTime = 0l;
 
-    @Override public void init(ScreenBasedGame game, AssetManager assetManager) {
+    @Override public void onInit(ScreenBasedGame game, AssetManager assetManager) {
         //add listener for resizing
         game.addResizeListener((width, height) -> {
             //
@@ -49,13 +49,15 @@ public class JuKuSoftIntroScreen extends BaseScreen {
             this.startTime = time.getTime();
         }
 
-        if (startTime + 3000 < time.getTime()) {
+        if (startTime + 2000 < time.getTime()) {
             game.getScreenManager().leaveAllAndEnter("load_screen");
         }
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
         batch.draw(this.bgImage, 0, 0);
+
+
     }
 
     @Override

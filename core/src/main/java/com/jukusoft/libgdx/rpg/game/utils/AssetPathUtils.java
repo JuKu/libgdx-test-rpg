@@ -17,4 +17,8 @@ public class AssetPathUtils {
         return "./data/sound/" + fileName;
     }
 
+    public static String getWallpaperPath (String fileName) {
+        return "./data/wallpaper/" + fileName;
+    }
+
 }

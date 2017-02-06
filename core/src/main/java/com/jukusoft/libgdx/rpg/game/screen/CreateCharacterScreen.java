@@ -1,5 +1,6 @@
 package com.jukusoft.libgdx.rpg.game.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
@@ -54,10 +55,13 @@ public class CreateCharacterScreen extends BaseScreen {
         this.bgTexture = game.getAssetManager().get(BG_IMAGE_PATH, Texture.class);
 
         //create and load ui skin from json file
-        this.uiSkin = SkinFactory.createSkin(/*AssetPathUtils.getUISkinPath("libgdx", "uiskin.atlas"), */AssetPathUtils.getUISkinPath("libgdx", "uiskin.json"));
+        this.uiSkin = SkinFactory.createSkin(/*AssetPathUtils.getUISkinPath("libgdx", "uiskin.atlas"), */AssetPathUtils.getUISkinPath("create_character", "uiskin.json"));
 
         //create new stage
         this.stage = new Stage();
+
+        //set input processor
+        Gdx.input.setInputProcessor(this.stage);
 
         //create start button
         this.startButton = new TextButton("START", this.uiSkin);

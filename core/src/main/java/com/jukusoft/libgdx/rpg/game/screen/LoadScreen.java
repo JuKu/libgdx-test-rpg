@@ -14,19 +14,19 @@ import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
  */
 public class LoadScreen extends BaseScreen {
 
-    protected final String BG_IMAGE_PATH = AssetPathUtils.getWallpaperPath("ocean/Ocean_large.png");
+    protected final String ICON_IMAGE_PATH = AssetPathUtils.getImagePath("general/icon_transparency.png");
 
-    protected Texture bgImage = null;
+    protected Texture logo = null;
 
     @Override public void onInit(ScreenBasedGame game, AssetManager assetManager) {
-        assetManager.load(BG_IMAGE_PATH, Texture.class);
+        assetManager.load(ICON_IMAGE_PATH, Texture.class);
     }
 
     @Override
     public void onResume () {
         assetManager.finishLoading();
 
-        this.bgImage = assetManager.get(BG_IMAGE_PATH, Texture.class);
+        this.logo = assetManager.get(ICON_IMAGE_PATH, Texture.class);
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {
@@ -34,7 +34,7 @@ public class LoadScreen extends BaseScreen {
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
-        batch.draw(this.bgImage, 0, 0);
+        batch.draw(this.logo, 0, 0);
     }
 
     @Override public void destroy() {

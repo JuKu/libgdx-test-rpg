@@ -95,7 +95,7 @@ public class CreditsScreen extends BaseScreen {
     @Override public void update(ScreenBasedGame game, GameTime time) {
         textStartPos += 50 * time.getDeltaTime();
 
-        if ((this.textStartPos - (creditsLines.length * 40)) > 600) {
+        if ((this.textStartPos - (creditsLines.length * 40)) > 500) {
             //leave and enter new game state
             game.getScreenManager().leaveAllAndEnter("menu");
         }

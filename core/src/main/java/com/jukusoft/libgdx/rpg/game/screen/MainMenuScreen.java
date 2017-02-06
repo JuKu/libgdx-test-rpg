@@ -74,9 +74,11 @@ public class MainMenuScreen extends BaseScreen {
         this.backgroundImage.setPosition(0, 0);
         this.uiStage.addActor(this.backgroundImage);
 
+        float startX = game.getViewportWidth() / 2 - 200;
+
         //create new game button
         this.newGameButton = new TextButton("New Game", this.uiSkin);
-        this.newGameButton.setPosition(400, 400);
+        this.newGameButton.setPosition(startX, 400);
         this.newGameButton.setScale(4);
         this.newGameButton.setWidth(400);
         this.newGameButton.setHeight(50);
@@ -84,14 +86,14 @@ public class MainMenuScreen extends BaseScreen {
 
         //create load game button
         this.loadButton = new TextButton("Load Game", this.uiSkin);
-        this.loadButton.setPosition(400, 320);
+        this.loadButton.setPosition(startX, 320);
         this.loadButton.setWidth(400);
         this.loadButton.setHeight(50);
         this.uiStage.addActor(this.loadButton);
 
         //create credits button
         this.creditsButton = new TextButton("Credits", this.uiSkin);
-        this.creditsButton.setPosition(400, 240);
+        this.creditsButton.setPosition(startX, 240);
         this.creditsButton.setWidth(400);
         this.creditsButton.setHeight(50);
         this.creditsButton.addListener(new ClickListener() {
@@ -104,7 +106,7 @@ public class MainMenuScreen extends BaseScreen {
 
         //create credits button
         this.settingsButton = new TextButton("Settings", this.uiSkin);
-        this.settingsButton.setPosition(400, 160);
+        this.settingsButton.setPosition(startX, 160);
         this.settingsButton.setWidth(400);
         this.settingsButton.setHeight(50);
         this.settingsButton.addListener(new ClickListener() {

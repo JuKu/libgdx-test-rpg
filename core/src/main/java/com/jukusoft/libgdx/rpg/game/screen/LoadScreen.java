@@ -14,7 +14,7 @@ import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
  */
 public class LoadScreen extends BaseScreen {
 
-    protected final String ICON_IMAGE_PATH = AssetPathUtils.getImagePath("general/icon_transparency.png");
+    protected final String ICON_IMAGE_PATH = AssetPathUtils.getImagePath("general/icon_transparency_border.png");
 
     protected Texture logo = null;
 

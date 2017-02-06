@@ -22,3 +22,6 @@ Third Party Graphics (free to use for this project - specific LICENSE file in sp
 
 ## Fonts
   - SparTakus (SIL Open Font License by Peter Wiegel, http://www.peter-wiegel.de/
+
+# Music & Sounds
+  - Game assets collection by Ove Melaa (Omsofware@hotmail.com)

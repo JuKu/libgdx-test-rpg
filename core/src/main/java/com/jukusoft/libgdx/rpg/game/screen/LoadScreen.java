@@ -145,8 +145,10 @@ public class LoadScreen extends BaseScreen {
     }
 
     @Override public void destroy() {
-        this.timer.cancel();
-        this.timer = null;
+        if (this.timer != null) {
+            this.timer.cancel();
+            this.timer = null;
+        }
     }
 
     protected boolean hasLoadingFinished () {

@@ -32,6 +32,10 @@ assets directory (./data)!
 
   - SparTakus (SIL Open Font License by Peter Wiegel)
 
+## Music & Sound
+
+  - Additional samples by Ove Melaa (Omsofware@hotmail.com)
+
 ## Special thanks
 
 Specical thanks to pentaquin.com project & libGDX team!

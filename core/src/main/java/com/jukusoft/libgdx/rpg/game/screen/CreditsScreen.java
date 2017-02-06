@@ -1,6 +1,7 @@
 package com.jukusoft.libgdx.rpg.game.screen;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -25,6 +26,7 @@ import java.util.TimerTask;
 public class CreditsScreen extends BaseScreen {
 
     protected final String ICON_IMAGE_PATH = AssetPathUtils.getImagePath("general/icon_transparency_border.png");
+    protected final String MUSIC_PATH = AssetPathUtils.getMusicPath("EssentialGameAudiopack/FullScores/Orchestral_Scores/Ove_Melaa-Heaven_Sings.mp3");
 
     protected Texture logo = null;
 
@@ -42,6 +44,8 @@ public class CreditsScreen extends BaseScreen {
         "#Credits",
         " - credits"
     };
+
+    protected Music backgroundMusic = null;
 
     @Override public void onInit(ScreenBasedGame game, AssetManager assetManager) {
         assetManager.load(ICON_IMAGE_PATH, Texture.class);
@@ -74,12 +78,23 @@ public class CreditsScreen extends BaseScreen {
 
         //reset text start position
         this.textStartPos = 200;
+
+        assetManager.load(AssetPathUtils.getMusicPath(MUSIC_PATH), Music.class);
+        assetManager.finishLoading();
+
+        this.backgroundMusic = assetManager.get(MUSIC_PATH, Music.class);
+        this.backgroundMusic.play();
+    }
+
+    @Override
+    public void onPause () {
+        this.backgroundMusic.stop();
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {
         textStartPos += 50 * time.getDeltaTime();
 
-        if ((this.textStartPos - (creditsLines.length * 40)) > 800) {
+        if ((this.textStartPos - (creditsLines.length * 40)) > 600) {
             //leave and enter new game state
             game.getScreenManager().leaveAllAndEnter("menu");
         }
@@ -129,6 +144,7 @@ public class CreditsScreen extends BaseScreen {
         this.creditsLargeFont.dispose();
         this.shapeRenderer.dispose();
         this.logo.dispose();
+        this.backgroundMusic.dispose();
     }
 
 }

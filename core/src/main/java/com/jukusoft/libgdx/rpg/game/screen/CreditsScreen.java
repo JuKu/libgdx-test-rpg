@@ -79,10 +79,11 @@ public class CreditsScreen extends BaseScreen {
         //reset text start position
         this.textStartPos = 200;
 
-        assetManager.load(AssetPathUtils.getMusicPath(MUSIC_PATH), Music.class);
+        assetManager.load(MUSIC_PATH, Music.class);
         assetManager.finishLoading();
 
         this.backgroundMusic = assetManager.get(MUSIC_PATH, Music.class);
+        this.backgroundMusic.setVolume(1.0f);
         this.backgroundMusic.play();
     }
 

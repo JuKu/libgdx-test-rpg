@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
@@ -28,7 +29,7 @@ public class LoadScreen extends BaseScreen {
         assetManager.load(ICON_IMAGE_PATH, Texture.class);
 
         //generate font
-        this.font = generateFont();
+        this.font = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 48, Color.WHITE, Color.BLUE, 3);
     }
 
     @Override
@@ -52,22 +53,6 @@ public class LoadScreen extends BaseScreen {
 
     @Override public void destroy() {
 
-    }
-
-    protected BitmapFont generateFont () {
-        //load font
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.absolute(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf")));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 48;
-
-        parameter.borderColor = Color.BLUE;
-        parameter.borderWidth = 3;
-        parameter.color = Color.WHITE;
-
-        BitmapFont font48 = generator.generateFont(parameter); // font size 48 pixels
-        generator.dispose(); // don't forget to dispose to avoid memory leaks!
-
-        return font48;
     }
 
 }

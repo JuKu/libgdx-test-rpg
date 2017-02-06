@@ -35,7 +35,7 @@ public class LoadScreen extends BaseScreen {
     protected BitmapFont creditsFont = null;
     protected BitmapFont creditsLargeFont = null;
 
-    protected float textStartPos = 400;
+    protected float textStartPos = 200;
 
     protected final String[] LOADING_TEXT = {
         "Loading",
@@ -61,7 +61,7 @@ public class LoadScreen extends BaseScreen {
         //generate fonts
         this.font = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 48, Color.WHITE, Color.BLUE, 3);
         this.creditsFont = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 18, Color.WHITE);
-        this.creditsLargeFont = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 28, Color.WHITE);
+        this.creditsLargeFont = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 28, Color.WHITE, Color.BLUE, 3);
 
         this.timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {

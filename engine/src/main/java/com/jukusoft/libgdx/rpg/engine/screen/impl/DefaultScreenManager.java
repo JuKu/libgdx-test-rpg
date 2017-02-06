@@ -2,6 +2,7 @@ package com.jukusoft.libgdx.rpg.engine.screen.impl;
 
 import com.jukusoft.libgdx.rpg.engine.exception.ScreenNotFoundException;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
+import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.IScreen;
 import com.jukusoft.libgdx.rpg.engine.screen.ScreenManager;
 
@@ -31,9 +32,9 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
     */
     protected List<IScreen> cachedScreenList = new ArrayList<>();
 
-    protected final BaseGame game;
+    protected final ScreenBasedGame game;
 
-    public DefaultScreenManager (BaseGame game) {
+    public DefaultScreenManager (ScreenBasedGame game) {
         this.game = game;
     }
 
@@ -84,7 +85,7 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
     }
 
     @Override public IScreen pop() {
-        IScreen screen = this.activeScreens.pop();
+        IScreen screen = this.activeScreens.poll();
 
         if (screen != null) {
             screen.onPause();

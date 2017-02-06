@@ -23,7 +23,7 @@ public abstract class ScreenBasedGame extends BaseGame {
     protected final void update (GameTime time) {
         //update all screens
         this.screenManager.listActiveScreens().stream().forEach(screen -> {
-            screen.update(time);
+            screen.update(this, time);
         });
     }
 
@@ -51,6 +51,10 @@ public abstract class ScreenBasedGame extends BaseGame {
     }
 
     protected abstract void onCreateScreens (ScreenManager<IScreen> screenManager);
+
+    public ScreenManager<IScreen> getScreenManager () {
+        return this.screenManager;
+    }
 
     protected void onDestroyGame () {
         //

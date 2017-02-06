@@ -2,7 +2,7 @@ package com.jukusoft.libgdx.rpg.engine.screen;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
+import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
 /**
@@ -13,12 +13,12 @@ public interface IScreen {
     /**
     * initialize game screen
     */
-    public void init (BaseGame game, AssetManager assetManager);
+    public void init (ScreenBasedGame game, AssetManager assetManager);
 
     /**
     * update game screen
     */
-    public void update (GameTime time);
+    public void update (ScreenBasedGame game, GameTime time);
 
     /**
     * draw game screen

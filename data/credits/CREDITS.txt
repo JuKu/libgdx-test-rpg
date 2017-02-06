@@ -1,0 +1,40 @@
+﻿
+# Credits
+
+## Programming
+
+ - Justin Künzel (main developer of this game)
+
+## Graphics / FX
+
+All graphics used for this project
+are under an specific license.
+See also CONTRIBUTORS.md file!
+
+### Third Party Graphics
+
+This project is using many thirdparty graphics.
+They are free to use for THIS project.
+
+Open Source Graphics:
+  - Reiner Tilesets http://www.reinerstilesets.de/de/
+
+For complete list please see CONTRIBUTORS.md file and look into
+assets directory (./data)!
+
+  - lostgarden.com
+  - opengameart.org (see CONTRIBUTORS.md)
+  - Reiner Tilesets http://www.reinerstilesets.de/de/
+  - tileset by by Zabin, Daneeklu, Jetrel, Hyptosis, Redshrike, Bertram (CC-BY-SA 3.0)
+
+## Fonts
+
+  - SparTakus (SIL Open Font License by Peter Wiegel, http://www.peter-wiegel.de/
+
+## Special thanks
+
+Specical thanks to pentaquin.com project & libGDX team!
+
+## Links
+
+# - pentaquin.com

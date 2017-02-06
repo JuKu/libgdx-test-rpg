@@ -99,7 +99,7 @@ public class LoadScreen extends BaseScreen {
 
         //draw credits
         for (int i = 0; i < this.creditsLines.length; i++) {
-            if (creditsLines[i].startsWith("#")) {
+            if (creditsLines[i].trim().startsWith("#")) {
                 //larger text
                 this.creditsLargeFont.draw(batch, creditsLines[i], /*(game.getViewportWidth() - 80) / 2*/80, this.textStartPos - (i * 40));
             } else {

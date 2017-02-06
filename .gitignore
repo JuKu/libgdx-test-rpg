@@ -17,9 +17,7 @@ $RECYCLE.BIN/
 
 !.gitlab-ci.yml
 
-save/
-*save*
-save
+*.save
 
 !.png
 !*.png

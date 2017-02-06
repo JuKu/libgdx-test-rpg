@@ -9,4 +9,12 @@ public class AssetPathUtils {
         return "./data/images/" + fileName;
     }
 
+    public static String getMusicPath (String fileName) {
+        return "./data/music/" + fileName;
+    }
+
+    public static String getSoundPath (String fileName) {
+        return "./data/sound/" + fileName;
+    }
+
 }

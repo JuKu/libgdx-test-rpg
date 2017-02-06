@@ -65,6 +65,9 @@ public class MainMenuScreen extends BaseScreen {
         game.getScreenManager().removeScreen("jukusoft_intro");
         game.getScreenManager().removeScreen("load_screen");
 
+        //set input processor
+        Gdx.input.setInputProcessor(this.uiStage);
+
         //wait while all assets was loaded
         game.getAssetManager().finishLoading();
 

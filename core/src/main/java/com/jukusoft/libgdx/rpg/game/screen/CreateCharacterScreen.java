@@ -145,8 +145,6 @@ public class CreateCharacterScreen extends BaseScreen {
         this.stage.dispose();
         this.stage = null;
 
-        this.startButton = null;
-
         this.uiSkin.dispose();
         this.uiSkin = null;
     }

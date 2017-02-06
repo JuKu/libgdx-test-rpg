@@ -1,6 +1,7 @@
 package com.jukusoft.libgdx.rpg.engine.utils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -52,6 +53,10 @@ public class FileUtils {
      * @return list of lines from file
     */
     public static List<String> readLines (String path, Charset charset) throws IOException {
+        if (!(new File(path)).exists()) {
+            throw new FileNotFoundException("Couldnt find file: " + path);
+        }
+
         return Files.readAllLines(Paths.get(path), charset);
     }
 

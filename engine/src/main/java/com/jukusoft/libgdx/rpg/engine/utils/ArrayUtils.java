@@ -24,4 +24,21 @@ public class ArrayUtils {
         return array;
     }
 
+    public static String[] convertStringListToArray (List<String> list) {
+        if (list == null) {
+            return new String[0];
+        }
+
+        //create new String array
+        String array[] = new String[list.size()];
+
+        //iterate through list
+        for (int i = 0; i < list.size(); i++) {
+            //get string and set to array
+            array[i] = list.get(i);
+        }
+
+        return array;
+    }
+
 }

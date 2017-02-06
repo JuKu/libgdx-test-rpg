@@ -71,6 +71,9 @@ public class CreditsScreen extends BaseScreen {
         assetManager.finishLoading();
 
         this.logo = assetManager.get(ICON_IMAGE_PATH, Texture.class);
+
+        //reset text start position
+        this.textStartPos = 200;
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {
@@ -120,6 +123,12 @@ public class CreditsScreen extends BaseScreen {
     @Override public void destroy() {
         this.timer.cancel();
         this.timer = null;
+
+        this.font.dispose();
+        this.creditsFont.dispose();
+        this.creditsLargeFont.dispose();
+        this.shapeRenderer.dispose();
+        this.logo.dispose();
     }
 
 }

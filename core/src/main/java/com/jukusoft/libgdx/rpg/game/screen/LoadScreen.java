@@ -61,7 +61,7 @@ public class LoadScreen extends BaseScreen {
         //generate fonts
         this.font = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 48, Color.WHITE, Color.BLUE, 3);
         this.creditsFont = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 18, Color.WHITE);
-        this.creditsLargeFont = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 28, Color.WHITE, Color.BLUE, 3);
+        this.creditsLargeFont = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 28, Color.WHITE, Color.RED, 3);
 
         this.timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {

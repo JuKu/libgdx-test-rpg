@@ -35,6 +35,7 @@ assets directory (./data)!
 ## Music & Sound
 
   - Additional samples by Ove Melaa (Omsofware@hotmail.com)
+  - Music by Hitctrl (opengameart.org, hitctrl@gmail.com)
 
 ## Special thanks
 

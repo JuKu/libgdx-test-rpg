@@ -25,3 +25,4 @@ Third Party Graphics (free to use for this project - specific LICENSE file in sp
 
 # Music & Sounds
   - Game assets collection by Ove Melaa (Omsofware@hotmail.com)
+  - Music by Hitctrl (opengameart.org, hitctrl@gmail.com)

@@ -17,5 +17,8 @@ dependencies {
     //log4j
     compile "log4j:log4j:$log4jVersion"
 
+    //ini4j
+    compile "org.ini4j:ini4j:$ini4jVersion"
+
     compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 }

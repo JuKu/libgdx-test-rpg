@@ -26,4 +26,14 @@ public class SkinFactory {
         return skin;
     }
 
+    public static Skin createSkin (final String jsonFile) {
+        Skin skin = new Skin(Gdx.files.absolute(jsonFile));
+        skin.getAtlas().getTextures().iterator().next().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        skin.getFont("default-font").getData().markupEnabled = true;
+        float scale = 1;
+        skin.getFont("default-font").getData().setScale(scale);
+
+        return skin;
+    }
+
 }

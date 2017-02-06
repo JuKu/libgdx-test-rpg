@@ -2,16 +2,12 @@ package com.jukusoft.libgdx.rpg.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
@@ -41,15 +37,16 @@ public class MainMenuScreen extends BaseScreen {
 
         //https://github.com/libgdx/libgdx/wiki/Scene2d.ui
 
-        //this.newGameButton = new Button("New Game");
-
         game.addResizeListener(((width, height) -> {
             //update viewport of stage
             uiStage.getViewport().update(width, height, true);
         }));
 
         //create and load ui skin from json file
-        this.uiSkin = SkinFactory.createSkin(AssetPathUtils.getUISkinPath("libgdx", "uiskin.atlas"), AssetPathUtils.getUISkinPath("libgdx", "uiskin.json"));
+        this.uiSkin = SkinFactory.createSkin(/*AssetPathUtils.getUISkinPath("libgdx", "uiskin.atlas"), */AssetPathUtils.getUISkinPath("libgdx", "uiskin.json"));
+
+        //this.newGameButton = new Button(this.uiSkin, "New Game");
+        //this.uiStage.addActor(this.newGameButton);
     }
 
     @Override
@@ -71,6 +68,8 @@ public class MainMenuScreen extends BaseScreen {
     @Override public void draw(GameTime time, SpriteBatch batch) {
         //draw background
         batch.draw(this.bgImage, 0, 0);
+
+        this.uiStage.draw();
     }
 
     @Override public void destroy() {

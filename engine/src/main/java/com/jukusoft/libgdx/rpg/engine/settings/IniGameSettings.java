@@ -42,6 +42,16 @@ public class IniGameSettings implements GameSettings {
         return section1.get(key);
     }
 
+    @Override public String getOrDefault(String section, String key, String defaultValue) {
+        Profile.Section section1 = this.sectionMap.get(section);
+
+        if (section1 == null) {
+            System.err.println("Couldnt found config section (config file: " + cfgFile.getAbsolutePath() + "): " + section);
+        }
+
+        return section1.getOrDefault(key, defaultValue);
+    }
+
     @Override public int getInt(String section, String key) {
         return Integer.parseInt(get(section, key));
     }

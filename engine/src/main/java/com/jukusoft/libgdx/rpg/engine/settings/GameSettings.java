@@ -19,6 +19,11 @@ public interface GameSettings {
     public String get (String section, String key);
 
     /**
+     * get value
+     */
+    public String getOrDefault (String section, String key, String defaultValue);
+
+    /**
     * get integer value
     */
     public int getInt (String section, String key);

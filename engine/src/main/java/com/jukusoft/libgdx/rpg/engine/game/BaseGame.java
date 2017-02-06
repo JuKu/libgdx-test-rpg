@@ -102,7 +102,7 @@ public abstract class BaseGame extends ApplicationAdapter {
 
         this.batch.begin();
 
-        //this.batch.setProjectionMatrix(this.camera.combined);
+        this.batch.setProjectionMatrix(this.camera.combined);
 
         //draw game
         this.draw(time, this.batch);
@@ -111,6 +111,10 @@ public abstract class BaseGame extends ApplicationAdapter {
     }
 
     protected abstract void initGame ();
+
+    public Camera getCamera () {
+        return this.camera;
+    }
 
     protected abstract void update (GameTime time);
 

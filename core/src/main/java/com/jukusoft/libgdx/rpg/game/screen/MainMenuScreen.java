@@ -113,7 +113,7 @@ public class MainMenuScreen extends BaseScreen {
                 game.getScreenManager().leaveAllAndEnter("settings");
             }
         });
-        this.uiStage.addActor(this.creditsButton);
+        this.uiStage.addActor(this.settingsButton);
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {

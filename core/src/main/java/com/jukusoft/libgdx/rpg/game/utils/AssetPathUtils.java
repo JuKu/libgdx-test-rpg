@@ -21,4 +21,8 @@ public class AssetPathUtils {
         return "./data/wallpaper/" + fileName;
     }
 
+    public static String getFontPath (String fileName) {
+        return "./data/font/" + fileName;
+    }
+
 }

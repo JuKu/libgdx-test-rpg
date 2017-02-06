@@ -3,7 +3,11 @@ package com.jukusoft.libgdx.rpg.desktop;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.jukusoft.libgdx.rpg.engine.utils.FileUtils;
 import com.jukusoft.libgdx.rpg.game.Game;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by Justin on 05.02.2017.
@@ -17,8 +21,21 @@ public class DesktopLauncher {
         config.width = 1280;
         config.addIcon("./data/images/general/icon.png", Files.FileType.Absolute);
 
-        //start game
-        new LwjglApplication(new Game(), config);
+        try {
+            //start game
+            new LwjglApplication(new Game(), config);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            try {
+                //write crash dump
+                FileUtils.writeFile("./crash.log", e.getLocalizedMessage(), StandardCharsets.UTF_8);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+            System.exit(0);
+        }
     }
 
 }

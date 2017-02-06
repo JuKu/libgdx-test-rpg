@@ -112,7 +112,7 @@ public class MainMenuScreen extends BaseScreen {
         this.settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                game.getScreenManager().leaveAllAndEnter("settings");
+                //game.getScreenManager().leaveAllAndEnter("settings");
             }
         });
         this.uiStage.addActor(this.settingsButton);

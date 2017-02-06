@@ -191,6 +191,10 @@ public abstract class BaseGame extends ApplicationAdapter {
         return this.getSettings().getFloat("Music", "volume");
     }
 
+    public String getLang () {
+        return this.getSettings().getOrDefault("Game", "lang", "en");
+    }
+
     public int getViewportWidth () {
         return this.VIEWPORT_WIDTH;
     }

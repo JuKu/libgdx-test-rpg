@@ -110,7 +110,7 @@ public class CreditsScreen extends BaseScreen {
         shapeRenderer.rect(0, game.getViewportHeight() - 200, game.getViewportWidth(), 200);
 
         //draw rectangle on bottom
-        shapeRenderer.rect(0, 0, game.getViewportWidth(), 150);
+        shapeRenderer.rect(0, 0, game.getViewportWidth(), 50);
 
         shapeRenderer.end();
 

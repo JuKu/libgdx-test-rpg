@@ -15,10 +15,10 @@ public class MainMenuScreen extends BaseScreen {
 
     protected Texture bgImage = null;
 
-    protected final String BG_IMAGE_PATH = "dragon1/dragon1.png";
+    protected final String BG_IMAGE_PATH = AssetPathUtils.getWallpaperPath("dragon1/dragon1.png");
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
-        assetManager.load(AssetPathUtils.getWallpaperPath(BG_IMAGE_PATH), Texture.class);
+        assetManager.load(BG_IMAGE_PATH, Texture.class);
     }
 
     @Override

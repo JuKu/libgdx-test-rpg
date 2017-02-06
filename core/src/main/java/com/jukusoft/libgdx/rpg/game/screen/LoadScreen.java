@@ -55,6 +55,9 @@ public class LoadScreen extends BaseScreen {
         " - credits"
     };
 
+    protected static final long MIN_LOAD_TIME = 5000l;
+    protected long startTime = 0l;
+
     @Override public void onInit(ScreenBasedGame game, AssetManager assetManager) {
         assetManager.load(ICON_IMAGE_PATH, Texture.class);
 
@@ -91,7 +94,16 @@ public class LoadScreen extends BaseScreen {
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {
+        if (startTime == 0l) {
+            startTime = time.getTime();
+        }
+
         textStartPos += 50 * time.getDeltaTime();
+
+        if (((startTime + MIN_LOAD_TIME) < time.getTime()) && this.hasLoadingFinished()) {
+            //leave and enter new game state
+            game.getScreenManager().leaveAllAndEnter("menu");
+        }
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
@@ -135,6 +147,13 @@ public class LoadScreen extends BaseScreen {
     @Override public void destroy() {
         this.timer.cancel();
         this.timer = null;
+    }
+
+    protected boolean hasLoadingFinished () {
+        //check, if all assets was be loaded
+        //this.assetManager.isLoaded()
+
+        return true;
     }
 
 }

@@ -85,7 +85,7 @@ public class MainMenuScreen extends BaseScreen {
         this.newGameButton.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                game.getScreenManager().leaveAllAndEnter("new_menu");
+                game.getScreenManager().leaveAllAndEnter("new_game");
             }
         });
         this.uiStage.addActor(this.newGameButton);

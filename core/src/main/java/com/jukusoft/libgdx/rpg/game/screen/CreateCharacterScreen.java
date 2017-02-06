@@ -92,6 +92,7 @@ public class CreateCharacterScreen extends BaseScreen {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 //game.getScreenManager().leaveAllAndEnter("settings");
+                createCharacterAndStart();
             }
         });
         this.stage.addActor(this.startButton);
@@ -188,6 +189,17 @@ public class CreateCharacterScreen extends BaseScreen {
             errorLabel.setVisible(true);
             errorLabel.setText("Please choose an character name!");
         }
+    }
+
+    protected void createCharacterAndStart () {
+        //get character name
+        String characterName = this.nameTextField.getText();
+
+        //create directory
+        File file = new File(AssetPathUtils.getSavePath(characterName));
+        file.mkdirs();
+
+        game.getScreenManager().leaveAllAndEnter("intro_screen");
     }
 
 }

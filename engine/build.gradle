@@ -20,5 +20,8 @@ dependencies {
     //ini4j
     compile "org.ini4j:ini4j:$ini4jVersion"
 
+    //json
+    compile "org.json:json:$jsonVersion"
+
     compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 }

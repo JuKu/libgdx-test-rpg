@@ -26,6 +26,7 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("credits", new CreditsScreen());
         screenManager.addScreen("settings", new SettingsScreen());
         screenManager.addScreen("new_game", new CreateCharacterScreen());
+        screenManager.addScreen("intro_story", new IntroStoryScreen());
 
         //push screen
         screenManager.push("jukusoft_intro");

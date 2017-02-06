@@ -19,5 +19,8 @@ dependencies {
     //log4j
     compile "log4j:log4j:$log4jVersion"
 
+    //json
+    compile "org.json:json:$jsonVersion"
+
     compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
 }

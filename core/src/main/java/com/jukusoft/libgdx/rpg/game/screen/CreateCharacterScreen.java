@@ -159,7 +159,7 @@ public class CreateCharacterScreen extends BaseScreen {
         if (!nameTextField.getText().isEmpty()) {
             errorLabel.setVisible(false);
 
-            if (!(new File(AssetPathUtils.getSavesPath(nameTextField.getText())).exists())) {
+            if (!(new File(AssetPathUtils.getSavePath(nameTextField.getText())).exists())) {
                 startButton.setDisabled(false);
                 startButton.setVisible(true);
             } else {

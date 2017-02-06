@@ -79,7 +79,6 @@ public class MainMenuScreen extends BaseScreen {
         //create new game button
         this.newGameButton = new TextButton("New Game", this.uiSkin);
         this.newGameButton.setPosition(startX, 400);
-        //this.newGameButton.setScale(4);
         this.newGameButton.setWidth(400);
         this.newGameButton.setHeight(50);
         this.newGameButton.addListener(new ClickListener() {

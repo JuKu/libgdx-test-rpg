@@ -28,6 +28,13 @@ public interface ScreenManager<T extends IScreen> {
     public void push (final String name);
 
     /**
+    * leave all active game states and enter an new one
+     *
+     * @param name name of new game state
+    */
+    public void leaveAllAndEnter (final String name);
+
+    /**
     * pop screen
     */
     public T pop ();

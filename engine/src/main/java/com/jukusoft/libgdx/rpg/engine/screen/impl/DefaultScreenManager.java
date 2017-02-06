@@ -39,7 +39,7 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
 
     @Override public void addScreen(String name, IScreen screen) {
         //initialize screen first
-        screen.init(game);
+        screen.init(game, game.getAssetManager());
 
         this.screens.put(name, screen);
 
@@ -70,8 +70,27 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         this.activeScreens.push(screen);
     }
 
+    @Override public void leaveAllAndEnter(String name) {
+        //leave all active game states
+        IScreen screen = pop();
+
+        //pop and pause all active screens
+        while (this.pop() != null) {
+            screen = pop();
+        }
+
+        //push new screen
+        this.push(name);
+    }
+
     @Override public IScreen pop() {
-        return this.activeScreens.pop();
+        IScreen screen = this.activeScreens.pop();
+
+        if (screen != null) {
+            screen.onPause();
+        }
+
+        return screen;
     }
 
     @Override public Collection<IScreen> listScreens() {

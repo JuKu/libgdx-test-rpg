@@ -13,8 +13,8 @@ public class DesktopLauncher {
     public static void main (String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Test RPG Game";
-        config.height = 640;
-        config.width = 960;
+        config.height = 720;
+        config.width = 1280;
         config.addIcon("./data/images/icon.png", Files.FileType.Absolute);
 
         //start game

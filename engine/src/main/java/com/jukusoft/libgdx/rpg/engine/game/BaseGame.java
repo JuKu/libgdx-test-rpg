@@ -2,6 +2,7 @@ package com.jukusoft.libgdx.rpg.engine.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -36,6 +37,11 @@ public abstract class BaseGame extends ApplicationAdapter {
     */
     protected SpriteBatch batch = null;
 
+    /**
+    * instance of asset manager
+    */
+    protected final AssetManager assetManager = new AssetManager();
+
     @Override
     public void resize(final int width, final int height) {
         this.resizeListeners.stream().forEach(consumer -> {
@@ -49,6 +55,10 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     public void removeResizeListener (ResizeListener listener) {
         this.resizeListeners.remove(listener);
+    }
+
+    public AssetManager getAssetManager () {
+        return this.assetManager;
     }
 
     @Override

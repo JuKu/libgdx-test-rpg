@@ -41,6 +41,7 @@ public class CreateCharacterScreen extends BaseScreen {
     protected Label genderLabel = null;
     protected SelectBox<String> genderSelectBox = null;
     protected Label errorLabel = null;
+    protected TextButton backButton = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         //
@@ -94,6 +95,19 @@ public class CreateCharacterScreen extends BaseScreen {
             }
         });
         this.stage.addActor(this.startButton);
+
+        //create back button
+        this.backButton = new TextButton("Back to Menu", this.uiSkin);
+        this.backButton.setPosition(30, 80);
+        this.backButton.setWidth(200);
+        this.backButton.setHeight(50);
+        this.backButton.addListener(new ClickListener() {
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                game.getScreenManager().leaveAllAndEnter("menu");
+            }
+        });
+        this.stage.addActor(this.backButton);
 
         this.nameLabel = new Label("Your Character Name: ", this.uiSkin);
         this.nameLabel.setPosition(30, 504);

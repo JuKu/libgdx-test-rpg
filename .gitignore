@@ -27,19 +27,14 @@ $RECYCLE.BIN/
 .log
 *.log
 
-*.cfg
 !testconfig.cfg
 server.cfg
-.cfg
 
 # Windows Installer files
 *.cab
 *.msi
 *.msm
 *.msp
-
-#.cfg
-#*.cfg
 
 ### Linux ###
 *~

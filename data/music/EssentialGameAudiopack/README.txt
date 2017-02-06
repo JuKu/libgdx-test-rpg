@@ -6,6 +6,8 @@
 *     OMSOFTWARE@HOTMAIL.COM          *
 ***************************************
 
+Found at: http://opengameart.org/content/oves-essential-game-audio-pack-collection-160-files-updated
+
 -About-
 After listening trough all my stuff i found a pretty big collection of stuff
 that was just lying around my HD and collecting dust. I have assembled them all 

@@ -101,6 +101,19 @@ public class MainMenuScreen extends BaseScreen {
             }
         });
         this.uiStage.addActor(this.creditsButton);
+
+        //create credits button
+        this.settingsButton = new TextButton("Settings", this.uiSkin);
+        this.settingsButton.setPosition(400, 160);
+        this.settingsButton.setWidth(400);
+        this.settingsButton.setHeight(50);
+        this.settingsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                game.getScreenManager().leaveAllAndEnter("settings");
+            }
+        });
+        this.uiStage.addActor(this.creditsButton);
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {

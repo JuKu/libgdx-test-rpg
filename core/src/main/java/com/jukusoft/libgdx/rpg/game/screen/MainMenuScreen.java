@@ -2,12 +2,19 @@ package com.jukusoft.libgdx.rpg.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
+import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
@@ -22,6 +29,8 @@ public class MainMenuScreen extends BaseScreen {
     protected Stage uiStage = null;
 
     protected Button newGameButton = null;
+
+    protected Skin uiSkin = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         assetManager.load(BG_IMAGE_PATH, Texture.class);
@@ -38,6 +47,9 @@ public class MainMenuScreen extends BaseScreen {
             //update viewport of stage
             uiStage.getViewport().update(width, height, true);
         }));
+
+        //create and load ui skin from json file
+        this.uiSkin = SkinFactory.createSkin(AssetPathUtils.getUISkinPath("libgdx", "uiskin.atlas"), AssetPathUtils.getUISkinPath("libgdx", "uiskin.json"));
     }
 
     @Override

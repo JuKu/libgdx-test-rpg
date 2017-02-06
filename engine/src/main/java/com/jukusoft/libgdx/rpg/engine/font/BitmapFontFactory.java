@@ -27,6 +27,8 @@ public class BitmapFontFactory {
         //load font
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.absolute(fontPath));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        //https://github.com/libgdx/libgdx/wiki/Gdx-freetype
         parameter.size = size;
         parameter.borderColor = borderColor;
         parameter.borderWidth = borderWidth;

@@ -39,7 +39,7 @@ public class JuKuSoftIntroScreen extends BaseScreen {
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
-        //
+        batch.draw(this.bgImage, 0, 0);
     }
 
     @Override public void destroy() {

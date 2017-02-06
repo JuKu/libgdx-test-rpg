@@ -3,19 +3,22 @@ package com.jukusoft.libgdx.rpg.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
+
+import java.io.File;
 
 /**
  * Created by Justin on 06.02.2017.
@@ -33,6 +36,11 @@ public class CreateCharacterScreen extends BaseScreen {
     protected Skin uiSkin = null;
 
     protected TextButton startButton = null;
+    protected Label nameLabel = null;
+    protected TextField nameTextField = null;
+    protected Label genderLabel = null;
+    protected SelectBox<String> genderSelectBox = null;
+    protected Label errorLabel = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         //
@@ -63,11 +71,22 @@ public class CreateCharacterScreen extends BaseScreen {
         //set input processor
         Gdx.input.setInputProcessor(this.stage);
 
+        //create error label
+        this.errorLabel = new Label("Error! Character name already exists!", this.uiSkin);
+        this.errorLabel.setPosition(100, 400);
+        this.errorLabel.setWidth(800);
+        this.errorLabel.setHeight(50);
+        this.errorLabel.setColor(Color.RED);
+        this.errorLabel.setVisible(false);
+        this.stage.addActor(this.errorLabel);
+
         //create start button
-        this.startButton = new TextButton("START", this.uiSkin);
-        this.startButton.setPosition(800, 160);
-        this.startButton.setWidth(100);
+        this.startButton = new TextButton("START GAME", this.uiSkin);
+        this.startButton.setPosition(1000, 80);
+        this.startButton.setWidth(200);
         this.startButton.setHeight(50);
+        this.startButton.setDisabled(true);
+        this.startButton.setVisible(false);
         this.startButton.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
@@ -75,6 +94,32 @@ public class CreateCharacterScreen extends BaseScreen {
             }
         });
         this.stage.addActor(this.startButton);
+
+        this.nameLabel = new Label("Your Character Name: ", this.uiSkin);
+        this.nameLabel.setPosition(30, 504);
+        this.stage.addActor(this.nameLabel);
+
+        this.nameTextField = new TextField("", this.uiSkin);
+        this.nameTextField.setPosition(200, 500);
+        this.nameTextField.addListener(new ChangeListener() {
+            @Override public void changed(ChangeEvent event, Actor actor) {
+                validateForm();
+            }
+        });
+        this.stage.addActor(this.nameTextField);
+
+        this.genderLabel = new Label("Gender: ", this.uiSkin);
+        this.genderLabel.setPosition(30, 464);
+        this.stage.addActor(this.genderLabel);
+
+        this.genderSelectBox = new SelectBox<>(this.uiSkin);
+        this.genderSelectBox.setPosition(200, 460);
+        this.genderSelectBox.setWidth(100);
+        this.genderSelectBox.setItems("male", "female");
+        this.genderSelectBox.setSelected("male");
+        this.genderSelectBox.setSelectedIndex(0);
+        this.genderSelectBox.validate();
+        this.stage.addActor(this.genderSelectBox);
     }
 
     @Override
@@ -108,6 +153,29 @@ public class CreateCharacterScreen extends BaseScreen {
 
     @Override public void destroy() {
 
+    }
+
+    protected void validateForm () {
+        if (!nameTextField.getText().isEmpty()) {
+            errorLabel.setVisible(false);
+
+            if (!(new File(AssetPathUtils.getSavesPath(nameTextField.getText())).exists())) {
+                startButton.setDisabled(false);
+                startButton.setVisible(true);
+            } else {
+                startButton.setDisabled(true);
+                startButton.setVisible(false);
+
+                errorLabel.setVisible(true);
+                errorLabel.setText("Error! Character name already exists: " + nameTextField.getText() + "! Choose another one!");
+            }
+        } else {
+            startButton.setDisabled(true);
+            startButton.setVisible(false);
+
+            errorLabel.setVisible(true);
+            errorLabel.setText("Please choose an character name!");
+        }
     }
 
 }

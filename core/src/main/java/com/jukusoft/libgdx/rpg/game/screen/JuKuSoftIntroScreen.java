@@ -49,7 +49,7 @@ public class JuKuSoftIntroScreen extends BaseScreen {
             this.startTime = time.getTime();
         }
 
-        if (startTime + 2000 < time.getTime()) {
+        if (startTime + 1500 < time.getTime()) {
             game.getScreenManager().leaveAllAndEnter("load_screen");
         }
     }

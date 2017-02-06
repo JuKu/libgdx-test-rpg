@@ -30,7 +30,7 @@ public interface ScreenManager<T extends IScreen> {
     /**
     * pop screen
     */
-    public void pop ();
+    public T pop ();
 
     /**
     * list all initialized screens

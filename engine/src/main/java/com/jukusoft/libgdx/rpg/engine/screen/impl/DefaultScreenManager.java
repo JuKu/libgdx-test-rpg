@@ -70,8 +70,8 @@ public class DefaultScreenManager implements ScreenManager<IScreen> {
         this.activeScreens.push(screen);
     }
 
-    @Override public void pop() {
-        this.activeScreens.pop();
+    @Override public IScreen pop() {
+        return this.activeScreens.pop();
     }
 
     @Override public Collection<IScreen> listScreens() {

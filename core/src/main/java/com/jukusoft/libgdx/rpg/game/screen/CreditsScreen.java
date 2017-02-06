@@ -91,6 +91,7 @@ public class CreditsScreen extends BaseScreen {
     @Override
     public void onPause () {
         this.backgroundMusic.stop();
+        this.backgroundMusic.dispose();
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {

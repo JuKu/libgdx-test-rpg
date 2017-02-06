@@ -82,6 +82,12 @@ public class MainMenuScreen extends BaseScreen {
         this.newGameButton.setScale(4);
         this.newGameButton.setWidth(400);
         this.newGameButton.setHeight(50);
+        this.newGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                game.getScreenManager().leaveAllAndEnter("new_menu");
+            }
+        });
         this.uiStage.addActor(this.newGameButton);
 
         //create load game button

@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
+import com.jukusoft.libgdx.rpg.engine.story.StoryTeller;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
@@ -16,6 +17,8 @@ public class IntroStoryScreen extends BaseScreen {
     protected final String MUSIC_PATH = AssetPathUtils.getMusicPath("EssentialGameAudiopack/FullScores/Orchestral_Scores/Ove_Melaa-Heaven_Sings.mp3");
 
     protected Music backgroundMusic = null;
+
+    protected StoryTeller storyTeller = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
 

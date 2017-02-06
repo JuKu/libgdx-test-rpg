@@ -41,4 +41,8 @@ public class AssetPathUtils {
         return "./data/save/" + fileName;
     }
 
+    public static String getStoryPath(String lang, String fileName) {
+        return "./data/story/" + lang + "/" + fileName;
+    }
+
 }

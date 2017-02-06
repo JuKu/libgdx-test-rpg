@@ -45,6 +45,9 @@ public class MainMenuScreen extends BaseScreen {
         //create and load ui skin from json file
         this.uiSkin = SkinFactory.createSkin(/*AssetPathUtils.getUISkinPath("libgdx", "uiskin.atlas"), */AssetPathUtils.getUISkinPath("libgdx", "uiskin.json"));
 
+        //https://github.com/libgdx/libgdx/blob/master/tests/gdx-tests/src/com/badlogic/gdx/tests/UISimpleTest.java#L37
+
+        //https://github.com/libgdx/libgdx/wiki/Scene2d.ui
         this.newGameButton = new TextButton("New Game", this.uiSkin);
         this.uiStage.addActor(this.newGameButton);
     }

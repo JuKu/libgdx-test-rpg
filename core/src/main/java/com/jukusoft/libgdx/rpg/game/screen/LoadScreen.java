@@ -55,7 +55,7 @@ public class LoadScreen extends BaseScreen {
         " - credits"
     };
 
-    protected static final long MIN_LOAD_TIME = 5000l;
+    protected static final long MIN_LOAD_TIME = 8000l;
     protected long startTime = 0l;
 
     @Override public void onInit(ScreenBasedGame game, AssetManager assetManager) {

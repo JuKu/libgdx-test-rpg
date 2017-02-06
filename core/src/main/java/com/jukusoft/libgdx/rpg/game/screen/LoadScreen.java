@@ -24,9 +24,9 @@ public class LoadScreen extends BaseScreen {
 
     @Override
     public void onResume () {
-        System.out.println("onResume().");
-
         assetManager.finishLoading();
+
+        this.bgImage = assetManager.get(BG_IMAGE_PATH, Texture.class);
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {
@@ -34,7 +34,7 @@ public class LoadScreen extends BaseScreen {
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
-
+        batch.draw(this.bgImage, 0, 0);
     }
 
     @Override public void destroy() {

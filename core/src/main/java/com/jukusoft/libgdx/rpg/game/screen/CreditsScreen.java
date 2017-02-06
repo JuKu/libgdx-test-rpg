@@ -1,5 +1,6 @@
 package com.jukusoft.libgdx.rpg.game.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -96,6 +97,12 @@ public class CreditsScreen extends BaseScreen {
         textStartPos += 50 * time.getDeltaTime();
 
         if ((this.textStartPos - (creditsLines.length * 40)) > 500) {
+            //leave and enter new game state
+            game.getScreenManager().leaveAllAndEnter("menu");
+        }
+
+        //check, if mouse is clicked
+        if (Gdx.input.isTouched()) {
             //leave and enter new game state
             game.getScreenManager().leaveAllAndEnter("menu");
         }

@@ -199,7 +199,7 @@ public class CreateCharacterScreen extends BaseScreen {
         File file = new File(AssetPathUtils.getSavePath(characterName));
         file.mkdirs();
 
-        game.getScreenManager().leaveAllAndEnter("intro_screen");
+        game.getScreenManager().leaveAllAndEnter("intro_story");
     }
 
 }

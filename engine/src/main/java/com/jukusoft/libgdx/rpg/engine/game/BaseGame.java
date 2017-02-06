@@ -8,11 +8,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jukusoft.libgdx.rpg.engine.settings.GameSettings;
+import com.jukusoft.libgdx.rpg.engine.settings.IniGameSettings;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.window.ResizeListener;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -51,6 +57,13 @@ public abstract class BaseGame extends ApplicationAdapter {
     protected Camera camera = null;
 
     protected AtomicBoolean useCamera = new AtomicBoolean(false);
+
+    protected String settingsDir = "./data/config/";
+
+    /**
+    * map with all game settings
+    */
+    protected Map<String,GameSettings> settingsMap = new ConcurrentHashMap<>();
 
     @Override
     public void resize(final int width, final int height) {
@@ -114,6 +127,68 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     public Camera getCamera () {
         return this.camera;
+    }
+
+    /**
+    * get instance of settings or null, if instance doesnst exists
+     *
+     * @param name name of settings
+     *
+     * @return instance of settings
+    */
+    public GameSettings getSettings (String name) {
+        name = name.toLowerCase();
+
+        GameSettings settings = this.settingsMap.get(name);
+
+        if (settings == null) {
+            throw new NullPointerException("instance of settings (name: " + name + ") is null.");
+        }
+
+        return settings;
+    }
+
+    /**
+     * get instance of global settings
+     *
+     * @return instance of global settings
+     */
+    public GameSettings getSettings () {
+        //get global settings
+        return this.getSettings("game");
+    }
+
+    /**
+    * load settings
+    */
+    public boolean loadSettings (String name, String path) {
+        name = name.toLowerCase();
+        path = path.toLowerCase();
+
+        GameSettings settings = new IniGameSettings();
+
+        try {
+            if (new File(path).exists()) {
+                settings.loadFromFile(new File(path));
+            } else {
+                if (new File(settingsDir + path).exists()) {
+                    settings.loadFromFile(new File(settingsDir + path));
+                } else {
+                    return false;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        this.settingsMap.put(name, settings);
+
+        return true;
+    }
+
+    public float getVolume () {
+        return this.getSettings().getFloat("Music", "volume");
     }
 
     public int getViewportWidth () {

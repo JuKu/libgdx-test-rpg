@@ -16,6 +16,9 @@ public class Game extends ScreenBasedGame {
 
     @Override
     protected void onCreateScreens(ScreenManager<IScreen> screenManager) {
+        //load settings
+        this.loadSettings("game", "game.cfg");
+
         //create screen
         screenManager.addScreen("jukusoft_intro", new JuKuSoftIntroScreen());
         screenManager.addScreen("load_screen", new LoadScreen());

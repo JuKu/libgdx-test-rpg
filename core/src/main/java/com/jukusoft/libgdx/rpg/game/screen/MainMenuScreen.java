@@ -24,7 +24,7 @@ public class MainMenuScreen extends BaseScreen {
 
     protected Stage uiStage = null;
 
-    protected Button newGameButton = null;
+    protected TextButton newGameButton = null;
 
     protected Skin uiSkin = null;
 
@@ -45,8 +45,8 @@ public class MainMenuScreen extends BaseScreen {
         //create and load ui skin from json file
         this.uiSkin = SkinFactory.createSkin(/*AssetPathUtils.getUISkinPath("libgdx", "uiskin.atlas"), */AssetPathUtils.getUISkinPath("libgdx", "uiskin.json"));
 
-        //this.newGameButton = new Button(this.uiSkin, "New Game");
-        //this.uiStage.addActor(this.newGameButton);
+        this.newGameButton = new TextButton("New Game", this.uiSkin);
+        this.uiStage.addActor(this.newGameButton);
     }
 
     @Override

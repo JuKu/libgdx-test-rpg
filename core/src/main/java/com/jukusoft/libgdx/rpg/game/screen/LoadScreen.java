@@ -34,7 +34,8 @@ public class LoadScreen extends BaseScreen {
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
-        batch.draw(this.logo, 0, 0);
+        //draw image to center
+        batch.draw(this.logo, (game.getViewportWidth() - 400) / 2, game.getViewportHeight() - 200);
     }
 
     @Override public void destroy() {

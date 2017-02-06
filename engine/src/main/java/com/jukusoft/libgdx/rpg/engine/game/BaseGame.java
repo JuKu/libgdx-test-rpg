@@ -116,6 +116,14 @@ public abstract class BaseGame extends ApplicationAdapter {
         return this.camera;
     }
 
+    public int getViewportWidth () {
+        return this.VIEWPORT_WIDTH;
+    }
+
+    public int getViewportHeight () {
+        return this.VIEWPORT_HEIGHT;
+    }
+
     protected abstract void update (GameTime time);
 
     protected abstract void draw (GameTime time, SpriteBatch batch);

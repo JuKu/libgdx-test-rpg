@@ -25,4 +25,12 @@ public class AssetPathUtils {
         return "./data/font/" + fileName;
     }
 
+    public static String getUISkinPath (String fileName) {
+        return "./data/ui/skin/" + fileName;
+    }
+
+    public static String getUISkinPath (String skinName, String fileName) {
+        return "./data/ui/skin/" + skinName + "/" + fileName;
+    }
+
 }

@@ -1,8 +1,11 @@
 package com.jukusoft.libgdx.rpg.game.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -14,11 +17,27 @@ import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 public class MainMenuScreen extends BaseScreen {
 
     protected Texture bgImage = null;
-
     protected final String BG_IMAGE_PATH = AssetPathUtils.getWallpaperPath("dragon1/dragon1.png");
+
+    protected Stage uiStage = null;
+
+    protected Button newGameButton = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         assetManager.load(BG_IMAGE_PATH, Texture.class);
+
+        //create stage for user interface (UI)
+        this.uiStage = new Stage();
+        Gdx.input.setInputProcessor(this.uiStage);
+
+        //https://github.com/libgdx/libgdx/wiki/Scene2d.ui
+
+        //this.newGameButton = new Button("New Game");
+
+        game.addResizeListener(((width, height) -> {
+            //update viewport of stage
+            uiStage.getViewport().update(width, height, true);
+        }));
     }
 
     @Override

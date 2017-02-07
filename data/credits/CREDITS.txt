@@ -27,10 +27,12 @@ assets directory (./data)!
   - opengameart.org (see CONTRIBUTORS.md)
   - Reiner Tilesets http://www.reinerstilesets.de/de/
   - tileset by by Zabin, Daneeklu, Jetrel, Hyptosis, Redshrike, Bertram (CC-BY-SA 3.0)
+  - some images from pexels.com
 
 ## Fonts
 
   - SparTakus (SIL Open Font License by Peter Wiegel)
+  - Arial (by Microsoft)
 
 ## Music & Sound
 

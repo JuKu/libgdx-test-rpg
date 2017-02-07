@@ -115,7 +115,9 @@ public class IntroStoryScreen extends BaseScreen {
 
         batch.begin();*/
 
-        this.storyTeller.draw(time, batch, 100, 600, 40);
+        if (storyTeller.getPartProgress(time.getTime()) < 0.95f) {
+            this.storyTeller.draw(time, batch, 100, 600, 40);
+        }
 
         batch.end();
 

@@ -18,9 +18,11 @@ public interface StoryTeller {
 
     public StoryPart getCurrentPart ();
 
+    public float getPartProgress (long now);
+
     public void update (GameTime time);
 
-    public void draw (GameTime time, SpriteBatch batch, float x, float y);
+    public void draw (GameTime time, SpriteBatch batch, float x, float y, float spacePerLines);
 
     public boolean hasFinished ();
 

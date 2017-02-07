@@ -23,7 +23,7 @@ public class DefaultStoryTeller implements StoryTeller {
     */
     List<StoryPart> storyParts = new ArrayList<>();
 
-    protected StoryPart currentPart = null;
+    protected volatile StoryPart currentPart = null;
     protected int currentPartIndex = 0;
 
     protected BitmapFont font = null;
@@ -67,6 +67,14 @@ public class DefaultStoryTeller implements StoryTeller {
         return this.currentPart;
     }
 
+    @Override public float getPartProgress(long now) {
+        if (currentPart == null) {
+            return 1f;
+        } else {
+            return currentPart.getPartProgress(now);
+        }
+    }
+
     @Override public void update(GameTime time) {
         if (currentPart.hasFinished(time.getTime())) {
             //switch to next part
@@ -84,8 +92,16 @@ public class DefaultStoryTeller implements StoryTeller {
         }
     }
 
-    @Override public void draw(GameTime time, SpriteBatch batch, float x, float y) {
+    @Override public void draw(GameTime time, SpriteBatch batch, float x, float y, float spacePerLine) {
+        if (currentPart == null) {
+            return;
+        }
 
+        String[] lines = this.currentPart.getLineArray();
+
+        for (int i = 0; i < lines.length; i++) {
+            this.font.draw(batch, lines[i], /*(game.getViewportWidth() - 80) / 2*/x, y - (i * spacePerLine));
+        }
     }
 
     @Override public boolean hasFinished() {

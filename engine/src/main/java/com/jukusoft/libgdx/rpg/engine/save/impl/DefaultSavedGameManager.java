@@ -1,5 +1,6 @@
 package com.jukusoft.libgdx.rpg.engine.save.impl;
 
+import com.jukusoft.libgdx.rpg.engine.exception.InvaildeSavedGameException;
 import com.jukusoft.libgdx.rpg.engine.exception.NoGameLoaderFoundException;
 import com.jukusoft.libgdx.rpg.engine.exception.NoGameSaverFoundException;
 import com.jukusoft.libgdx.rpg.engine.save.*;
@@ -78,8 +79,46 @@ public class DefaultSavedGameManager implements SavedGameManager {
         return list;
     }
 
-    @Override public <T extends SavedGameInfo> List<T> listSavedGames(Class<T> cls) {
-        return null;
+    @Override public <T extends SavedGameInfo> List<T> listSavedGames(Class<T> cls, Class<T> brokenGameInfoClass) {
+        //get info loader
+        SavedGameInfoLoader<T> loader = this.getInfoLoader(cls);
+
+        //create new empty list
+        List<T> list = new ArrayList<T>();
+
+        //get list of all available saved games
+        List<String> savedGameNames = this.listSavedGameNames();
+
+        //iterate through all saved game directories
+        for (String saveName : savedGameNames) {
+            T info = null;
+
+            try {
+                info = loader.load(this.savesPath + saveName);
+            } catch (InvaildeSavedGameException e) {
+                e.printStackTrace();
+
+                try {
+                    info = brokenGameInfoClass.newInstance();
+
+                    if (info instanceof IBrokenSavedGameInfo) {
+                        IBrokenSavedGameInfo brokenSavedGameInfo = (IBrokenSavedGameInfo) info;
+                        brokenSavedGameInfo.setSaveDir(new File(this.savesDir + saveName));
+                        brokenSavedGameInfo.setName(saveName);
+                    }
+                } catch (InstantiationException e1) {
+                    e1.printStackTrace();
+                    throw new RuntimeException("InstantiationException: " + e1.getLocalizedMessage());
+                } catch (IllegalAccessException e1) {
+                    e1.printStackTrace();
+                    throw new RuntimeException("IllegalAccessException: " + e1.getLocalizedMessage());
+                }
+            }
+
+            list.add(info);
+        }
+
+        return list;
     }
 
     @Override public <T extends SavedGameInfo> SavedGameInfoLoader<T> getInfoLoader(Class<T> cls) {

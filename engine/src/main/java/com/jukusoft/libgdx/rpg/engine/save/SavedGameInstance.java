@@ -3,7 +3,7 @@ package com.jukusoft.libgdx.rpg.engine.save;
 /**
  * Created by Justin on 08.02.2017.
  */
-public abstract class SavedGameInstance {
+public abstract class SavedGameInstance extends GameInstance {
 
     protected String name = null;
 

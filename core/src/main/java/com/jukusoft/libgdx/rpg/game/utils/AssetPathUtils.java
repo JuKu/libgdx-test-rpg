@@ -33,6 +33,10 @@ public class AssetPathUtils {
         return "./data/ui/skin/" + skinName + "/" + fileName;
     }
 
+    public static String getUIWidgetPath (String widgetName, String fileName) {
+        return "./data/ui/widget/" + widgetName + "/" + fileName;
+    }
+
     public static String getSavePath() {
         return "./data/save/";
     }

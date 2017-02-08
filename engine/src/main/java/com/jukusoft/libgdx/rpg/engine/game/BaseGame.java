@@ -57,6 +57,7 @@ public abstract class BaseGame extends ApplicationAdapter {
     protected static int VIEWPORT_HEIGHT = 720;
 
     protected Camera camera = null;
+    protected Camera uiCamera = null;
 
     protected AtomicBoolean useCamera = new AtomicBoolean(false);
 
@@ -107,6 +108,11 @@ public abstract class BaseGame extends ApplicationAdapter {
         this.camera.update();
         this.batch.setProjectionMatrix(this.camera.combined);
 
+        //initialize UI camera
+        this.uiCamera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+        this.uiCamera.translate(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
+        this.uiCamera.update();
+
         this.initGame();
     }
 
@@ -120,6 +126,9 @@ public abstract class BaseGame extends ApplicationAdapter {
 
         //update camera
         this.camera.update();
+
+        //update UI camera
+        this.uiCamera.update();
 
         //clear all color buffer bits and clear screen
         Gdx.gl.glClearColor(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
@@ -139,6 +148,10 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     public Camera getCamera () {
         return this.camera;
+    }
+
+    public Camera getUICamera () {
+        return this.uiCamera;
     }
 
     /**

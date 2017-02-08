@@ -50,7 +50,7 @@ public class GameVersion {
         this.buildNumber = Integer.parseInt(section.get("build"));
         this.version = Integer.parseInt(section.getOrDefault("version", "0"));
         this.versionString = section.get("versionString");
-        this.channel = VersionChannel.valueOf(section.get("channel"));
+        this.channel = VersionChannel.valueOf(section.get("channel").toUpperCase());
     }
 
     public int getBuild () {

@@ -26,7 +26,7 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("credits", new CreditsScreen());
         screenManager.addScreen("settings", new SettingsScreen());
         screenManager.addScreen("new_game", new CreateCharacterScreen());
-        screenManager.addScreen("load_game", new LoadScreen());
+        screenManager.addScreen("load_game", new LoadGameScreen());
         screenManager.addScreen("intro_story", new IntroStoryScreen());
         screenManager.addScreen("game", new GameScreen());
 

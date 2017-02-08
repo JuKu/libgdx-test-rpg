@@ -9,6 +9,7 @@ public class SavedGameInfo implements Comparable<SavedGameInfo> {
 
     protected File saveDir = null;
     protected String name = "";
+    protected String characterName = "";
 
     //version of game client, which has saved this game
     protected int gameVersion = 1;
@@ -31,6 +32,14 @@ public class SavedGameInfo implements Comparable<SavedGameInfo> {
 
     public String getName () {
         return this.name;
+    }
+
+    public String getCharacterName () {
+        return this.characterName;
+    }
+
+    public void setCharacterName (String characterName) {
+        this.characterName = characterName;
     }
 
     public int getGameVersion () {

@@ -21,6 +21,7 @@ import com.jukusoft.libgdx.rpg.engine.save.SavedGameInstance;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.ui.LoadButton;
 import com.jukusoft.libgdx.rpg.game.ui.LoadEntityButton;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
@@ -135,6 +136,17 @@ public class LoadGameScreen extends BaseScreen {
 
                     button.setIcon(iconTexture);
                 }
+            }
+
+            if (!(gameInfo instanceof IBrokenSavedGameInfo)) {
+                button.setClickListener(() -> {
+                    //save character name
+                    game.getSharedData().put(SharedDataConst.CHARACTER_NAME, gameInfo.getCharacterName());
+                    game.getSharedData().put(SharedDataConst.SAVE_PATH, gameInfo.getSaveDir());
+
+                    //next screen
+                    game.getScreenManager().leaveAllAndEnter("game");
+                });
             }
 
             this.loadButtonList.add(button);

@@ -62,6 +62,10 @@ public class DefaultSavedGameInfoLoader implements SavedGameInfoLoader<SavedGame
         int gameVersion = json.getInt("game_version");
         gameInfo.setGameVersion(gameVersion);
 
+        //get character name
+        String characterName = json.getString("character_name");
+        gameInfo.setCharacterName(characterName);
+
         //get game title
         String title = json.getString("title");
         gameInfo.setTitle(title);

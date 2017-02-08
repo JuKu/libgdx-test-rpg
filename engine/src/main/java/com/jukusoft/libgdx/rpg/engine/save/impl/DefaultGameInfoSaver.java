@@ -34,6 +34,7 @@ public class DefaultGameInfoSaver implements GameInfoSaver<SavedGameInfo> {
         json.put("name", gameInfo.getName());
         json.put("game_version", version.getVersion());
         json.put("game_build", version.getBuild());
+        json.put("character_name", gameInfo.getCharacterName());
         json.put("title", gameInfo.getTitle());
         json.put("icon_path", gameInfo.getGameIcon());
         json.put("last_played_timestamp", System.currentTimeMillis());

@@ -217,6 +217,7 @@ public class CreateCharacterScreen extends BaseScreen {
         SavedGameInfo gameInfo = new SavedGameInfo(new File(AssetPathUtils.getSavePath(characterName)), characterName);
         gameInfo.setTitle(characterName);
         gameInfo.setGameIcon("icons/palm/palm.png");
+        gameInfo.setCharacterName(characterName);
 
         try {
             gameInfoSaver.saveGameInfo(AssetPathUtils.getSavePath(characterName), game.getVersion(), gameInfo);

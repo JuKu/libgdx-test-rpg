@@ -7,6 +7,7 @@ import com.jukusoft.libgdx.rpg.engine.save.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -117,6 +118,9 @@ public class DefaultSavedGameManager implements SavedGameManager {
 
             list.add(info);
         }
+
+        //sort list with last played date
+        Collections.sort(list);
 
         return list;
     }

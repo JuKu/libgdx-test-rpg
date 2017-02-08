@@ -37,6 +37,10 @@ public class AssetPathUtils {
         return "./data/ui/widget/" + widgetName + "/" + fileName;
     }
 
+    public static String getDataPath () {
+        return "./data/";
+    }
+
     public static String getSavePath() {
         return "./data/save/";
     }

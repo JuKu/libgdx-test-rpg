@@ -27,6 +27,7 @@ public class LoadButton<T extends SavedGameInfo> {
     protected Texture bgTexture = null;
     protected Texture hoverTexture = null;
     protected BitmapFont font = null;
+    protected Texture iconTexture = null;
 
     protected T gameInfo = null;
 
@@ -79,8 +80,15 @@ public class LoadButton<T extends SavedGameInfo> {
             batch.draw(this.bgTexture, x, y);
         }
 
+        float paddingBottom = (this.height / 2) - 32;
+
+        //draw icon
+        if (iconTexture != null) {
+            batch.draw(iconTexture, x + 10, y + paddingBottom);
+        }
+
         //draw button text
-        this.font.draw(batch, this.gameInfo.getTitle(), x + 30, y + 60);
+        this.font.draw(batch, this.gameInfo.getTitle(), x + 80, y + 60);
     }
 
     protected boolean isInner (float mouseX, float mouseY) {
@@ -95,6 +103,10 @@ public class LoadButton<T extends SavedGameInfo> {
 
     public void setClickListener (ClickListener listener) {
         this.clickListener = listener;
+    }
+
+    public void setIcon (Texture iconTexture) {
+        this.iconTexture = iconTexture;
     }
 
 }

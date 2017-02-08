@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.save.BrokenSavedGameInfo;
+import com.jukusoft.libgdx.rpg.engine.save.IBrokenSavedGameInfo;
 import com.jukusoft.libgdx.rpg.engine.save.SavedGameInfo;
 import com.jukusoft.libgdx.rpg.engine.save.SavedGameInstance;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
@@ -24,8 +25,11 @@ import com.jukusoft.libgdx.rpg.game.ui.LoadButton;
 import com.jukusoft.libgdx.rpg.game.ui.LoadEntityButton;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Justin on 08.02.2017.
@@ -51,6 +55,8 @@ public class LoadGameScreen extends BaseScreen {
 
     protected Stage stage = null;
     protected BitmapFont arialFont = null;
+
+    protected Map<String,Texture> iconTextureMap = new HashMap<>();
 
     protected List<LoadButton> loadButtonList = new ArrayList<>();
 
@@ -108,6 +114,29 @@ public class LoadGameScreen extends BaseScreen {
             //create new load button
             LoadButton<SavedGameInfo> button = new LoadButton<>(this.buttonTexture, this.hoveredTexture, this.arialFont, gameInfo);
             button.setPosition(startX, startY);
+
+            if (!gameInfo.getGameIcon().isEmpty()) {
+                String iconPath = AssetPathUtils.getImagePath(gameInfo.getGameIcon());
+
+                Texture iconTexture = getIcon(iconPath);
+
+                if (iconTexture != null) {
+                    button.setIcon(iconTexture);
+                }
+            } else {
+                if (gameInfo instanceof IBrokenSavedGameInfo) {
+                    String iconPath = AssetPathUtils.getImagePath("icons/cancel/cancel_64.png");
+
+                    Texture iconTexture = getIcon(iconPath);
+
+                    if (iconTexture != null) {
+                        button.setIcon(iconTexture);
+                    }
+
+                    button.setIcon(iconTexture);
+                }
+            }
+
             this.loadButtonList.add(button);
 
             startY = startY - 120;
@@ -132,6 +161,36 @@ public class LoadGameScreen extends BaseScreen {
 
         this.shapeRenderer.dispose();
         this.shapeRenderer = null;
+
+        //dispose all icon textures
+        for (Map.Entry<String,Texture> entry : this.iconTextureMap.entrySet()) {
+            Texture texture = entry.getValue();
+
+            this.iconTextureMap.remove(entry.getKey());
+
+            texture.dispose();
+            texture = null;
+        }
+    }
+
+    protected Texture getIcon (String iconPath) {
+        if (!this.iconTextureMap.containsKey(iconPath)) {
+            //check, if icon exists
+            if (new File(iconPath).exists()) {
+                assetManager.load(iconPath, Texture.class);
+                assetManager.finishLoading();
+
+                Texture iconTexture = assetManager.get(iconPath, Texture.class);
+                this.iconTextureMap.put(iconPath, iconTexture);
+            } else {
+                System.out.println("icon doesnt exists: " + iconPath);
+                return null;
+            }
+        }
+
+        Texture iconTexture = this.iconTextureMap.get(iconPath);
+
+        return iconTexture;
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {

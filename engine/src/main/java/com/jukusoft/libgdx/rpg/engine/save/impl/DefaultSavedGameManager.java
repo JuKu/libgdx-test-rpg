@@ -58,6 +58,9 @@ public class DefaultSavedGameManager implements SavedGameManager {
 
         //add default saved game info loader
         this.registerInfoLoader(new DefaultSavedGameInfoLoader(), SavedGameInfo.class);
+
+        //add default saved game info saver
+        this.registerInfoSaver(new DefaultGameInfoSaver(), SavedGameInfo.class);
     }
 
     @Override public List<String> listSavedGameNames() {

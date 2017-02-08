@@ -1,15 +1,12 @@
 package com.jukusoft.libgdx.rpg.game.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
-import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -34,6 +31,8 @@ public class LoadScreen extends BaseScreen {
     protected BitmapFont font = null;
     protected BitmapFont creditsFont = null;
     protected BitmapFont creditsLargeFont = null;
+
+    protected BitmapFont arialFont = null;
 
     protected float textStartPos = 200;
 
@@ -65,6 +64,7 @@ public class LoadScreen extends BaseScreen {
         this.font = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 48, Color.WHITE, Color.BLUE, 3);
         this.creditsFont = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 18, Color.WHITE);
         this.creditsLargeFont = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("spartakus/SparTakus.ttf"), 28, Color.WHITE, Color.RED, 3);
+        this.arialFont = BitmapFontFactory.createFont(AssetPathUtils.getFontPath("arial/arial.ttf"), 14, Color.WHITE);
 
         this.timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -142,6 +142,10 @@ public class LoadScreen extends BaseScreen {
 
         //draw text
         this.font.draw(batch, LOADING_TEXT[textIndex], 50, 80);
+
+        //draw version information
+        this.arialFont
+            .draw(batch, "Version: " + game.getVersion().getVersionString() + " (Channel: " + game.getVersion().getChannel() + ")", /*game.getViewportWidth() - 400*/50, 20);
     }
 
     @Override public void destroy() {
@@ -149,6 +153,9 @@ public class LoadScreen extends BaseScreen {
             this.timer.cancel();
             this.timer = null;
         }
+
+        this.arialFont.dispose();
+        this.arialFont = null;
     }
 
     protected boolean hasLoadingFinished () {

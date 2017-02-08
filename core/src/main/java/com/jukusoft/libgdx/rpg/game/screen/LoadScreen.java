@@ -154,8 +154,10 @@ public class LoadScreen extends BaseScreen {
             this.timer = null;
         }
 
-        this.arialFont.dispose();
-        this.arialFont = null;
+        if (this.arialFont != null) {
+            this.arialFont.dispose();
+            this.arialFont = null;
+        }
     }
 
     protected boolean hasLoadingFinished () {

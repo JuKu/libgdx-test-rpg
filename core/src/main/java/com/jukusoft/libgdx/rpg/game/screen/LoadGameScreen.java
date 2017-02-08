@@ -57,6 +57,7 @@ public class LoadGameScreen extends BaseScreen {
 
         //play background music
         this.backgroundMusic.setVolume(game.getVolume());
+        this.backgroundMusic.setLooping(true);
         this.backgroundMusic.play();
     }
 

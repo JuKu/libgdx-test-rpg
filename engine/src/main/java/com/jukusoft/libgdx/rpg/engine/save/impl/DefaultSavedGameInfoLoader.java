@@ -4,9 +4,12 @@ import com.jukusoft.libgdx.rpg.engine.exception.FilePermissionException;
 import com.jukusoft.libgdx.rpg.engine.exception.InvaildeSavedGameException;
 import com.jukusoft.libgdx.rpg.engine.save.SavedGameInfo;
 import com.jukusoft.libgdx.rpg.engine.save.SavedGameInfoLoader;
+import com.jukusoft.libgdx.rpg.engine.utils.FileUtils;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by Justin on 08.02.2017.
@@ -39,7 +42,16 @@ public class DefaultSavedGameInfoLoader implements SavedGameInfoLoader<SavedGame
             throw new FilePermissionException("Cannot read saved game info file: " + infoFile.getAbsolutePath() + ".");
         }
 
-        JSONObject json = new JSONObject();
+        String fileContent = "";
+
+        try {
+            fileContent = FileUtils.readFile(infoFile.getAbsolutePath(), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new InvaildeSavedGameException("saved game in path '" + saveDir + "' is broken, IOException thrown: " + e.getLocalizedMessage());
+        }
+
+        JSONObject json = new JSONObject(fileContent);
 
         //create new instance of saved game info
         SavedGameInfo gameInfo = new SavedGameInfo(new File(saveDir), saveName);

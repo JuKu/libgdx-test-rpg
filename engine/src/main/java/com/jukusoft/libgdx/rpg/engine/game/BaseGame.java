@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jukusoft.libgdx.rpg.engine.save.SavedGameManager;
 import com.jukusoft.libgdx.rpg.engine.settings.GameSettings;
 import com.jukusoft.libgdx.rpg.engine.settings.IniGameSettings;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -70,6 +71,8 @@ public abstract class BaseGame extends ApplicationAdapter {
     * version information
     */
     protected GameVersion version = null;
+
+    protected SavedGameManager savedGameManager = null;
 
     @Override
     public void resize(final int width, final int height) {
@@ -228,6 +231,22 @@ public abstract class BaseGame extends ApplicationAdapter {
         }
 
         this.version = version;
+    }
+
+    public SavedGameManager getSavedGameManager () {
+        if (this.savedGameManager == null) {
+            throw new IllegalStateException("Cannot get saved game manager, you have to set saved game manager with method setSavedGameManager() first.");
+        }
+
+        return this.savedGameManager;
+    }
+
+    public void setSavedGameManager (SavedGameManager savedGameManager) {
+        if (savedGameManager == null) {
+            throw new NullPointerException("saved game manager is null.");
+        }
+
+        this.savedGameManager = savedGameManager;
     }
 
     public int getViewportWidth () {

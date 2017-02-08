@@ -33,6 +33,10 @@ public class AssetPathUtils {
         return "./data/ui/skin/" + skinName + "/" + fileName;
     }
 
+    public static String getSavePath() {
+        return "./data/save/";
+    }
+
     public static String getSavePath(String charName, String fileName) {
         return "./data/save/" + charName + "/" + fileName;
     }

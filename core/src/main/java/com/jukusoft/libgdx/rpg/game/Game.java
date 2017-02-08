@@ -1,6 +1,7 @@
 package com.jukusoft.libgdx.rpg.game;
 
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
+import com.jukusoft.libgdx.rpg.engine.save.impl.DefaultSavedGameManager;
 import com.jukusoft.libgdx.rpg.engine.screen.IScreen;
 import com.jukusoft.libgdx.rpg.engine.screen.ScreenManager;
 import com.jukusoft.libgdx.rpg.engine.version.GameVersion;
@@ -23,6 +24,9 @@ public class Game extends ScreenBasedGame {
 
         //load version information
         this.setVersion(new GameVersion(settingsDir + "version.cfg"));
+
+        //set saved game manager to support saved games
+        this.setSavedGameManager(new DefaultSavedGameManager(AssetPathUtils.getSavePath()));
 
         //create screen
         screenManager.addScreen("jukusoft_intro", new JuKuSoftIntroScreen());

@@ -1,0 +1,5 @@
+License: CC-BY-SA 3.0
+
+Authors: see Attributions.txt
+
+Found at: http://opengameart.org/content/lpc-tile-atlas

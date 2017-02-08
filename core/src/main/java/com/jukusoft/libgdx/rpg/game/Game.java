@@ -3,7 +3,9 @@ package com.jukusoft.libgdx.rpg.game;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.IScreen;
 import com.jukusoft.libgdx.rpg.engine.screen.ScreenManager;
+import com.jukusoft.libgdx.rpg.engine.version.GameVersion;
 import com.jukusoft.libgdx.rpg.game.screen.*;
+import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
 /**
  * Created by Justin on 06.02.2017.
@@ -18,6 +20,9 @@ public class Game extends ScreenBasedGame {
     protected void onCreateScreens(ScreenManager<IScreen> screenManager) {
         //load settings
         this.loadSettings("game", "game.cfg");
+
+        //load version information
+        this.setVersion(new GameVersion(settingsDir + "version.cfg"));
 
         //create screen
         screenManager.addScreen("jukusoft_intro", new JuKuSoftIntroScreen());

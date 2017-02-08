@@ -37,6 +37,11 @@ public class DefaultSavedGameManager implements SavedGameManager {
     protected Map<Class,SavedGameInfoLoader> infoLoaderMap = new ConcurrentHashMap<>();
 
     /**
+    * map with all available game info savers
+    */
+    protected Map<Class,GameInfoSaver> infoSaverMap = new ConcurrentHashMap<>();
+
+    /**
     * default constructor
     */
     public DefaultSavedGameManager (final String savesPath) {
@@ -141,6 +146,24 @@ public class DefaultSavedGameManager implements SavedGameManager {
 
     @Override public <T extends SavedGameInfo> void removeInfoLoader(Class<T> cls) {
         this.infoLoaderMap.remove(cls);
+    }
+
+    @Override public <T extends SavedGameInfo> GameInfoSaver<T> getInfoSaver(Class<T> cls) {
+        GameInfoSaver<T> saver = this.infoSaverMap.get(cls);
+
+        if (saver == null) {
+            return null;
+        }
+
+        return saver;
+    }
+
+    @Override public <T extends SavedGameInfo> void registerInfoSaver(GameInfoSaver<T> saver, Class<T> cls) {
+        this.infoSaverMap.put(cls, saver);
+    }
+
+    @Override public <T extends SavedGameInfo> void removeInfoSaver(Class<T> cls) {
+        this.infoSaverMap.remove(cls);
     }
 
     @Override public <T extends SavedGameInstance> GameLoader<T> getGameLoader(Class<T> cls) {

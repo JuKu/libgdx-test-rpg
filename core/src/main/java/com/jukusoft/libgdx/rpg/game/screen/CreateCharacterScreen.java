@@ -12,7 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.jukusoft.libgdx.rpg.engine.exception.GameSaverException;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
+import com.jukusoft.libgdx.rpg.engine.save.GameInfoSaver;
+import com.jukusoft.libgdx.rpg.engine.save.SavedGameInfo;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -203,6 +206,28 @@ public class CreateCharacterScreen extends BaseScreen {
         //save character name
         game.getSharedData().put(SharedDataConst.CHARACTER_NAME, characterName);
         game.getSharedData().put(SharedDataConst.SAVE_PATH, AssetPathUtils.getSavePath(characterName));
+
+        //save game info file
+        GameInfoSaver<SavedGameInfo> gameInfoSaver = game.getSavedGameManager().getInfoSaver(SavedGameInfo.class);
+
+        if (gameInfoSaver == null) {
+            throw new NullPointerException("game info saver is null.");
+        }
+
+        SavedGameInfo gameInfo = new SavedGameInfo(new File(AssetPathUtils.getSavePath(characterName)), characterName);
+        gameInfo.setTitle(characterName);
+        gameInfo.setGameIcon("icons/palm/palm.png");
+
+        try {
+            gameInfoSaver.saveGameInfo(AssetPathUtils.getSavePath(characterName), game.getVersion(), gameInfo);
+        } catch (GameSaverException e) {
+            e.printStackTrace();
+
+            errorLabel.setVisible(true);
+            errorLabel.setText("Couldnt save game info file to path: " + AssetPathUtils.getSavePath(characterName));
+
+            return;
+        }
 
         game.getScreenManager().leaveAllAndEnter("intro_story");
     }

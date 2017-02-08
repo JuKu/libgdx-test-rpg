@@ -27,6 +27,12 @@ public interface SavedGameManager {
 
     public <T extends SavedGameInfo> void removeInfoLoader (Class<T> cls);
 
+    public <T extends SavedGameInfo> GameInfoSaver<T> getInfoSaver (Class<T> cls);
+
+    public <T extends SavedGameInfo> void registerInfoSaver (GameInfoSaver<T> saver, Class<T> cls);
+
+    public <T extends SavedGameInfo> void removeInfoSaver (Class<T> cls);
+
     public <T extends SavedGameInstance> GameLoader<T> getGameLoader (Class<T> cls);
 
     public <T extends SavedGameInstance> void registerLoader (GameLoader<T> loader, Class<T> cls);

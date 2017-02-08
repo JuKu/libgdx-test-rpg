@@ -48,6 +48,9 @@ public class DefaultSavedGameManager implements SavedGameManager {
 
             System.out.println("Create new saves directory: " + this.savesDir.getAbsolutePath());
         }
+
+        //add default saved game info loader
+        this.registerInfoLoader(new DefaultSavedGameInfoLoader(), SavedGameInfo.class);
     }
 
     @Override public List<String> listSavedGameNames() {
@@ -59,7 +62,13 @@ public class DefaultSavedGameManager implements SavedGameManager {
         for (File file : files) {
             //only directories should be listed
             if (file.isDirectory()) {
-                String[] strArray = file.getAbsolutePath().replace("\\", "/").split("/");
+                String path = file.getAbsolutePath();
+
+                if (path.endsWith("/")) {
+                    path = path.substring(0, -1);
+                }
+
+                String[] strArray = path.replace("\\", "/").split("/");
 
                 //only add filename to list
                 list.add(strArray[strArray.length - 1]);

@@ -62,6 +62,7 @@ public class DefaultSavedGameInfoLoader implements SavedGameInfoLoader<SavedGame
         long lastPlayedTimestamp = json.getLong("last_played_timestamp");
         gameInfo.setLastPlayedTimestamp(lastPlayedTimestamp);
 
+        //return instance of game info
         return gameInfo;
     }
 

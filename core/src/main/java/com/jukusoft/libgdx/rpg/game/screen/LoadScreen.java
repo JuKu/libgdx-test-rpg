@@ -145,7 +145,7 @@ public class LoadScreen extends BaseScreen {
 
         //draw version information
         this.arialFont
-            .draw(batch, "Version: " + game.getVersion().getVersionString() + " (Channel: " + game.getVersion().getChannel() + ")", /*game.getViewportWidth() - 400*/50, 20);
+            .draw(batch, "Version: " + game.getVersion().getVersionString() + " (Channel: " + game.getVersion().getChannel() + ")", 50, 20);
     }
 
     @Override public void destroy() {

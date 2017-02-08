@@ -65,6 +65,8 @@ public class HUDOverlayScreen extends BaseScreen {
         shapeRenderer.end();
 
         batch.begin();
+
+        this.hud.drawLayer2(time, batch);
     }
 
     @Override public void destroy() {

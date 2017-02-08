@@ -35,6 +35,7 @@ public class FilledBar extends BaseHUDWidget {
     }
 
     public void update (BaseGame game, GameTime time) {
+        //calculate percent
         this.percent = this.value / this.maxValue;
     }
 
@@ -47,9 +48,15 @@ public class FilledBar extends BaseHUDWidget {
         shapeRenderer.setColor(this.backgroundColor);
         shapeRenderer.rect(getX(), getY(), getWidth(), getHeight());
 
+        float maxWidth = getWidth() - (paddingLeft + paddingRight);
+        float maxHeight = getHeight() - (paddingTop + paddingBottom);
+
+        float barWidth = maxWidth * percent;
+        float barHeight = maxHeight;
+
         //draw foreground
         shapeRenderer.setColor(this.foregroundColor);
-        shapeRenderer.rect(getX() + paddingBottom, getY() + paddingLeft, getWidth() - (paddingLeft + paddingRight), getHeight() - (paddingTop + paddingBottom));
+        shapeRenderer.rect(getX() + paddingBottom, getY() + paddingLeft, barWidth, barHeight);
     }
 
     @Override public void drawLayer2(GameTime time, SpriteBatch batch) {
@@ -79,6 +86,18 @@ public class FilledBar extends BaseHUDWidget {
 
     public void setValue (float value) {
         this.value = value;
+    }
+
+    public float getMaxValue () {
+        return this.maxValue;
+    }
+
+    public void setMaxValue (float maxValue) {
+        this.maxValue = maxValue;
+    }
+
+    public float getPercent () {
+        return this.percent;
     }
 
 }

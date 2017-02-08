@@ -38,6 +38,7 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("load_game", new LoadGameScreen());
         screenManager.addScreen("intro_story", new IntroStoryScreen());
         screenManager.addScreen("game", new GameScreen());
+        screenManager.addScreen("hud", new HUDOverlayScreen());
 
         //push screen
         screenManager.push("jukusoft_intro");

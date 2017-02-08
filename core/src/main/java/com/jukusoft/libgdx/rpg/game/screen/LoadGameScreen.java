@@ -19,8 +19,11 @@ import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 public class LoadGameScreen extends BaseScreen {
 
     protected final String BG_IMAGE_PATH = AssetPathUtils.getWallpaperPath("ocean_sunset/ocean.png");
+    protected final String MUSIC_PATH = AssetPathUtils.getMusicPath("EssentialGameAudiopack/Loops/Drum_Only_Loops/Ove_Melaa-DrumLoop_1_64BPM.mp3");
 
+    //assets
     protected Texture backgroundTexture = null;
+    protected Music backgroundMusic = null;
 
     //user interface
     protected Stage stage = null;
@@ -34,6 +37,7 @@ public class LoadGameScreen extends BaseScreen {
     public void onResume () {
         //load assets
         this.assetManager.load(BG_IMAGE_PATH, Texture.class);
+        this.assetManager.load(MUSIC_PATH, Music.class);
 
         //create and load ui skin from json file
         this.uiSkin = SkinFactory.createSkin(/*AssetPathUtils.getUISkinPath("libgdx", "uiskin.atlas"), */AssetPathUtils.getUISkinPath("create_character", "uiskin.json"));
@@ -49,13 +53,24 @@ public class LoadGameScreen extends BaseScreen {
 
         //get assets
         this.backgroundTexture = this.assetManager.get(BG_IMAGE_PATH, Texture.class);
+        this.backgroundMusic = this.assetManager.get(MUSIC_PATH, Music.class);
+
+        //play background music
+        this.backgroundMusic.setVolume(game.getVolume());
+        this.backgroundMusic.play();
     }
 
     @Override
     public void onPause () {
+        //stop background music
+        this.backgroundMusic.stop();
+
         //free memory for assets
         this.backgroundTexture.dispose();
         this.backgroundTexture = null;
+
+        this.backgroundMusic.dispose();
+        this.backgroundMusic = null;
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {

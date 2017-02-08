@@ -5,12 +5,14 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.save.BrokenSavedGameInfo;
 import com.jukusoft.libgdx.rpg.engine.save.SavedGameInfo;
@@ -44,6 +46,7 @@ public class LoadGameScreen extends BaseScreen {
     protected float mouseY = 0;
 
     protected Stage stage = null;
+    protected BitmapFont arialFont = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         //
@@ -60,6 +63,9 @@ public class LoadGameScreen extends BaseScreen {
         this.assetManager.load(BG_IMAGE_PATH, Texture.class);
         this.assetManager.load(MUSIC_PATH, Music.class);
         this.assetManager.load(BUTTON_BG_PATH, Texture.class);
+
+        this.arialFont = BitmapFontFactory
+            .createFont(AssetPathUtils.getFontPath("arial/arial.ttf"), 26, Color.WHITE);
 
         //wait while all assets was loaded
         this.assetManager.finishLoading();
@@ -126,6 +132,7 @@ public class LoadGameScreen extends BaseScreen {
 
         float startX = (game.getViewportWidth() / 2) - 200;
         float startY = 500;
+        float startYBackup = startY;
 
         //set camera matrix to shape renderer
         this.shapeRenderer.setProjectionMatrix(game.getUICamera().combined);
@@ -163,6 +170,19 @@ public class LoadGameScreen extends BaseScreen {
         shapeRenderer.end();
 
         batch.begin();
+
+        startY = startYBackup;
+
+        //render text
+        for (int i = 0; i < savedGameInfos.length; i++) {
+            SavedGameInfo gameInfo = savedGameInfos[i];
+
+            if (gameInfo != null) {
+                this.arialFont.draw(batch, "Name: " + gameInfo.getName(), startX + 20, startY + 80);
+
+                startY = startY - 120;
+            }
+        }
 
         //draw user interface
         //this.stage.draw();

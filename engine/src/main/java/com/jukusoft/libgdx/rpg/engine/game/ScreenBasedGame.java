@@ -1,6 +1,8 @@
 package com.jukusoft.libgdx.rpg.engine.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jukusoft.libgdx.rpg.engine.data.DefaultSharedData;
+import com.jukusoft.libgdx.rpg.engine.data.SharedData;
 import com.jukusoft.libgdx.rpg.engine.screen.IScreen;
 import com.jukusoft.libgdx.rpg.engine.screen.ScreenManager;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.DefaultScreenManager;
@@ -13,10 +15,16 @@ public abstract class ScreenBasedGame extends BaseGame {
 
     protected ScreenManager<IScreen> screenManager = null;
 
+    /**
+    *
+    */
+    protected SharedData sharedData = null;
+
     public ScreenBasedGame () {
         super();
 
         this.screenManager = new DefaultScreenManager(this);
+        this.sharedData = new DefaultSharedData();
     }
 
     @Override
@@ -53,7 +61,19 @@ public abstract class ScreenBasedGame extends BaseGame {
     protected abstract void onCreateScreens (ScreenManager<IScreen> screenManager);
 
     public ScreenManager<IScreen> getScreenManager () {
+        if (this.screenManager == null) {
+            throw new IllegalStateException("screen manager isnt initialized yet. Call constructor of ScreenBasedGame first!");
+        }
+
         return this.screenManager;
+    }
+
+    public SharedData getSharedData () {
+        if (this.sharedData == null) {
+            throw new IllegalStateException("shared data isnt inialized yet. Call constructor of ScreenBasedGame first!");
+        }
+
+        return this.sharedData;
     }
 
     protected void onDestroyGame () {

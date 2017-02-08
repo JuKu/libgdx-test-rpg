@@ -17,6 +17,7 @@ public class BrokenSavedGameInfo extends SavedGameInfo implements IBrokenSavedGa
 
     public void setName (String name) {
         this.name = name;
+        this.title = "Broken: " + name;
     }
 
 }

@@ -20,9 +20,11 @@ import com.jukusoft.libgdx.rpg.engine.save.SavedGameInstance;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.game.ui.LoadButton;
 import com.jukusoft.libgdx.rpg.game.ui.LoadEntityButton;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,11 +35,13 @@ public class LoadGameScreen extends BaseScreen {
     protected final String BG_IMAGE_PATH = AssetPathUtils.getWallpaperPath("ocean_sunset/ocean.png");
     protected final String MUSIC_PATH = AssetPathUtils.getMusicPath("EssentialGameAudiopack/Loops/Drum_Only_Loops/Ove_Melaa-DrumLoop_1_64BPM.mp3");
     protected final String BUTTON_BG_PATH = AssetPathUtils.getUIWidgetPath("loadbutton", "loadbutton.png");
+    protected final String BUTTON_HOVER_PATH = AssetPathUtils.getUIWidgetPath("loadbutton", "loadbutton_clicked.png");
 
     //assets
     protected Texture backgroundTexture = null;
     protected Music backgroundMusic = null;
     protected Texture buttonTexture = null;
+    protected Texture hoveredTexture = null;
 
     protected SavedGameInfo[] savedGameInfos = new SavedGameInfo[5];
     protected ShapeRenderer shapeRenderer = null;
@@ -47,6 +51,8 @@ public class LoadGameScreen extends BaseScreen {
 
     protected Stage stage = null;
     protected BitmapFont arialFont = null;
+
+    protected List<LoadButton> loadButtonList = new ArrayList<>();
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         //
@@ -63,6 +69,7 @@ public class LoadGameScreen extends BaseScreen {
         this.assetManager.load(BG_IMAGE_PATH, Texture.class);
         this.assetManager.load(MUSIC_PATH, Music.class);
         this.assetManager.load(BUTTON_BG_PATH, Texture.class);
+        this.assetManager.load(BUTTON_HOVER_PATH, Texture.class);
 
         this.arialFont = BitmapFontFactory
             .createFont(AssetPathUtils.getFontPath("arial/arial.ttf"), 26, Color.WHITE);
@@ -74,6 +81,7 @@ public class LoadGameScreen extends BaseScreen {
         this.backgroundTexture = this.assetManager.get(BG_IMAGE_PATH, Texture.class);
         this.backgroundMusic = this.assetManager.get(MUSIC_PATH, Music.class);
         this.buttonTexture = this.assetManager.get(BUTTON_BG_PATH, Texture.class);
+        this.hoveredTexture = this.assetManager.get(BUTTON_HOVER_PATH, Texture.class);
 
         //play background music
         this.backgroundMusic.setVolume(game.getVolume());
@@ -85,6 +93,9 @@ public class LoadGameScreen extends BaseScreen {
 
         int i = 0;
 
+        float startX = (game.getViewportWidth() / 2) - 200;
+        float startY = 500;
+
         for (SavedGameInfo gameInfo : savedGameInfoList) {
             //only 5 entries can be shown without scrollbar
             if (i >= 5) {
@@ -94,7 +105,14 @@ public class LoadGameScreen extends BaseScreen {
             /*LoadEntityButton button = new LoadEntityButton(this.backgroundTexture, gameInfo, this.uiSkin);
             this.verticalGroup.addActor(button);*/
 
-            this.savedGameInfos[i] = gameInfo;
+            //create new load button
+            LoadButton<SavedGameInfo> button = new LoadButton<>(this.buttonTexture, this.hoveredTexture, this.arialFont, gameInfo);
+            button.setPosition(startX, startY);
+            this.loadButtonList.add(button);
+
+            startY = startY - 120;
+
+            //this.savedGameInfos[i] = gameInfo;
 
             i++;
         }
@@ -120,6 +138,11 @@ public class LoadGameScreen extends BaseScreen {
         //get mouse coordinates
         this.mouseX = Gdx.input.getX();
         this.mouseY = game.getViewportHeight() - Gdx.input.getY();
+
+        //update buttons
+        for (LoadButton<SavedGameInfo> button : this.loadButtonList) {
+            button.update(game, time);
+        }
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
@@ -127,7 +150,7 @@ public class LoadGameScreen extends BaseScreen {
         batch.draw(this.backgroundTexture, 0, 0);
 
         //execute OpenGL render calls, because stage uses its own sprite batcher
-        batch.flush();
+        /*batch.flush();
         batch.end();
 
         float startX = (game.getViewportWidth() / 2) - 200;
@@ -182,6 +205,11 @@ public class LoadGameScreen extends BaseScreen {
 
                 startY = startY - 120;
             }
+        }*/
+
+        //draw buttons
+        for (LoadButton<SavedGameInfo> button : this.loadButtonList) {
+            button.draw(time, batch);
         }
 
         //draw user interface

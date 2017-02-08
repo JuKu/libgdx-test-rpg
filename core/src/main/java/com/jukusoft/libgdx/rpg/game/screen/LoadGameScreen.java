@@ -54,9 +54,6 @@ public class LoadGameScreen extends BaseScreen {
     protected Texture backButtonTexture = null;
     protected Texture backButtonHoveredTexture = null;
 
-    protected SavedGameInfo[] savedGameInfos = new SavedGameInfo[5];
-    protected ShapeRenderer shapeRenderer = null;
-
     protected float mouseX = 0;
     protected float mouseY = 0;
 
@@ -76,10 +73,10 @@ public class LoadGameScreen extends BaseScreen {
 
     @Override
     public void onResume () {
-        this.shapeRenderer = new ShapeRenderer();
-
         this.stage = new Stage();
         Gdx.input.setInputProcessor(this.stage);
+
+        System.out.println("onResume().");
 
         //load assets
         this.assetManager.load(BG_IMAGE_PATH, Texture.class);
@@ -94,7 +91,8 @@ public class LoadGameScreen extends BaseScreen {
             .createFont(AssetPathUtils.getFontPath("arial/arial.ttf"), 26, Color.WHITE);
 
         //wait while all assets was loaded
-        this.assetManager.finishLoading();
+        game.getAssetManager().finishLoading();
+        this.assetManager.finishLoadingAsset(BG_IMAGE_PATH);
 
         //get assets
         this.backgroundTexture = this.assetManager.get(BG_IMAGE_PATH, Texture.class);
@@ -104,6 +102,8 @@ public class LoadGameScreen extends BaseScreen {
         this.backButtonTexture = this.assetManager.get(BUTTON_BACK_BG_PATH, Texture.class);
         this.backButtonHoveredTexture = this.assetManager.get(BUTTON_BACK_HOVER_PATH, Texture.class);
         this.iconBackTexture = this.assetManager.get(ICON_BACK_PATH, Texture.class);
+
+        this.assetManager.finishLoading();
 
         //play background music
         this.backgroundMusic.setVolume(game.getVolume());
@@ -188,23 +188,20 @@ public class LoadGameScreen extends BaseScreen {
         this.backgroundMusic.stop();
 
         //free memory for assets
-        this.backgroundTexture.dispose();
-        this.backgroundTexture = null;
+        //this.backgroundTexture.dispose();
+        //this.backgroundTexture = null;
 
         this.backgroundMusic.dispose();
         this.backgroundMusic = null;
 
-        this.shapeRenderer.dispose();
-        this.shapeRenderer = null;
-
-        this.backButtonTexture.dispose();
+        /*this.backButtonTexture.dispose();
         this.backButtonTexture = null;
 
         this.backButtonHoveredTexture.dispose();
         this.backButtonHoveredTexture = null;
 
         this.iconBackTexture.dispose();
-        this.iconBackTexture = null;
+        this.iconBackTexture = null;*/
 
         //dispose all icon textures
         for (Map.Entry<String,Texture> entry : this.iconTextureMap.entrySet()) {
@@ -251,6 +248,16 @@ public class LoadGameScreen extends BaseScreen {
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
+        if (backgroundTexture == null) {
+            throw new NullPointerException("background texture is null.");
+        }
+
+        if (!backgroundTexture.isManaged()) {
+            throw new IllegalStateException("background texture isnt managed.");
+        }
+
+        batch.setProjectionMatrix(game.getUICamera().combined);
+
         //draw background image
         batch.draw(this.backgroundTexture, 0, 0);
 

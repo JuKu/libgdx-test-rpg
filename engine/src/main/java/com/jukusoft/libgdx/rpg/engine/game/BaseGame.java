@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.settings.GameSettings;
 import com.jukusoft.libgdx.rpg.engine.settings.IniGameSettings;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.version.GameVersion;
 import com.jukusoft.libgdx.rpg.engine.window.ResizeListener;
 
 import java.io.File;
@@ -64,6 +65,11 @@ public abstract class BaseGame extends ApplicationAdapter {
     * map with all game settings
     */
     protected Map<String,GameSettings> settingsMap = new ConcurrentHashMap<>();
+
+    /**
+    * version information
+    */
+    protected GameVersion version = null;
 
     @Override
     public void resize(final int width, final int height) {
@@ -196,6 +202,32 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     public String getLang () {
         return this.getSettings().getOrDefault("Game", "lang", "en");
+    }
+
+    /**
+    * get version information
+     *
+     * @return version information
+    */
+    public GameVersion getVersion () {
+        if (this.version == null) {
+            throw new IllegalStateException("Cannot get version, you have to set version information with method setVersion() first.");
+        }
+
+        return this.version;
+    }
+
+    /**
+    * set version information
+     *
+     * @param version version information
+    */
+    public void setVersion (GameVersion version) {
+        if (version == null) {
+            throw new NullPointerException("version is null.");
+        }
+
+        this.version = version;
     }
 
     public int getViewportWidth () {

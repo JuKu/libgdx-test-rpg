@@ -67,7 +67,7 @@ public class DefaultSavedGameManager implements SavedGameManager {
                 String path = file.getAbsolutePath();
 
                 if (path.endsWith("/")) {
-                    path = path.substring(0, -1);
+                    path = path.substring(0, path.length() - 1);
                 }
 
                 String[] strArray = path.replace("\\", "/").split("/");
@@ -80,7 +80,7 @@ public class DefaultSavedGameManager implements SavedGameManager {
         return list;
     }
 
-    @Override public <T extends SavedGameInfo> List<T> listSavedGames(Class<T> cls, Class<T> brokenGameInfoClass) {
+    @Override public <T extends SavedGameInfo,V extends T> List<T> listSavedGames(Class<T> cls, Class<V> brokenGameInfoClass) {
         //get info loader
         SavedGameInfoLoader<T> loader = this.getInfoLoader(cls);
 

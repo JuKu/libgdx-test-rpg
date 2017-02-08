@@ -19,7 +19,7 @@ public interface SavedGameManager {
      *
      * @return list with information for every saved game
      */
-    public <T extends SavedGameInfo> List<T> listSavedGames(Class<T> cls, Class<T> brokenGameInfoClass);
+    public <T extends SavedGameInfo,V extends T> List<T> listSavedGames(Class<T> cls, Class<V> brokenGameInfoClass);
 
     public <T extends SavedGameInfo> SavedGameInfoLoader<T> getInfoLoader (Class<T> cls);
 

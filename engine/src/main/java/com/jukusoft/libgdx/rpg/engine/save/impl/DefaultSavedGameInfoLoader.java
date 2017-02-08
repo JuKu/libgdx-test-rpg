@@ -22,7 +22,7 @@ public class DefaultSavedGameInfoLoader implements SavedGameInfoLoader<SavedGame
             saveDir = saveDir + "/";
         }
 
-        String savePath = saveDir.substring(0, -1);
+        String savePath = saveDir.substring(0, saveDir.length() - 1);
         String[] strArray = savePath.split("/");
         String saveName = strArray[strArray.length - 1];
 

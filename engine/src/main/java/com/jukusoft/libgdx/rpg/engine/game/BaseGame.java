@@ -89,6 +89,9 @@ public abstract class BaseGame extends ApplicationAdapter {
         //create sprite batcher
         this.batch = new SpriteBatch();
 
+        this.VIEWPORT_WIDTH = Gdx.graphics.getWidth();
+        this.VIEWPORT_HEIGHT = Gdx.graphics.getHeight();
+
         //initialize camera
         this.camera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         this.camera.translate(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);

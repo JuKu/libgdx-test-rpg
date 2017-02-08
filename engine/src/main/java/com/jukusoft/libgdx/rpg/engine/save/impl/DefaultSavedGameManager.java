@@ -2,10 +2,7 @@ package com.jukusoft.libgdx.rpg.engine.save.impl;
 
 import com.jukusoft.libgdx.rpg.engine.exception.NoGameLoaderFoundException;
 import com.jukusoft.libgdx.rpg.engine.exception.NoGameSaverFoundException;
-import com.jukusoft.libgdx.rpg.engine.save.GameLoader;
-import com.jukusoft.libgdx.rpg.engine.save.GameSaver;
-import com.jukusoft.libgdx.rpg.engine.save.SavedGameInstance;
-import com.jukusoft.libgdx.rpg.engine.save.SavedGameManager;
+import com.jukusoft.libgdx.rpg.engine.save.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,6 +28,11 @@ public class DefaultSavedGameManager implements SavedGameManager {
     * map with all available game savers
     */
     protected Map<Class,GameSaver> gameSaverMap = new ConcurrentHashMap<>();
+
+    /**
+    * map with all available game info loaders
+    */
+    protected Map<Class,SavedGameInfoLoader> infoLoaderMap = new ConcurrentHashMap<>();
 
     /**
     * default constructor
@@ -65,6 +67,28 @@ public class DefaultSavedGameManager implements SavedGameManager {
         }
 
         return list;
+    }
+
+    @Override public <T extends SavedGameInfo> List<T> listSavedGames(Class<T> cls) {
+        return null;
+    }
+
+    @Override public <T extends SavedGameInfo> SavedGameInfoLoader<T> getInfoLoader(Class<T> cls) {
+        SavedGameInfoLoader<T> loader = this.infoLoaderMap.get(cls);
+
+        if (loader == null) {
+            throw new NoGameLoaderFoundException("Cound not found any game info loader for class: " + cls.getCanonicalName());
+        }
+
+        return loader;
+    }
+
+    @Override public <T extends SavedGameInfo> void registerInfoLoader(SavedGameInfoLoader<T> loader, Class<T> cls) {
+        this.infoLoaderMap.put(cls, loader);
+    }
+
+    @Override public <T extends SavedGameInfo> void removeInfoLoader(Class<T> cls) {
+        this.infoLoaderMap.remove(cls);
     }
 
     @Override public <T extends SavedGameInstance> GameLoader<T> getGameLoader(Class<T> cls) {

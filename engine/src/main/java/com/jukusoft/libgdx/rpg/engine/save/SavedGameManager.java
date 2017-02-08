@@ -8,9 +8,24 @@ import java.util.List;
 public interface SavedGameManager {
 
     /**
-    * list all saved games
+    * list all saved game names
+     *
+     * @return list with names of all saved games
     */
     public List<String> listSavedGameNames ();
+
+    /**
+     * list all saved games
+     *
+     * @return list with information for every saved game
+     */
+    public <T extends SavedGameInfo> List<T> listSavedGames(Class<T> cls);
+
+    public <T extends SavedGameInfo> SavedGameInfoLoader<T> getInfoLoader (Class<T> cls);
+
+    public <T extends SavedGameInfo> void registerInfoLoader (SavedGameInfoLoader<T> loader, Class<T> cls);
+
+    public <T extends SavedGameInfo> void removeInfoLoader (Class<T> cls);
 
     public <T extends SavedGameInstance> GameLoader<T> getGameLoader (Class<T> cls);
 

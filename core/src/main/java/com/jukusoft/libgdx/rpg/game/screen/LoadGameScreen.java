@@ -22,6 +22,7 @@ import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
+import com.jukusoft.libgdx.rpg.game.ui.ImageButton;
 import com.jukusoft.libgdx.rpg.game.ui.LoadButton;
 import com.jukusoft.libgdx.rpg.game.ui.LoadEntityButton;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
@@ -41,12 +42,17 @@ public class LoadGameScreen extends BaseScreen {
     protected final String MUSIC_PATH = AssetPathUtils.getMusicPath("EssentialGameAudiopack/Loops/Drum_Only_Loops/Ove_Melaa-DrumLoop_1_64BPM.mp3");
     protected final String BUTTON_BG_PATH = AssetPathUtils.getUIWidgetPath("loadbutton", "loadbutton.png");
     protected final String BUTTON_HOVER_PATH = AssetPathUtils.getUIWidgetPath("loadbutton", "loadbutton_clicked.png");
+    protected final String BUTTON_BACK_BG_PATH = AssetPathUtils.getUIWidgetPath("backbutton", "backbutton.png");
+    protected final String BUTTON_BACK_HOVER_PATH = AssetPathUtils.getUIWidgetPath("backbutton", "backbutton_hovered.png");
+    protected final String ICON_BACK_PATH = AssetPathUtils.getImagePath("icons/back/back_64.png");
 
     //assets
     protected Texture backgroundTexture = null;
     protected Music backgroundMusic = null;
     protected Texture buttonTexture = null;
     protected Texture hoveredTexture = null;
+    protected Texture backButtonTexture = null;
+    protected Texture backButtonHoveredTexture = null;
 
     protected SavedGameInfo[] savedGameInfos = new SavedGameInfo[5];
     protected ShapeRenderer shapeRenderer = null;
@@ -60,6 +66,9 @@ public class LoadGameScreen extends BaseScreen {
     protected Map<String,Texture> iconTextureMap = new HashMap<>();
 
     protected List<LoadButton> loadButtonList = new ArrayList<>();
+
+    protected ImageButton backButton = null;
+    protected Texture iconBackTexture = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         //
@@ -77,6 +86,9 @@ public class LoadGameScreen extends BaseScreen {
         this.assetManager.load(MUSIC_PATH, Music.class);
         this.assetManager.load(BUTTON_BG_PATH, Texture.class);
         this.assetManager.load(BUTTON_HOVER_PATH, Texture.class);
+        this.assetManager.load(BUTTON_BACK_BG_PATH, Texture.class);
+        this.assetManager.load(BUTTON_BACK_HOVER_PATH, Texture.class);
+        this.assetManager.load(ICON_BACK_PATH, Texture.class);
 
         this.arialFont = BitmapFontFactory
             .createFont(AssetPathUtils.getFontPath("arial/arial.ttf"), 26, Color.WHITE);
@@ -89,6 +101,9 @@ public class LoadGameScreen extends BaseScreen {
         this.backgroundMusic = this.assetManager.get(MUSIC_PATH, Music.class);
         this.buttonTexture = this.assetManager.get(BUTTON_BG_PATH, Texture.class);
         this.hoveredTexture = this.assetManager.get(BUTTON_HOVER_PATH, Texture.class);
+        this.backButtonTexture = this.assetManager.get(BUTTON_BACK_BG_PATH, Texture.class);
+        this.backButtonHoveredTexture = this.assetManager.get(BUTTON_BACK_HOVER_PATH, Texture.class);
+        this.iconBackTexture = this.assetManager.get(ICON_BACK_PATH, Texture.class);
 
         //play background music
         this.backgroundMusic.setVolume(game.getVolume());
@@ -157,6 +172,14 @@ public class LoadGameScreen extends BaseScreen {
 
             i++;
         }
+
+        this.backButton = new ImageButton(this.backButtonTexture, this.backButtonHoveredTexture, this.arialFont, "BACK");
+        this.backButton.setPosition(50, 50);
+        this.backButton.setIcon(this.iconBackTexture);
+        this.backButton.setClickListener(() -> {
+            //leave and enter new game state
+            game.getScreenManager().leaveAllAndEnter("menu");
+        });
     }
 
     @Override
@@ -173,6 +196,15 @@ public class LoadGameScreen extends BaseScreen {
 
         this.shapeRenderer.dispose();
         this.shapeRenderer = null;
+
+        this.backButtonTexture.dispose();
+        this.backButtonTexture = null;
+
+        this.backButtonHoveredTexture.dispose();
+        this.backButtonHoveredTexture = null;
+
+        this.iconBackTexture.dispose();
+        this.iconBackTexture = null;
 
         //dispose all icon textures
         for (Map.Entry<String,Texture> entry : this.iconTextureMap.entrySet()) {
@@ -214,74 +246,21 @@ public class LoadGameScreen extends BaseScreen {
         for (LoadButton<SavedGameInfo> button : this.loadButtonList) {
             button.update(game, time);
         }
+
+        this.backButton.update(game, time);
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
         //draw background image
         batch.draw(this.backgroundTexture, 0, 0);
 
-        //execute OpenGL render calls, because stage uses its own sprite batcher
-        /*batch.flush();
-        batch.end();
-
-        float startX = (game.getViewportWidth() / 2) - 200;
-        float startY = 500;
-        float startYBackup = startY;
-
-        //set camera matrix to shape renderer
-        this.shapeRenderer.setProjectionMatrix(game.getUICamera().combined);
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
-        for (int i = 0; i < savedGameInfos.length; i++) {
-            SavedGameInfo gameInfo = savedGameInfos[i];
-
-            if (gameInfo != null) {
-                float width = 400;
-                float height = 100;
-
-                boolean hovered = false;
-
-                if (mouseX >= startX && mouseX <= (startX + width)) {
-                    if (mouseY >= startY && mouseY <= (startY + height)) {
-                        hovered = true;
-                    }
-                }
-
-                if (hovered) {
-                    shapeRenderer.setColor(Color.GREEN);
-                } else {
-                    shapeRenderer.setColor(new Color(0x0000ff88));
-                }
-
-                //draw rectangle
-                shapeRenderer.rect(startX, startY, width, height);
-
-                startY = startY - 120;
-            }
-        }
-
-        shapeRenderer.end();
-
-        batch.begin();
-
-        startY = startYBackup;
-
-        //render text
-        for (int i = 0; i < savedGameInfos.length; i++) {
-            SavedGameInfo gameInfo = savedGameInfos[i];
-
-            if (gameInfo != null) {
-                this.arialFont.draw(batch, "Name: " + gameInfo.getName(), startX + 20, startY + 80);
-
-                startY = startY - 120;
-            }
-        }*/
-
         //draw buttons
         for (LoadButton<SavedGameInfo> button : this.loadButtonList) {
             button.draw(time, batch);
         }
+
+        //draw back button
+        this.backButton.draw(time, batch);
 
         //draw user interface
         //this.stage.draw();

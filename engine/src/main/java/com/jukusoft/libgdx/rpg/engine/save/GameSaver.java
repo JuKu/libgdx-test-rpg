@@ -1,10 +1,10 @@
-package com.jukusoft.libgdx.rpg.game.save;
+package com.jukusoft.libgdx.rpg.engine.save;
 
 /**
  * Created by Justin on 08.02.2017.
  */
 @FunctionalInterface
-public interface GameSaver {
+public interface GameSaver<T extends SavedGameInstance> {
 
     /**
     * save game
@@ -12,6 +12,6 @@ public interface GameSaver {
      * @param savePath path to saved game
      * @param savedGameInstance instance of game
     */
-    public void save (final String savePath, SavedGameInstance savedGameInstance);
+    public void save (final String savePath, T savedGameInstance);
 
 }

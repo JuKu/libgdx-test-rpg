@@ -1,9 +1,9 @@
-package com.jukusoft.libgdx.rpg.game.save;
+package com.jukusoft.libgdx.rpg.engine.save;
 
 /**
  * Created by Justin on 08.02.2017.
  */
-public class SavedGameInstance {
+public abstract class SavedGameInstance {
 
     protected String name = null;
 
@@ -14,7 +14,7 @@ public class SavedGameInstance {
         //
     }
 
-    public static final SavedGameInstance createNewGame (final String saveName) {
+    /*public static final SavedGameInstance createNewGame (final String saveName) {
         SavedGameInstance game = new SavedGameInstance();
 
         return game;
@@ -24,6 +24,6 @@ public class SavedGameInstance {
         SavedGameInstance game = new SavedGameInstance();
 
         return game;
-    }
+    }*/
 
 }

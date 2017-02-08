@@ -19,6 +19,9 @@ $RECYCLE.BIN/
 
 *.save
 
+data/save
+data/save/*
+
 !.png
 !*.png
 !*.xcf

@@ -5,6 +5,7 @@ package com.jukusoft.libgdx.rpg.game.shared;
  */
 public class SharedDataConst {
 
-    public static final String SAVE_NAME = "saveName";
+    public static final String SAVE_PATH = "save_path";
+    public static final String CHARACTER_NAME = "character_name";
 
 }

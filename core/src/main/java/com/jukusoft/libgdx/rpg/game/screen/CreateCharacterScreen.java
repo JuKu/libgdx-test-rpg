@@ -16,6 +16,7 @@ import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
 import java.io.File;
@@ -198,6 +199,10 @@ public class CreateCharacterScreen extends BaseScreen {
         //create directory
         File file = new File(AssetPathUtils.getSavePath(characterName));
         file.mkdirs();
+
+        //save character name
+        game.getSharedData().put(SharedDataConst.CHARACTER_NAME, characterName);
+        game.getSharedData().put(SharedDataConst.SAVE_PATH, AssetPathUtils.getSavePath(characterName));
 
         game.getScreenManager().leaveAllAndEnter("intro_story");
     }

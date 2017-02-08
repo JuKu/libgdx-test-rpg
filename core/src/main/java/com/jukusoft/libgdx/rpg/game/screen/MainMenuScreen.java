@@ -97,6 +97,12 @@ public class MainMenuScreen extends BaseScreen {
         this.loadButton.setPosition(startX, 320);
         this.loadButton.setWidth(400);
         this.loadButton.setHeight(50);
+        this.loadButton.addListener(new ClickListener() {
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                game.getScreenManager().leaveAllAndEnter("load_game");
+            }
+        });
         this.uiStage.addActor(this.loadButton);
 
         //create credits button

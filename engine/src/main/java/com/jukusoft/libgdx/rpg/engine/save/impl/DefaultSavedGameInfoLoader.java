@@ -5,6 +5,7 @@ import com.jukusoft.libgdx.rpg.engine.exception.InvaildeSavedGameException;
 import com.jukusoft.libgdx.rpg.engine.save.SavedGameInfo;
 import com.jukusoft.libgdx.rpg.engine.save.SavedGameInfoLoader;
 import com.jukusoft.libgdx.rpg.engine.utils.FileUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -56,27 +57,32 @@ public class DefaultSavedGameInfoLoader implements SavedGameInfoLoader<SavedGame
         //create new instance of saved game info
         SavedGameInfo gameInfo = new SavedGameInfo(new File(saveDir), saveName);
 
-        //parse info.json
+        try {
+            //parse info.json
 
-        //get version of game client which has saved this game
-        int gameVersion = json.getInt("game_version");
-        gameInfo.setGameVersion(gameVersion);
+            //get version of game client which has saved this game
+            int gameVersion = json.getInt("game_version");
+            gameInfo.setGameVersion(gameVersion);
 
-        //get character name
-        String characterName = json.getString("character_name");
-        gameInfo.setCharacterName(characterName);
+            //get character name
+            String characterName = json.getString("character_name");
+            gameInfo.setCharacterName(characterName);
 
-        //get game title
-        String title = json.getString("title");
-        gameInfo.setTitle(title);
+            //get game title
+            String title = json.getString("title");
+            gameInfo.setTitle(title);
 
-        //get game icon path
-        String iconPath = json.getString("icon_path");
-        gameInfo.setGameIcon(iconPath);
+            //get game icon path
+            String iconPath = json.getString("icon_path");
+            gameInfo.setGameIcon(iconPath);
 
-        //get last played timestamp
-        long lastPlayedTimestamp = json.getLong("last_played_timestamp");
-        gameInfo.setLastPlayedTimestamp(lastPlayedTimestamp);
+            //get last played timestamp
+            long lastPlayedTimestamp = json.getLong("last_played_timestamp");
+            gameInfo.setLastPlayedTimestamp(lastPlayedTimestamp);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            throw new InvaildeSavedGameException("JSONException while loading game info file '" + infoFile.getAbsolutePath() + "': " + e.getLocalizedMessage());
+        }
 
         //return instance of game info
         return gameInfo;

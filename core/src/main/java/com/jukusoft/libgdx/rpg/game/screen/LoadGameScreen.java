@@ -76,8 +76,6 @@ public class LoadGameScreen extends BaseScreen {
         this.stage = new Stage();
         Gdx.input.setInputProcessor(this.stage);
 
-        System.out.println("onResume().");
-
         //load assets
         this.assetManager.load(BG_IMAGE_PATH, Texture.class);
         this.assetManager.load(MUSIC_PATH, Music.class);

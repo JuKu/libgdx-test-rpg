@@ -5,6 +5,8 @@ package com.jukusoft.libgdx.rpg.engine.version;
  */
 public enum VersionChannel {
 
+    UNKNOWN_CHANNEL,
+
     PRE_ALPHA,
 
     ALPHA,

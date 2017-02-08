@@ -20,9 +20,11 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void onResume () {
-        //add hud screen overlay
-        this.characterData = game.getSharedData().get("character_data", CharacterData.class);
+        this.characterData = new CharacterData();
 
+        game.getSharedData().put("character_data", this.characterData);
+
+        //add hud screen overlay
         game.getScreenManager().push("hud");
     }
 

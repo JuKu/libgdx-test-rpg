@@ -3,8 +3,11 @@ package com.jukusoft.libgdx.rpg.engine.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.jukusoft.libgdx.rpg.engine.input.InputManager;
 import com.jukusoft.libgdx.rpg.engine.input.impl.DefaultInputManager;
 import com.jukusoft.libgdx.rpg.engine.save.SavedGameManager;
@@ -124,6 +127,9 @@ public abstract class BaseGame extends ApplicationAdapter {
 
         //create new input manager
         this.inputManager = new DefaultInputManager();
+
+        //add loader for tmx maps
+        assetManager.setLoader(TiledMap.class, new TmxMapLoader(new AbsoluteFileHandleResolver()));
 
         try {
             this.initGame();

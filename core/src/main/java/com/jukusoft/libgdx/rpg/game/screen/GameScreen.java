@@ -76,7 +76,7 @@ public class GameScreen extends BaseScreen {
         SectorCoord coord = this.characterData.getCurrentSector();
 
         //create game world
-        this.gameWorld = new GameWorld(coord, this.testTexture);
+        this.gameWorld = new GameWorld(game, coord, this.testTexture);
 
         //set correct input processor
         game.getInputManager().setInputProcessor();
@@ -110,6 +110,14 @@ public class GameScreen extends BaseScreen {
 
             //move skybox
             gameWorld.getSkyBox().translate(5, 0);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.K)) {
+            lightingSystem.setLightingEnabled(false);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.L)) {
+            lightingSystem.setLightingEnabled(true);
         }
 
         //update lighting system

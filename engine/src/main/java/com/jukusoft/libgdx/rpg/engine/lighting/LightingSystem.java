@@ -91,6 +91,11 @@ public class LightingSystem implements LightingEnvironment {
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {
+        if (!isLightingEnabled()) {
+            //because lighting isnt enabled, we dont have to update lighting system
+            return;
+        }
+
         float dt = time.getDeltaTime();
 
         //calculate zAngle

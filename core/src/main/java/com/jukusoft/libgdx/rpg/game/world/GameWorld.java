@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.jukusoft.libgdx.rpg.engine.exception.MapNotFoundException;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.skybox.SkyBox;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -60,10 +61,13 @@ public class GameWorld {
     protected Map<SectorCoord,GameWorldMap> mapCache = new ConcurrentHashMap<>();
 
     protected List<SectorChangedListener> sectorChangedListenerList = new ArrayList<>();
+    protected BaseGame game = null;
 
     //https://github.com/libgdx/libgdx/wiki/Tile-maps
 
-    public GameWorld (SectorCoord coord, Texture texture) {
+    public GameWorld (BaseGame game, SectorCoord coord, Texture texture) {
+        this.game = game;
+
         //initialize shader programs
         try {
             this.initShaders();
@@ -113,7 +117,13 @@ public class GameWorld {
         //check, if map is cached
         if (map == null) {
             //load map
-            map = new GameWorldMap(coord);
+            map = new GameWorldMap(this.game, coord);
+
+            try {
+                map.load();
+            } catch (MapNotFoundException e) {
+                e.printStackTrace();
+            }
 
             //add map to cache
             this.mapCache.put(coord, map);

@@ -129,10 +129,12 @@ public class GameScreen extends BaseScreen {
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.K)) {
+            //disable lighting
             lightingSystem.setLightingEnabled(false);
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.L)) {
+            //enable lighting
             lightingSystem.setLightingEnabled(true);
         }
 

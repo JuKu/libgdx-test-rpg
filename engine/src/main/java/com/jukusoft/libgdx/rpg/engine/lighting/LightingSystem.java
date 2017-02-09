@@ -15,18 +15,20 @@ import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.window.ResizeListener;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Justin on 09.02.2017.
  */
-public class LightingSystem {
+public class LightingSystem implements LightingEnvironment {
 
     protected FrameBuffer fbo = null;
     protected ShaderProgram defaultShader = null;
 
     //shader values
-    public static final float ambientIntensity = .7f;
-    public static final Vector3 ambientColor = new Vector3(0.3f, 0.3f, 0.7f);
+    public float ambientIntensity = .7f;
+    public Vector3 ambientColor = new Vector3(0.3f, 0.3f, 0.7f);
 
     //http://www.alcove-games.com/opengl-es-2-tutorials/lightmap-shader-fire-effect-glsl/
 
@@ -39,6 +41,8 @@ public class LightingSystem {
 
     //used for drawing
     private boolean lightOscillate = false;
+
+    protected List<AmbientLightChangedListener> ambientLightChangedListenerList = new ArrayList<>();
 
     public LightingSystem (BaseGame game, int width, int height) {
         //create new frame buffer
@@ -120,4 +124,31 @@ public class LightingSystem {
         this.fbo = null;
     }
 
+    @Override public void setAmbientColor(float r, float g, float b) {
+        this.ambientColor.x = r;
+        this.ambientColor.y = g;
+        this.ambientColor.z = b;
+
+        this.notifyAmbientLightChanged();
+    }
+
+    @Override public void setAmbientIntensity(float ambientIntensity) {
+        this.ambientIntensity = ambientIntensity;
+
+        this.notifyAmbientLightChanged();
+    }
+
+    @Override public void addAmbientLightListener(AmbientLightChangedListener listener) {
+        this.ambientLightChangedListenerList.add(listener);
+    }
+
+    @Override public void removeAmbientLightListener(AmbientLightChangedListener listener) {
+        this.ambientLightChangedListenerList.remove(listener);
+    }
+
+    protected void notifyAmbientLightChanged () {
+        this.ambientLightChangedListenerList.stream().forEach(listener -> {
+            listener.changedAmbientLight(ambientColor.x, ambientColor.y, ambientColor.z, ambientIntensity);
+        });
+    }
 }

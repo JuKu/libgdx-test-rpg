@@ -74,14 +74,14 @@ public class HUDOverlayScreen extends BaseScreen {
 
         //create new widget group for health bar
         this.healthBar = new FilledIconBar(this.heartTexture, this.font);
-        this.healthBar.setPosition(game.getViewportWidth() - 240, game.getViewportHeight() - 106);
+        this.healthBar.setPosition(game.getViewportWidth() - 540, game.getViewportHeight() - /*106*/60);
         this.healthBar.setMaxValue(this.characterData.getMaxHealth());
         this.healthBar.setValue(this.characterData.getHealth());
         this.hud.addWidget(this.healthBar);
 
         //create new mana bar
         this.manaBar = new FilledIconBar(this.diamondTexture, this.font);
-        this.manaBar.setPosition(game.getViewportWidth() - 240, game.getViewportHeight() - 156);
+        this.manaBar.setPosition(game.getViewportWidth() - 680, game.getViewportHeight() - /*156*/60);
         this.manaBar.setMaxValue(this.characterData.getMaxMana());
         this.manaBar.setValue(this.characterData.getMana());
         this.hud.addWidget(this.manaBar);

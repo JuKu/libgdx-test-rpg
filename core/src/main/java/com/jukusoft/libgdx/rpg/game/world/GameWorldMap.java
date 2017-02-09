@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.jukusoft.libgdx.rpg.engine.exception.MapNotFoundException;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -32,6 +33,9 @@ public class GameWorldMap extends BaseMap {
 
     protected static TmxMapLoader mapLoader = null;
     protected BaseGame game = null;
+
+    //map renderer
+    OrthogonalTiledMapRenderer mapRenderer = null;
 
     public GameWorldMap (BaseGame game, SectorCoord coord) {
         this.game = game;
@@ -64,6 +68,10 @@ public class GameWorldMap extends BaseMap {
         this.tiledMap = new TmxMapLoader(new AbsoluteFileHandleResolver()).load(this.mapPath);
 
         System.out.println("tmx map loaded for " + getSectorCoord() + ", tmx map: " + this.mapPath);
+
+        //create map renderer (every map needs its own renderer)
+        float unitScale = 1f;//1 / 32f;
+        this.mapRenderer = new OrthogonalTiledMapRenderer(this.tiledMap, unitScale);
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {
@@ -71,11 +79,22 @@ public class GameWorldMap extends BaseMap {
     }
 
     public void draw (GameTime time, Camera camera, SpriteBatch batch) {
-        //
+        System.out.println("draw map.");
+
+        float offsetX = getX() - game.getCamera().position.x;
+        float offsetY = getY() - game.getCamera().position.y;
+        float width = getWidthInPixels() - offsetX;
+        float height = getHeightInPixels() - offsetY;
+
+        //set projection matrix
+        this.mapRenderer.setView(game.getCamera().combined, getX(), getY(), width, height);
+
+        //TODO: render only specific layers which arent water
+        this.mapRenderer.render();
     }
 
     public void drawWater (GameTime time, Camera camera, SpriteBatch batch) {
-        //
+        //TODO: render layers with water
     }
 
     public SectorCoord getSectorCoord () {

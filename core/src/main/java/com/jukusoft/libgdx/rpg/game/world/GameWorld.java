@@ -132,6 +132,7 @@ public class GameWorld {
         //check, if map is near current map
         if (isMapNearCurrent(coord)) {
             System.out.println("load new visible map: " + coord);
+            this.visibleMaps.add(map);
         }
     }
 
@@ -153,6 +154,8 @@ public class GameWorld {
     public void cleanUpVisibleMapCache () {
         for (GameWorldMap map : this.visibleMaps) {
             if (!this.isMapNearCurrent(map.getSectorCoord())) {
+                System.out.println("cleanUp map: " + map.getSectorCoord());
+
                 //remove map from cache
                 this.visibleMaps.remove(map);
                 this.mapCache.remove(map.getSectorCoord());
@@ -204,6 +207,7 @@ public class GameWorld {
         }
 
         batch.setProjectionMatrix(camera.combined);
+        batch.setShader(this.currentShader);
 
         //render all maps which are visible
         this.visibleMaps.stream().forEach(map -> {

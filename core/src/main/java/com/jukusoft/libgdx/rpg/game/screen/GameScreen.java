@@ -147,10 +147,10 @@ public class GameScreen extends BaseScreen {
         //this is because our default and ambiant shader dont use multi texturing...
         //youc can basically bind anything, it doesnt matter
 
+        batch.draw(testTexture, 0, 0);
+
         //draw game world
         this.gameWorld.draw(time, game.getCamera(), batch);
-
-        batch.draw(testTexture, 0, 0);
 
         //draw lightmap (only for testing purposes)
         //batch.draw(lightingSystem.getFBO().getColorBufferTexture(), 0, 0);

@@ -2,6 +2,7 @@ package com.jukusoft.libgdx.rpg.game.world;
 
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
@@ -38,12 +39,14 @@ public class GameWorld {
     protected ShaderProgram defaultShader = null;
 
     //water animation
-    private float					amplitudeWave = 0.1f;//0.1f;
-    private float					angleWave = 0.0f;
-    private float					angleWaveSpeed = 1.0f;//1.0f;
-    public static final float 		PI2 = 3.1415926535897932384626433832795f * 2.0f;
+    private float amplitudeWave = 0.1f;//0.1f;
+    private float angleWave = 0.0f;
+    private float angleWaveSpeed = 1.0f;//1.0f;
+    public static final float PI2 = 3.1415926535897932384626433832795f * 2.0f;
 
     protected Texture testTexture = null;
+
+    protected volatile boolean animateWater = false;
 
     public GameWorld (Texture texture) {
         //initialize shader programs
@@ -115,9 +118,12 @@ public class GameWorld {
         //first draw water
         this.drawWater(time, camera, batch);
 
+        batch.end();
+
         //set default shader
         batch.setProjectionMatrix(camera.combined);
         batch.setShader(this.defaultShader);
+        batch.begin();
 
         //render all maps which are visible
         this.visibleMaps.stream().forEach(map -> {
@@ -127,6 +133,15 @@ public class GameWorld {
     }
 
     protected void drawWater (GameTime time, Camera camera, SpriteBatch batch) {
+        if (!animateWater) {
+            //draw water layer of maps
+            this.visibleMaps.stream().forEach(map -> {
+                map.drawWater(time, camera, batch);
+            });
+
+            return;
+        }
+
         /**
         *  special thanks to the author of this tutorial:
          *
@@ -143,11 +158,11 @@ public class GameWorld {
         while(angleWave > PI2)
             angleWave -= PI2;
 
-        System.out.println("================");
+        /*System.out.println("================");
         System.out.println("Delta: " + dt);
         System.out.println("angleWaveSpeed: " + angleWaveSpeed);
         System.out.println("angleWave: " + angleWave);
-        System.out.println("amplitudeWave: " + amplitudeWave);
+        System.out.println("amplitudeWave: " + amplitudeWave);*/
 
         //feed the shader with the new data
         waterShader.begin();
@@ -155,6 +170,7 @@ public class GameWorld {
         waterShader.end();
 
         //render the first layer (the water) using our special vertex shader
+        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.setProjectionMatrix(camera.combined);
         batch.setShader(this.waterShader);
         //batch.begin();
@@ -164,7 +180,7 @@ public class GameWorld {
             map.drawWater(time, camera, batch);
         });
 
-        batch.draw(testTexture, 400, 400);
+        //batch.draw(testTexture, 0, 0);
 
         //tilemap.render(batch, 0, dt);
         batch.flush();
@@ -176,6 +192,10 @@ public class GameWorld {
 
         this.defaultShader.dispose();
         this.defaultShader = null;
+    }
+
+    public void setAnimateWater (boolean flag) {
+        this.animateWater = flag;
     }
 
 }

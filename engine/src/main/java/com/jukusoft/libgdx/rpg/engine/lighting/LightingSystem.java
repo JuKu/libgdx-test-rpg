@@ -83,9 +83,18 @@ public class LightingSystem implements LightingEnvironment {
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {
+        float dt = time.getDeltaTime();
+
+        //calculate zAngle
+        zAngle += dt * zSpeed;
+        while(zAngle > PI2)
+            zAngle -= PI2;
+
+        float lightSize = lightOscillate ? (4.75f + 0.25f * (float) Math.sin(zAngle) + .2f * MathUtils.random()) : 5.0f;
+
         //update lightings
         this.visibleLightings.stream().forEach(lighting -> {
-            lighting.update(game, time);
+            lighting.update(game, lightSize, zAngle, time);
         });
     }
 
@@ -118,15 +127,21 @@ public class LightingSystem implements LightingEnvironment {
         if (wasDrawing) {
             batch.begin();
         }
+
+        //after drawing instead of using shaders, you can also use shading:
+        //batch.setBlendFunction(GL20.GL_DST_COLOR, GL20.GL_SRC_ALPHA);
+        //theLightSprite.draw(batch, parentAlpha);
+        //batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        //see also: http://stackoverflow.com/questions/21278229/libgdx-light-without-box2d
     }
 
     protected void drawLights (GameTime time, SpriteBatch batch) {
-        float lightSize = lightOscillate ? (4.75f + 0.25f * (float) Math.sin(zAngle) + .2f * MathUtils.random()) : 5.0f;
+        //float lightSize = lightOscillate ? (4.75f + 0.25f * (float) Math.sin(zAngle) + .2f * MathUtils.random()) : 5.0f;
         //batch.draw(light, tilemap.campFirePosition.x - lightSize*0.5f + 0.5f,tilemap.campFirePosition.y + 0.5f - lightSize*0.5f, lightSize, lightSize);
 
         //draw lightings
         this.visibleLightings.stream().forEach(lighting -> {
-            lighting.draw(time, lightSize, batch);
+            lighting.draw(time, batch);
         });
     }
 

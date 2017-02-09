@@ -9,9 +9,9 @@ import com.jukusoft.libgdx.rpg.engine.time.GameTime;
  */
 public interface Lighting {
 
-    public void update (BaseGame game, GameTime time);
+    public void update (BaseGame game, float lightSize, float zAngle, GameTime time);
 
-    public void draw (GameTime time, float lightSize, SpriteBatch batch);
+    public void draw (GameTime time, SpriteBatch batch);
 
     public float getX ();
 

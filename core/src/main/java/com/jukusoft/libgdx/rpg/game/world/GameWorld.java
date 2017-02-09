@@ -46,7 +46,7 @@ public class GameWorld {
 
     protected Texture testTexture = null;
 
-    protected volatile boolean animateWater = false;
+    protected volatile boolean animateWater = true;
 
     public GameWorld (Texture texture) {
         //initialize shader programs

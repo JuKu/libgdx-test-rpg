@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
+import com.jukusoft.libgdx.rpg.engine.lighting.LightingSystem;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
@@ -24,6 +25,9 @@ public class GameScreen extends BaseScreen {
     protected Texture testTexture = null;
     protected String testTexturePath = AssetPathUtils.getImagePath("test/water.png");
 
+    //lighting system
+    LightingSystem lightingSystem = null;
+
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         game.getAssetManager().load(testTexturePath, Texture.class);
         game.getAssetManager().finishLoading();
@@ -32,6 +36,9 @@ public class GameScreen extends BaseScreen {
 
         //create game world
         this.gameWorld = new GameWorld(this.testTexture);
+
+        //create new lighting system
+        this.lightingSystem = new LightingSystem(game, game.getViewportWidth(), game.getViewportHeight());
     }
 
     @Override
@@ -71,6 +78,9 @@ public class GameScreen extends BaseScreen {
     @Override public void destroy() {
         this.gameWorld.dispose();
         this.gameWorld = null;
+
+        this.lightingSystem.dispose();
+        this.lightingSystem = null;
     }
 
 }

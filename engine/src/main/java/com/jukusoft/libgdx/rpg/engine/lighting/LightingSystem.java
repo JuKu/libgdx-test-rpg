@@ -52,6 +52,11 @@ public class LightingSystem {
 
             //create new framebuffer
             this.fbo = new FrameBuffer(Pixmap.Format.RGBA8888, newWidth, newHeight, false);
+
+            //change resolution on lighting shader
+            this.finalLightingShader.begin();
+            this.finalLightingShader.setUniformf("resolution", newWidth, newHeight);
+            this.finalLightingShader.end();
         });
 
         //create shader
@@ -61,6 +66,13 @@ public class LightingSystem {
             e.printStackTrace();
             throw new RuntimeException("Couldnt not initialize lighting shaders: " + e.getLocalizedMessage());
         }
+
+        //initialize lighting shader
+        this.finalLightingShader.begin();
+        this.finalLightingShader.setUniformi("u_lightmap", 1);
+        this.finalLightingShader.setUniformf("ambientColor", ambientColor.x, ambientColor.y,
+            ambientColor.z, ambientIntensity);
+        this.finalLightingShader.end();
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {

@@ -139,6 +139,12 @@ public class HUDOverlayScreen extends BaseScreen {
     @Override public void destroy() {
         this.heartTexture.dispose();
         this.heartTexture = null;
+
+        this.diamondTexture.dispose();
+        this.diamondTexture = null;
+
+        this.logoTexture.dispose();
+        this.logoTexture = null;
     }
 
 }

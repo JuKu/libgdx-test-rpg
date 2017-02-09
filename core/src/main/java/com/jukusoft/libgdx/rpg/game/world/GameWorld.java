@@ -72,7 +72,7 @@ public class GameWorld {
         //read shader programs to string
         final String vertexShader = FileUtils.readFile(AssetPathUtils.getShaderPath("water/vertexShader.glsl"),
             StandardCharsets.ISO_8859_1);
-        
+
         final String fragmentShader = FileUtils.readFile(AssetPathUtils.getShaderPath("water/defaultPixelShader.glsl"), StandardCharsets.ISO_8859_1);
 
         //create water shader program

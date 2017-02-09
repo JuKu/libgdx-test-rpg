@@ -60,6 +60,9 @@ public class GameScreen extends BaseScreen {
 
         game.getSharedData().put("character_data", this.characterData);
 
+        //set correct input processor
+        game.getInputManager().setInputProcessor();
+
         //add hud screen overlay
         game.getScreenManager().push("hud");
     }

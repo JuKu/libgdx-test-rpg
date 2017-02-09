@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jukusoft.libgdx.rpg.engine.input.InputManager;
+import com.jukusoft.libgdx.rpg.engine.input.impl.DefaultInputManager;
 import com.jukusoft.libgdx.rpg.engine.save.SavedGameManager;
 import com.jukusoft.libgdx.rpg.engine.settings.GameSettings;
 import com.jukusoft.libgdx.rpg.engine.settings.IniGameSettings;
@@ -55,7 +57,7 @@ public abstract class BaseGame extends ApplicationAdapter {
     protected static int VIEWPORT_WIDTH = 1280;
     protected static int VIEWPORT_HEIGHT = 720;
 
-    protected Camera camera = null;
+    protected OrthographicCamera camera = null;
     protected Camera uiCamera = null;
 
     protected AtomicBoolean useCamera = new AtomicBoolean(false);
@@ -76,6 +78,11 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     protected FPSLogger fpsLogger = new FPSLogger();
     protected String shaderPath = "./data/shader/";
+
+    /**
+    * instance of input manager
+    */
+    protected InputManager inputManager = null;
 
     @Override
     public void resize(final int width, final int height) {
@@ -114,6 +121,9 @@ public abstract class BaseGame extends ApplicationAdapter {
         this.uiCamera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
         this.uiCamera.translate(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
         this.uiCamera.update();
+
+        //create new input manager
+        this.inputManager = new DefaultInputManager();
 
         try {
             this.initGame();
@@ -172,12 +182,20 @@ public abstract class BaseGame extends ApplicationAdapter {
         return this.camera;
     }
 
+    public OrthographicCamera getCamera2D () {
+        return this.camera;
+    }
+
     public Camera getUICamera () {
         return this.uiCamera;
     }
 
     public int getFPS () {
         return Gdx.graphics.getFramesPerSecond();
+    }
+
+    public InputManager getInputManager () {
+        return this.inputManager;
     }
 
     public String getShaderDir () {

@@ -79,8 +79,6 @@ public class GameWorldMap extends BaseMap {
     }
 
     public void draw (GameTime time, Camera camera, SpriteBatch batch) {
-        System.out.println("draw map.");
-
         float offsetX = getX() - game.getCamera().position.x;
         float offsetY = getY() - game.getCamera().position.y;
         float width = getWidthInPixels() - offsetX;

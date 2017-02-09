@@ -70,23 +70,6 @@ public class HUDOverlayScreen extends BaseScreen {
         this.healthBar.setMaxValue(this.characterData.getMaxHealth());
         this.healthBar.setValue(this.characterData.getHealth());
         this.hud.addWidget(this.healthBar);
-
-        /*this.heartWidgetGroup = new WidgetGroup();
-        this.heartWidgetGroup.setPosition(game.getViewportWidth() - 240, game.getViewportHeight() - 106);
-        this.hud.addWidget(this.heartWidgetGroup);*/
-
-        //add heart icon
-        /*this.heartImageWidget = new ImageWidget(this.heartTexture);
-        this.heartImageWidget.setPosition(0, 0);
-        this.heartWidgetGroup.addWidget(this.heartImageWidget);
-
-        //add health widget
-        this.healthBar = new FilledBar(this.font);
-        this.healthBar.setPosition(40, 6);
-        this.healthBar.setDimension(80, 20);
-        this.healthBar.setMaxValue(this.characterData.getMaxHealth());
-        this.healthBar.setValue(this.characterData.getHealth());
-        this.heartWidgetGroup.addWidget(this.healthBar);*/
     }
 
     @Override

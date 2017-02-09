@@ -112,6 +112,22 @@ public class GameScreen extends BaseScreen {
             gameWorld.getSkyBox().translate(5, 0);
         }
 
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            //move camera
+            game.getCamera().translate(0, 5, 0);
+
+            //move skybox
+            gameWorld.getSkyBox().translate(0, 5);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            //move camera
+            game.getCamera().translate(0, -5, 0);
+
+            //move skybox
+            gameWorld.getSkyBox().translate(0, -5);
+        }
+
         if (Gdx.input.isKeyPressed(Input.Keys.K)) {
             lightingSystem.setLightingEnabled(false);
         }

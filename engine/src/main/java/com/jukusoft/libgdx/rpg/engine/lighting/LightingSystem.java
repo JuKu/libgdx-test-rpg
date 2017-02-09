@@ -68,6 +68,9 @@ public class LightingSystem implements LightingEnvironment {
             this.finalLightingShader.end();
         });
 
+        //create new default shader
+        this.defaultShader = SpriteBatch.createDefaultShader();
+
         //create shader
         try {
             this.finalLightingShader = ShaderFactory.createShader(game.getShaderDir() + "lighting/vertexShader.glsl", game.getShaderDir() + "lighting/pixelShader.glsl");
@@ -195,6 +198,14 @@ public class LightingSystem implements LightingEnvironment {
 
     public FrameBuffer getFBO () {
         return this.fbo;
+    }
+
+    public ShaderProgram getLightingShader () {
+        return this.finalLightingShader;
+    }
+
+    public ShaderProgram getDefaultShader () {
+        return this.defaultShader;
     }
 
 }

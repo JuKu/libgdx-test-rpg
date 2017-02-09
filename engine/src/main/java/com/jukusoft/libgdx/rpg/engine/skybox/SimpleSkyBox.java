@@ -22,9 +22,6 @@ public class SimpleSkyBox implements SkyBox {
 
     protected float offsetX = 0;
 
-    protected float lastCameraX = 0;
-    protected float lastCameraY = 0;
-
     protected float skyBoxWidth = 0;
 
     //points, when skybox has to be moved
@@ -34,8 +31,8 @@ public class SimpleSkyBox implements SkyBox {
     protected float worldPosX = 0;
     protected float worldPosY = 0;
 
-    protected float smoothFactorX = 0.8f;
-    protected float smoothFactorY = 0.8f;
+    protected float smoothFactorX = 0.4f;
+    protected float smoothFactorY = 0.4f;
 
     protected Camera camera = null;
 

@@ -2,6 +2,8 @@ package com.jukusoft.libgdx.rpg.game.world;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
@@ -21,10 +23,12 @@ public abstract class BaseMap {
     protected float widthInTiles = 30;
     protected float heightInTiles = 30;
 
+    protected BoundingBox boundingBox = null;
+
     protected MapPositionChangedListener changedListener = null;
 
     public BaseMap () {
-        //
+        this.boundingBox = new BoundingBox(new Vector3(x, y, 0), new Vector3(getWidthInPixels(), getHeightInPixels(), 0));
     }
 
     public float getX () {
@@ -84,10 +88,11 @@ public abstract class BaseMap {
     */
     public boolean isMapVisibleInViewPort (Camera camera) {
         //check borders
-        float cameraWidth = camera.viewportWidth;
-        float cameraHeight = camera.viewportHeight;
+        //float cameraWidth = camera.viewportWidth;
+        //float cameraHeight = camera.viewportHeight;
 
-        return false;
+        //check, if map is in frustum (viewport)
+        return camera.frustum.boundsInFrustum(this.boundingBox);
     }
 
     public abstract void update (BaseGame game, Camera camera, GameTime time);

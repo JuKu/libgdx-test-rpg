@@ -53,6 +53,10 @@ public class AssetPathUtils {
         return "./data/save/" + fileName;
     }
 
+    public static String getShaderPath (String shaderFileName) {
+        return "./data/shader/" + shaderFileName;
+    }
+
     public static String getStoryPath(String lang, String fileName) {
         return "./data/story/" + lang + "/" + fileName;
     }

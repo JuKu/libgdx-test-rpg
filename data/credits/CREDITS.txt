@@ -43,7 +43,10 @@ assets directory (./data)!
 
 ## Special thanks
 
-Specical thanks to pentaquin.com project & libGDX team!
+Specical thanks to:
+ - pentaquin.com project
+ - libGDX team
+ - alcove-games.com for nice tutorials
 
 ## Links
 

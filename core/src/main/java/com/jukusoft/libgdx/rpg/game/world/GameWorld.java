@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
+import com.jukusoft.libgdx.rpg.engine.skybox.SkyBox;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.utils.FileUtils;
 import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
@@ -49,6 +50,8 @@ public class GameWorld {
     protected volatile boolean animateWater = true;
 
     protected ShaderProgram currentShader = null;
+
+    protected SkyBox skyBox = null;
 
     //https://github.com/libgdx/libgdx/wiki/Tile-maps
 
@@ -94,6 +97,11 @@ public class GameWorld {
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {
+        //update skybox
+        if (this.skyBox != null) {
+            this.skyBox.update(game, time);
+        }
+
         //check, if some maps arent visible anymore and remove them from draw queue
         this.visibleMaps.stream().forEach(map -> {
             if (!map.isMapVisibleInViewPort(camera)) {
@@ -117,6 +125,11 @@ public class GameWorld {
         batch.setProjectionMatrix(camera.combined);
         batch.setShader(this.currentShader);
         batch.begin();
+
+        //draw skybox
+        if (this.skyBox != null) {
+            this.skyBox.draw(time, batch);
+        }
 
         //render all maps which are visible
         this.visibleMaps.stream().forEach(map -> {
@@ -200,6 +213,10 @@ public class GameWorld {
         } else {
             this.currentShader = shader;
         }
+    }
+
+    public void setSkyBox (SkyBox skyBox) {
+        this.skyBox = skyBox;
     }
 
 }

@@ -23,7 +23,7 @@ public class HUDOverlayScreen extends BaseScreen {
 
     protected static final String HEART_ICON_PATH = AssetPathUtils.getImagePath("icons/heart/heart_32.png");
     protected static final String DIAMOND_ICON_PATH = AssetPathUtils.getImagePath("icons/diamond/diamond_32.png");
-    protected static final String LOGO_PATH = AssetPathUtils.getImagePath("general/icon_transparency.png");
+    protected static final String LOGO_PATH = AssetPathUtils.getImagePath("general/icon_transparency_smallest.png");
 
     protected CharacterData characterData = null;
 
@@ -81,14 +81,14 @@ public class HUDOverlayScreen extends BaseScreen {
 
         //create new mana bar
         this.manaBar = new FilledIconBar(this.diamondTexture, this.font);
-        this.manaBar.setPosition(game.getViewportWidth() - 240, game.getViewportHeight() - 126);
+        this.manaBar.setPosition(game.getViewportWidth() - 240, game.getViewportHeight() - 156);
         this.manaBar.setMaxValue(this.characterData.getMaxMana());
         this.manaBar.setValue(this.characterData.getMana());
         this.hud.addWidget(this.manaBar);
 
         //add logo image widget
         this.logoImageWidget = new ImageWidget(this.logoTexture);
-        this.logoImageWidget.setPosition(20, game.getViewportHeight() - 20);
+        this.logoImageWidget.setPosition(20, game.getViewportHeight() - 70);
         this.hud.addWidget(this.logoImageWidget);
     }
 

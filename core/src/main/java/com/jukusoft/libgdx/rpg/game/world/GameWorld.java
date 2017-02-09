@@ -82,14 +82,6 @@ public class GameWorld {
         //create water shader program
         this.waterShader = new ShaderProgram(vertexShader, fragmentShader);
 
-        /*for (String attr : defaultShader.getAttributes()) {
-            System.out.println("attribute: " + attr);
-        }*/
-
-        //System.out.println("\n\ndefault vertex shader code:\n\n" + defaultShader.getVertexShaderSource() + "\n\n");
-
-        //System.out.println("\n\ndefault fragment shader code:\n\n" + defaultShader.getFragmentShaderSource() + "\n\n");
-
         //check, if water shader was compiled
         if (!this.waterShader.isCompiled()) {
             //log debug information

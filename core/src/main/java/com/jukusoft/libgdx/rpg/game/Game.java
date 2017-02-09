@@ -28,6 +28,9 @@ public class Game extends ScreenBasedGame {
         //set saved game manager to support saved games
         this.setSavedGameManager(new DefaultSavedGameManager(AssetPathUtils.getSavePath()));
 
+        //set shader path
+        this.shaderPath = AssetPathUtils.getShaderPath("");
+
         //create screen
         screenManager.addScreen("jukusoft_intro", new JuKuSoftIntroScreen());
         screenManager.addScreen("load_screen", new LoadScreen());

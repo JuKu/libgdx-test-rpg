@@ -10,8 +10,11 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
+import com.jukusoft.libgdx.rpg.engine.shader.ShaderFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.window.ResizeListener;
+
+import java.io.IOException;
 
 /**
  * Created by Justin on 09.02.2017.
@@ -27,7 +30,7 @@ public class LightingSystem {
 
     //http://www.alcove-games.com/opengl-es-2-tutorials/lightmap-shader-fire-effect-glsl/
 
-    protected ShaderProgram lightShader = null;
+    protected ShaderProgram finalLightingShader = null;
 
     //used to make the light flicker
     public float zAngle;
@@ -50,6 +53,14 @@ public class LightingSystem {
             //create new framebuffer
             this.fbo = new FrameBuffer(Pixmap.Format.RGBA8888, newWidth, newHeight, false);
         });
+
+        //create shader
+        try {
+            this.finalLightingShader = ShaderFactory.createShader(game.getShaderDir() + "lighting/vertexShader.glsl", game.getShaderDir() + "lighting/pixelShader.glsl");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Couldnt not initialize lighting shaders: " + e.getLocalizedMessage());
+        }
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {

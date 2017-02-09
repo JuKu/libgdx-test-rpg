@@ -75,6 +75,7 @@ public abstract class BaseGame extends ApplicationAdapter {
     protected SavedGameManager savedGameManager = null;
 
     protected FPSLogger fpsLogger = new FPSLogger();
+    protected String shaderPath = "./data/shader/";
 
     @Override
     public void resize(final int width, final int height) {
@@ -177,6 +178,10 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     public int getFPS () {
         return Gdx.graphics.getFramesPerSecond();
+    }
+
+    public String getShaderDir () {
+        return this.shaderPath;
     }
 
     /**

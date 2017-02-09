@@ -18,15 +18,17 @@ public class FilledBar extends BaseHUDWidget {
     protected Color foregroundColor = Color.RED;
     protected Color textColor = Color.WHITE;
 
-    protected float paddingLeft = 4;
-    protected float paddingRight = 4;
-    protected float paddingTop = 4;
-    protected float paddingBottom = 4;
+    protected float paddingLeft = 0;
+    protected float paddingRight = 0;
+    protected float paddingTop = 0;
+    protected float paddingBottom = 0;
 
     protected BitmapFont font = null;
     protected float percent = 0;
     protected float value = 0;
     protected float maxValue = 100;
+
+    protected float textPaddingBottom = 28;
 
     public FilledBar (BitmapFont font) {
         this.font = font;
@@ -58,8 +60,8 @@ public class FilledBar extends BaseHUDWidget {
     }
 
     @Override public void drawLayer2(GameTime time, SpriteBatch batch) {
-        float startX = getX() + (getWidth() / 2) - (this.text.length() * this.font.getSpaceWidth() - 10);
-        float startY = getY() + (getHeight() / 2) - this.font.getLineHeight();
+        float startX = getX() + (getWidth() / 2) - (this.text.length() * this.font.getSpaceWidth());
+        float startY = getY() + (getHeight() / 2) - this.font.getLineHeight() + textPaddingBottom;
 
         //draw text
         this.font.setColor(this.textColor);
@@ -95,7 +97,7 @@ public class FilledBar extends BaseHUDWidget {
     }
 
     public float getPercent () {
-        return this.percent;
+        return this.percent * 100;
     }
 
 }

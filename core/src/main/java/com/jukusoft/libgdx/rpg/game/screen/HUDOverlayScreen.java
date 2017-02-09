@@ -8,13 +8,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
-import com.jukusoft.libgdx.rpg.engine.hud.FilledBar;
-import com.jukusoft.libgdx.rpg.engine.hud.ImageWidget;
-import com.jukusoft.libgdx.rpg.engine.hud.WidgetGroup;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
 import com.jukusoft.libgdx.rpg.engine.hud.HUD;
+import com.jukusoft.libgdx.rpg.game.hud.FilledIconBar;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
 /**
@@ -30,10 +28,11 @@ public class HUDOverlayScreen extends BaseScreen {
 
     //HUD
     protected HUD hud = null;
-    protected FilledBar healthBar = null;
+    //protected FilledBar healthBar = null;
     protected static final int FONT_SIZE = 18;
-    protected ImageWidget heartImageWidget = null;
-    protected WidgetGroup heartWidgetGroup = null;
+    //protected ImageWidget heartImageWidget = null;
+    //protected WidgetGroup heartWidgetGroup = null;
+    protected FilledIconBar healthBar = null;
 
     //assets
     protected BitmapFont font = null;
@@ -66,12 +65,18 @@ public class HUDOverlayScreen extends BaseScreen {
         this.hud = new HUD();
 
         //create new widget group for health bar
-        this.heartWidgetGroup = new WidgetGroup();
+        this.healthBar = new FilledIconBar(this.heartTexture, this.font);
+        this.healthBar.setPosition(game.getViewportWidth() - 240, game.getViewportHeight() - 106);
+        this.healthBar.setMaxValue(this.characterData.getMaxHealth());
+        this.healthBar.setValue(this.characterData.getHealth());
+        this.hud.addWidget(this.healthBar);
+
+        /*this.heartWidgetGroup = new WidgetGroup();
         this.heartWidgetGroup.setPosition(game.getViewportWidth() - 240, game.getViewportHeight() - 106);
-        this.hud.addWidget(this.heartWidgetGroup);
+        this.hud.addWidget(this.heartWidgetGroup);*/
 
         //add heart icon
-        this.heartImageWidget = new ImageWidget(this.heartTexture);
+        /*this.heartImageWidget = new ImageWidget(this.heartTexture);
         this.heartImageWidget.setPosition(0, 0);
         this.heartWidgetGroup.addWidget(this.heartImageWidget);
 
@@ -81,7 +86,7 @@ public class HUDOverlayScreen extends BaseScreen {
         this.healthBar.setDimension(80, 20);
         this.healthBar.setMaxValue(this.characterData.getMaxHealth());
         this.healthBar.setValue(this.characterData.getHealth());
-        this.heartWidgetGroup.addWidget(this.healthBar);
+        this.heartWidgetGroup.addWidget(this.healthBar);*/
     }
 
     @Override

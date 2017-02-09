@@ -87,6 +87,7 @@ Links with some example image idea (license wasnt checked yet, but images also a
  - http://opengameart.org/comment/55179#comment-55179
 
  - http://opengameart.org/content/a-platformer-in-the-forest
+ - https://www.iconfinder.com/icons/128447/adamant_almaz_brilliant_crystal_diamond_diamonds_fake_gem_glass_hardness_imitation_jevel_jewellery_jewelry_minikin_rich_transparency_transparent_icon#size=64
 
 sound:
 http://opengameart.org/content/oves-essential-game-audio-pack-collection-160-files-updated

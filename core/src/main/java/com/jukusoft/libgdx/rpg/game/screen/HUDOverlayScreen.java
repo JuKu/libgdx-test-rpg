@@ -10,6 +10,7 @@ import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.hud.FilledBar;
 import com.jukusoft.libgdx.rpg.engine.hud.ImageWidget;
+import com.jukusoft.libgdx.rpg.engine.hud.WidgetGroup;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
@@ -32,6 +33,7 @@ public class HUDOverlayScreen extends BaseScreen {
     protected FilledBar healthBar = null;
     protected static final int FONT_SIZE = 18;
     protected ImageWidget heartImageWidget = null;
+    protected WidgetGroup heartWidgetGroup = null;
 
     //assets
     protected BitmapFont font = null;
@@ -63,18 +65,23 @@ public class HUDOverlayScreen extends BaseScreen {
         //create new Head-up-Display (HUD)
         this.hud = new HUD();
 
+        //create new widget group for health bar
+        this.heartWidgetGroup = new WidgetGroup();
+        this.heartWidgetGroup.setPosition(game.getViewportWidth() - 240, game.getViewportHeight() - 106);
+        this.hud.addWidget(this.heartWidgetGroup);
+
         //add heart icon
         this.heartImageWidget = new ImageWidget(this.heartTexture);
-        this.heartImageWidget.setPosition(game.getViewportWidth() - 240, game.getViewportHeight() - 106);
-        this.hud.addWidget(this.heartImageWidget);
+        this.heartImageWidget.setPosition(0, 0);
+        this.heartWidgetGroup.addWidget(this.heartImageWidget);
 
         //add health widget
         this.healthBar = new FilledBar(this.font);
-        this.healthBar.setPosition(game.getViewportWidth() - 200, game.getViewportHeight() - 100);
+        this.healthBar.setPosition(40, 6);
         this.healthBar.setDimension(80, 20);
         this.healthBar.setMaxValue(this.characterData.getMaxHealth());
         this.healthBar.setValue(this.characterData.getHealth());
-        this.hud.addWidget(this.healthBar);
+        this.heartWidgetGroup.addWidget(this.healthBar);
     }
 
     @Override

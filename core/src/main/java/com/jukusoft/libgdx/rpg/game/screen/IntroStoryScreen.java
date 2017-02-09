@@ -101,6 +101,8 @@ public class IntroStoryScreen extends BaseScreen {
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
+        batch.setProjectionMatrix(game.getUICamera().combined);
+
         batch.draw(this.backgroundTexture, 0, 0);
 
         /*batch.end();

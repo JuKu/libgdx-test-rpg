@@ -78,7 +78,7 @@ public class GameWorldMap extends BaseMap {
         //
     }
 
-    public void draw (GameTime time, Camera camera, SpriteBatch batch) {
+    public void draw (GameTime time, Camera camera, ShaderProgram shader, SpriteBatch batch) {
         float offsetX = getX() - game.getCamera().position.x;
         float offsetY = getY() - game.getCamera().position.y;
         float width = getWidthInPixels() - offsetX;
@@ -86,6 +86,8 @@ public class GameWorldMap extends BaseMap {
 
         //set projection matrix
         this.mapRenderer.setView(game.getCamera().combined, getX(), getY(), width, height);
+
+        this.mapRenderer.getBatch().setShader(shader);
 
         //TODO: render only specific layers which arent water
         this.mapRenderer.render();

@@ -1,11 +1,6 @@
 package com.jukusoft.libgdx.rpg.game.world;
 
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -188,7 +183,7 @@ public class GameWorld {
         //TODO: check, if user walk to near maps, if so, load near maps to draw queue
     }
 
-    public void draw (GameTime time, Camera camera, SpriteBatch batch) {
+    public void draw (GameTime time, Camera camera, ShaderProgram shader, SpriteBatch batch) {
         //batch.draw(testTexture, 0, 0);
 
         //first draw water
@@ -212,7 +207,7 @@ public class GameWorld {
         //render all maps which are visible
         this.visibleMaps.stream().forEach(map -> {
             //draw map
-            map.draw(time, camera, batch);
+            map.draw(time, camera, this.currentShader, batch);
         });
     }
 

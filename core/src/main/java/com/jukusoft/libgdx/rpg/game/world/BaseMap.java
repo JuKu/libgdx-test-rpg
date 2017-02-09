@@ -2,6 +2,7 @@ package com.jukusoft.libgdx.rpg.game.world;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
@@ -97,6 +98,6 @@ public abstract class BaseMap {
 
     public abstract void update (BaseGame game, Camera camera, GameTime time);
 
-    public abstract void draw (GameTime time, Camera camera, SpriteBatch batch);
+    public abstract void draw (GameTime time, Camera camera, ShaderProgram shader, SpriteBatch batch);
 
 }

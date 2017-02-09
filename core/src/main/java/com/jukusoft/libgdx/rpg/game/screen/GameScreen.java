@@ -150,7 +150,11 @@ public class GameScreen extends BaseScreen {
         batch.draw(testTexture, 0, 0);
 
         //draw game world
-        this.gameWorld.draw(time, game.getCamera(), batch);
+        if (this.lightingSystem.isLightingEnabled()) {
+            this.gameWorld.draw(time, game.getCamera(), this.lightingSystem.getLightingShader(), batch);
+        } else {
+            this.gameWorld.draw(time, game.getCamera(), null, batch);
+        }
 
         //draw lightmap (only for testing purposes)
         //batch.draw(lightingSystem.getFBO().getColorBufferTexture(), 0, 0);

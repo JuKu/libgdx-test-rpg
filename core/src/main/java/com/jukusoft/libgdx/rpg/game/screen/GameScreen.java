@@ -6,7 +6,9 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
+import com.jukusoft.libgdx.rpg.engine.lighting.Lighting;
 import com.jukusoft.libgdx.rpg.engine.lighting.LightingSystem;
+import com.jukusoft.libgdx.rpg.engine.lighting.TextureLighting;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
@@ -24,21 +26,32 @@ public class GameScreen extends BaseScreen {
 
     protected Texture testTexture = null;
     protected String testTexturePath = AssetPathUtils.getImagePath("test/water.png");
+    protected String lightMapPath = AssetPathUtils.getLightMapPath("lightmap1/light.png");
+    protected Texture lightMap = null;
 
     //lighting system
     LightingSystem lightingSystem = null;
 
+    //lightings
+    Lighting testLighting = null;
+
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         game.getAssetManager().load(testTexturePath, Texture.class);
+        game.getAssetManager().load(lightMapPath, Texture.class);
         game.getAssetManager().finishLoading();
 
         this.testTexture = game.getAssetManager().get(testTexturePath, Texture.class);
+        this.lightMap = game.getAssetManager().get(lightMapPath, Texture.class);
 
         //create game world
         this.gameWorld = new GameWorld(this.testTexture);
 
         //create new lighting system
         this.lightingSystem = new LightingSystem(game, game.getViewportWidth(), game.getViewportHeight());
+
+        //create new test lighting
+        this.testLighting = new TextureLighting(this.lightMap);
+        this.lightingSystem.addLighting(this.testLighting);
     }
 
     @Override

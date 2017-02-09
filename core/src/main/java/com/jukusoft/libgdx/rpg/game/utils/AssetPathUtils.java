@@ -57,6 +57,10 @@ public class AssetPathUtils {
         return "./data/shader/" + shaderFileName;
     }
 
+    public static String getLightMapPath (String lightMapPath) {
+        return "./data/lightmap/" + lightMapPath;
+    }
+
     public static String getStoryPath(String lang, String fileName) {
         return "./data/story/" + lang + "/" + fileName;
     }

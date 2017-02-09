@@ -34,6 +34,9 @@ public class SimpleSkyBox implements SkyBox {
     protected float smoothFactorX = 0.4f;
     protected float smoothFactorY = 0.4f;
 
+    //https://github.com/libgdx/libgdx/wiki/Orthographic-camera
+
+    //skybox needs its own camera to allow smoothness movements
     protected Camera camera = null;
 
     public SimpleSkyBox (Texture texture) {

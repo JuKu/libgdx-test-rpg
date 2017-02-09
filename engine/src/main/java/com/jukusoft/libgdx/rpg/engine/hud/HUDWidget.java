@@ -24,4 +24,6 @@ public interface HUDWidget {
 
     public void setPosition (float x, float y);
 
+    public void onMoveGroup (float groupX, float groupY);
+
 }

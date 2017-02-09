@@ -14,6 +14,9 @@ public abstract class BaseHUDWidget implements HUDWidget {
     protected float width = 100;
     protected float height = 100;
 
+    protected float groupX = 0;
+    protected float groupY = 0;
+
     @Override public void drawLayer1(GameTime time, ShapeRenderer shapeRenderer) {
 
     }
@@ -23,11 +26,11 @@ public abstract class BaseHUDWidget implements HUDWidget {
     }
 
     public float getX () {
-        return this.x;
+        return this.x + groupX;
     }
 
     public float getY () {
-        return this.y;
+        return this.y + groupY;
     }
 
     public void setPosition (float x, float y) {
@@ -46,6 +49,11 @@ public abstract class BaseHUDWidget implements HUDWidget {
     public void setDimension (float width, float height) {
         this.width = width;
         this.height = height;
+    }
+
+    public void onMoveGroup (float groupX, float groupY) {
+        this.groupX = groupX;
+        this.groupY = groupY;
     }
 
 }

@@ -2,12 +2,14 @@ package com.jukusoft.libgdx.rpg.game.screen;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.hud.FilledBar;
+import com.jukusoft.libgdx.rpg.engine.hud.ImageWidget;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
@@ -19,6 +21,8 @@ import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
  */
 public class HUDOverlayScreen extends BaseScreen {
 
+    protected static final String HEART_ICON_PATH = AssetPathUtils.getImagePath("icons/heart/heart_32.png");
+
     protected CharacterData characterData = null;
 
     protected ShapeRenderer shapeRenderer = null;
@@ -27,13 +31,23 @@ public class HUDOverlayScreen extends BaseScreen {
     protected HUD hud = null;
     protected FilledBar healthBar = null;
     protected static final int FONT_SIZE = 18;
+    protected ImageWidget heartImageWidget = null;
 
     //assets
     protected BitmapFont font = null;
+    protected Texture heartTexture = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         this.font = BitmapFontFactory
             .createFont(AssetPathUtils.getFontPath("arial/arial.ttf"), FONT_SIZE, Color.WHITE);
+
+        //load assets
+        game.getAssetManager().load(HEART_ICON_PATH, Texture.class);
+
+        //wait while all assets was loaded
+        game.getAssetManager().finishLoading();
+
+        this.heartTexture = game.getAssetManager().get(HEART_ICON_PATH, Texture.class);
     }
 
     @Override
@@ -48,6 +62,11 @@ public class HUDOverlayScreen extends BaseScreen {
 
         //create new Head-up-Display (HUD)
         this.hud = new HUD();
+
+        //add heart icon
+        this.heartImageWidget = new ImageWidget(this.heartTexture);
+        this.heartImageWidget.setPosition(game.getViewportWidth() - 240, game.getViewportHeight() - 106);
+        this.hud.addWidget(this.heartImageWidget);
 
         //add health widget
         this.healthBar = new FilledBar(this.font);
@@ -98,7 +117,8 @@ public class HUDOverlayScreen extends BaseScreen {
     }
 
     @Override public void destroy() {
-
+        this.heartTexture.dispose();
+        this.heartTexture = null;
     }
 
 }

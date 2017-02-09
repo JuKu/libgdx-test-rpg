@@ -10,7 +10,7 @@ Here you can see an list of all contributors and used assets.
 Open Source Graphics:
   - Reiner Tilesets http://www.reinerstilesets.de/de/
 
-Third Party Graphics (free to use for this project - specific LICENSE file in specific graphic directory):
+Third Party Graphics (free to use for this project - specific LICENSE file in specific graphic directory or on website):
   - https://www.iconfinder.com/icons/512535/control_controller_game_gamepad_play_icon#size=256
   - http://opengameart.org/content/2d-lost-garden-zelda-style-tiles-resized-to-32x32-with-additions
   - http://www.lostgarden.com/2006/07/more-free-game-graphics.html
@@ -20,6 +20,8 @@ Third Party Graphics (free to use for this project - specific LICENSE file in sp
   - http://opengameart.org/content/ocean-background (data/graphics/thirdparty/ocean - by KnoblePeronsa)
   - tilset (data/graphic/tilesets/tileset1) by Zabin, Daneeklu, Jetrel, Hyptosis, Redshrike, Bertram. License: CC BY SA 3.0, found at http://www.alcove-games.com/opengl-es-2-tutorials/lightmap-shader-fire-effect-glsl/
   - palm icon by aha-soft (data/images/icons/palm), link: https://www.iconfinder.com/aha-soft
+  - pixelart heart by By Vicent Pla (https://www.iconfinder.com/icons/204607/heart_icon#size=96)
+  - heart icon (https://www.iconfinder.com/icons/6604/favourite_heart_love_package_icon#size=128, GPL license)
 
 ## Fonts
   - SparTakus (SIL Open Font License by Peter Wiegel, http://www.peter-wiegel.de/

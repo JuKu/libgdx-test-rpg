@@ -131,6 +131,8 @@ public class GameWorld {
             this.skyBox.draw(time, batch);
         }
 
+        batch.setProjectionMatrix(camera.combined);
+
         //render all maps which are visible
         this.visibleMaps.stream().forEach(map -> {
             //draw map

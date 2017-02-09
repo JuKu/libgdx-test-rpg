@@ -1,8 +1,10 @@
 package com.jukusoft.libgdx.rpg.engine.skybox;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
@@ -32,6 +34,11 @@ public class SimpleSkyBox implements SkyBox {
     protected float worldPosX = 0;
     protected float worldPosY = 0;
 
+    protected float smoothFactorX = 0.8f;
+    protected float smoothFactorY = 0.8f;
+
+    protected Camera camera = null;
+
     public SimpleSkyBox (Texture texture) {
         this.skyBoxTexture = texture;
         this.x = skyBoxWidth / 2;
@@ -40,6 +47,9 @@ public class SimpleSkyBox implements SkyBox {
 
         this.pointX1 = x - skyBoxWidth;
         this.pointX2 = x + skyBoxWidth;
+
+        this.camera = new OrthographicCamera(texture.getWidth(), texture.getHeight());
+        this.camera.translate(texture.getWidth() / 2, texture.getHeight() / 2, 0);
     }
 
     @Override public void update(BaseGame game, GameTime time) {
@@ -58,11 +68,16 @@ public class SimpleSkyBox implements SkyBox {
             //move skybox
             x += skyBoxWidth;
         }
+
+        camera.update();
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
         System.out.println("draw skybox, x: " + x + ", y: " + y + ", offsetX: " + offsetX + ", skybox width: " + skyBoxTexture.getWidth());
         System.out.println("pointX1: " + pointX1 + ", pointX2: " + pointX2);
+
+        //set skybox camera
+        batch.setProjectionMatrix(camera.combined);
 
         //draw 3 skyboxes near
         batch.draw(this.skyBoxTexture, x - skyBoxWidth, y);
@@ -71,8 +86,10 @@ public class SimpleSkyBox implements SkyBox {
     }
 
     @Override public void translate(float x, float y) {
-        this.worldPosX += x;
-        this.worldPosY += y;
+        this.worldPosX += (x * smoothFactorX);
+        this.worldPosY += (y * smoothFactorY);
+
+        camera.translate((x * smoothFactorX), (y * smoothFactorY), 0);
     }
 
 }

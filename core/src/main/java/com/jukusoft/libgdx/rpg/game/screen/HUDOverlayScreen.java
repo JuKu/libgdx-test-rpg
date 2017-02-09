@@ -12,7 +12,7 @@ import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
 import com.jukusoft.libgdx.rpg.engine.hud.HUD;
-import com.jukusoft.libgdx.rpg.game.hud.FilledIconBar;
+import com.jukusoft.libgdx.rpg.engine.hud.FilledIconBar;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
 /**

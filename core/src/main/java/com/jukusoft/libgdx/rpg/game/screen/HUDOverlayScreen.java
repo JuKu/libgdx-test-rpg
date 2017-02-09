@@ -119,7 +119,7 @@ public class HUDOverlayScreen extends BaseScreen {
         batch.setProjectionMatrix(game.getUICamera().combined);
 
         //reset shader, so default shader will be used
-        batch.setShader(null);
+        //batch.setShader(null);
 
         this.hud.drawLayer0(time, batch);
 

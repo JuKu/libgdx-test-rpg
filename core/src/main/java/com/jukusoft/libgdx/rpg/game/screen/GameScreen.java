@@ -107,10 +107,15 @@ public class GameScreen extends BaseScreen {
         //draw game world
         this.gameWorld.draw(time, game.getCamera(), batch);
 
+        batch.draw(testTexture, 0, 0);
+
         //draw lightmap (only for testing purposes)
         //batch.draw(lightingSystem.getFBO().getColorBufferTexture(), 0, 0);
 
         batch.flush();
+
+        //reset shader, so default shader is used
+        batch.setShader(null);
     }
 
     @Override public void destroy() {

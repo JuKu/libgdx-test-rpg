@@ -24,4 +24,7 @@ dependencies {
     compile "org.json:json:$jsonVersion"
 
     compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
+    //Apache commons-lang library for custom hashcode
+    compile "org.apache.commons:commons-lang3:$apacheCommonsLangVersion"
 }

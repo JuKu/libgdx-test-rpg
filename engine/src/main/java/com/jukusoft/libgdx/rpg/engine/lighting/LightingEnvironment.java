@@ -17,4 +17,8 @@ public interface LightingEnvironment {
 
     public void removeLighting (Lighting lighting);
 
+    public boolean isLightingEnabled ();
+
+    public void setLightingEnabled (boolean lightingEnabled);
+
 }

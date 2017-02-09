@@ -48,6 +48,8 @@ public class GameWorld {
 
     protected volatile boolean animateWater = true;
 
+    protected ShaderProgram currentShader = null;
+
     //https://github.com/libgdx/libgdx/wiki/Tile-maps
 
     public GameWorld (Texture texture) {
@@ -65,6 +67,7 @@ public class GameWorld {
     protected void initShaders () throws IOException {
         //create default shader program
         this.defaultShader = SpriteBatch.createDefaultShader();
+        this.currentShader = this.defaultShader;
 
         //read shader programs to string
         final String vertexShader = FileUtils.readFile(AssetPathUtils.getShaderPath("water/vertexShader.glsl"),
@@ -124,7 +127,7 @@ public class GameWorld {
 
         //set default shader
         batch.setProjectionMatrix(camera.combined);
-        batch.setShader(this.defaultShader);
+        batch.setShader(this.currentShader);
         batch.begin();
 
         //render all maps which are visible
@@ -198,6 +201,17 @@ public class GameWorld {
 
     public void setAnimateWater (boolean flag) {
         this.animateWater = flag;
+    }
+
+    /**
+    * set shader to draw maps (for lighting system)
+    */
+    public void setCurrentShader (ShaderProgram shader) {
+        if (shader == null) {
+            this.currentShader = this.defaultShader;
+        } else {
+            this.currentShader = shader;
+        }
     }
 
 }

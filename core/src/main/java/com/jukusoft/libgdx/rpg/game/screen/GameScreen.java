@@ -90,11 +90,27 @@ public class GameScreen extends BaseScreen {
 
         batch.setProjectionMatrix(game.getCamera().combined);
 
+        //check, if lighting is enabled
+        if (this.lightingSystem.isLightingEnabled()) {
+            //set lighting shader, so lighting shader will be used
+            this.gameWorld.setCurrentShader(this.lightingSystem.getLightingShader());
+        } else {
+            //reset shader
+            this.gameWorld.setCurrentShader(null);
+        }
+
+        lightingSystem.getFBO().getColorBufferTexture().bind(1); //this is important! bind the FBO to the 2nd texture unit
+        this.lightMap.bind(0); //we force the binding of a texture on first texture unit to avoid artefacts
+        //this is because our default and ambiant shader dont use multi texturing...
+        //youc can basically bind anything, it doesnt matter
+
         //draw game world
         this.gameWorld.draw(time, game.getCamera(), batch);
 
         //draw lightmap (only for testing purposes)
         //batch.draw(lightingSystem.getFBO().getColorBufferTexture(), 0, 0);
+
+        batch.flush();
     }
 
     @Override public void destroy() {

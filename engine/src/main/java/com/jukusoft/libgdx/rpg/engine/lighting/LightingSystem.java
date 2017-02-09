@@ -49,6 +49,9 @@ public class LightingSystem implements LightingEnvironment {
 
     protected List<AmbientLightChangedListener> ambientLightChangedListenerList = new ArrayList<>();
 
+    //flag if lighting is enabled
+    protected boolean lightingEnabled = true;
+
     public LightingSystem (BaseGame game, int width, int height) {
         //create new frame buffer
         this.fbo = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, false);
@@ -105,6 +108,11 @@ public class LightingSystem implements LightingEnvironment {
     }
 
     public void drawFBO (GameTime time, Camera camera, SpriteBatch batch) {
+        if (!this.isLightingEnabled()) {
+            //we dont have to do anything, because lighting isnt enabled
+            return;
+        }
+
         boolean wasDrawing = false;
 
         if (batch.isDrawing()) {
@@ -188,6 +196,14 @@ public class LightingSystem implements LightingEnvironment {
     @Override public void removeLighting(Lighting lighting) {
         this.visibleLightings.remove(lighting);
         this.lightings.remove(lighting);
+    }
+
+    @Override public boolean isLightingEnabled() {
+        return this.lightingEnabled;
+    }
+
+    @Override public void setLightingEnabled(boolean lightingEnabled) {
+        this.lightingEnabled = lightingEnabled;
     }
 
     protected void notifyAmbientLightChanged () {

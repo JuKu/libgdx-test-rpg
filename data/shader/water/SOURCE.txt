@@ -1,0 +1,2 @@
+This shaders are from http://www.alcove-games.com/opengl-es-2-tutorials/vertex-shader-for-tiled-water/ .
+Thanks to the author of this shader programs!

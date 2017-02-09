@@ -28,7 +28,6 @@ public class TextureLighting extends BaseLighting {
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
-        float lightSize = lightOscillate ? (4.75f + 0.25f * (float)Math.sin(zAngle) + .2f* MathUtils.random()):5.0f;
         batch.draw(this.lightMapTexture, getX() - lightSize * 0.5f + 0.5f, getY() + 0.5f - lightSize*0.5f, lightSize, lightSize);
     }
 

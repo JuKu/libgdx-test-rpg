@@ -42,6 +42,8 @@ public class LightingSystem implements LightingEnvironment {
     //used for drawing
     private boolean lightOscillate = false;
 
+    protected List<Lighting> lightings = new ArrayList<>();
+
     //list with all visible lightings in viewport
     protected List<Lighting> visibleLightings = new ArrayList<>();
 
@@ -170,6 +172,18 @@ public class LightingSystem implements LightingEnvironment {
 
     @Override public void removeAmbientLightListener(AmbientLightChangedListener listener) {
         this.ambientLightChangedListenerList.remove(listener);
+    }
+
+    @Override public void addLighting(Lighting lighting) {
+        this.lightings.add(lighting);
+
+        //TODO: remove this line
+        this.visibleLightings.add(lighting);
+    }
+
+    @Override public void removeLighting(Lighting lighting) {
+        this.visibleLightings.remove(lighting);
+        this.lightings.remove(lighting);
     }
 
     protected void notifyAmbientLightChanged () {

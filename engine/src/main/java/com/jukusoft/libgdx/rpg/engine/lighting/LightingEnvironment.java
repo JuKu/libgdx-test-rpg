@@ -13,4 +13,8 @@ public interface LightingEnvironment {
 
     public void removeAmbientLightListener (AmbientLightChangedListener listener);
 
+    public void addLighting (Lighting lighting);
+
+    public void removeLighting (Lighting lighting);
+
 }

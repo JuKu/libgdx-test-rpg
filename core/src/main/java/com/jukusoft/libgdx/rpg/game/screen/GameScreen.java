@@ -31,6 +31,9 @@ public class GameScreen extends BaseScreen {
 
         //add hud screen overlay
         game.getScreenManager().push("hud");
+
+        //create game world
+        this.gameWorld = new GameWorld();
     }
 
     @Override
@@ -45,10 +48,16 @@ public class GameScreen extends BaseScreen {
 
             System.out.println("");
         }
+
+        //update game world
+        this.gameWorld.update(game, game.getCamera(), time);
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
         batch.setProjectionMatrix(game.getCamera().combined);
+
+        //draw game world
+        this.gameWorld.draw(time, game.getCamera(), batch);
     }
 
     @Override public void destroy() {

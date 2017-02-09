@@ -66,6 +66,30 @@ public abstract class BaseMap {
         this.changedListener = listener;
     }
 
+    /**
+    * check, if this coordinate is in map
+    */
+    public boolean isPointInFrustum (float x, float y) {
+        if (x >= this.getX() && x < (this.getX() + this.getWidthInPixels())) {
+            if (y >= this.getY() && y < (this.getY() + this.getHeightInPixels())) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+    * check, if map is visible in current viewport
+    */
+    public boolean isMapVisibleInViewPort (Camera camera) {
+        //check borders
+        float cameraWidth = camera.viewportWidth;
+        float cameraHeight = camera.viewportHeight;
+
+        return false;
+    }
+
     public abstract void update (BaseGame game, Camera camera, GameTime time);
 
     public abstract void draw (GameTime time, Camera camera, SpriteBatch batch);

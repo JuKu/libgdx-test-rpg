@@ -31,6 +31,10 @@ public class DefaultInputManager implements InputManager {
         Gdx.input.setInputProcessor(this.inputMultiplexer);
     }
 
+    @Override public BasicInputProcessor getGameInputProcessor() {
+        return this.inputProcessor;
+    }
+
     @Override public void addCustomInputProcessor(InputProcessor inputProcessor) {
         this.inputMultiplexer.addProcessor(0, inputProcessor);
     }

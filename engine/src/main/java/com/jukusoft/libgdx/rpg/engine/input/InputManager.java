@@ -9,6 +9,8 @@ public interface InputManager {
 
     public void setInputProcessor ();
 
+    public BasicInputProcessor getGameInputProcessor ();
+
     public void addCustomInputProcessor (InputProcessor inputProcessor);
 
     public void removeCustomInputProcessor (InputProcessor inputProcessor);

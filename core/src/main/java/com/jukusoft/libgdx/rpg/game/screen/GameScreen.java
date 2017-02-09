@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
+import com.jukusoft.libgdx.rpg.engine.input.impl.CameraZoomListener;
 import com.jukusoft.libgdx.rpg.engine.lighting.Lighting;
 import com.jukusoft.libgdx.rpg.engine.lighting.LightingSystem;
 import com.jukusoft.libgdx.rpg.engine.lighting.TextureLighting;
@@ -35,6 +36,8 @@ public class GameScreen extends BaseScreen {
     //lightings
     Lighting testLighting = null;
 
+    protected CameraZoomListener zoomListener = null;
+
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         game.getAssetManager().load(testTexturePath, Texture.class);
         game.getAssetManager().load(lightMapPath, Texture.class);
@@ -52,6 +55,10 @@ public class GameScreen extends BaseScreen {
         //create new test lighting
         this.testLighting = new TextureLighting(this.lightMap, 200, 200);
         this.lightingSystem.addLighting(this.testLighting);
+
+        //create zoom listener to support camera zoom
+        this.zoomListener = new CameraZoomListener(game.getCamera2D());
+        game.getInputManager().getGameInputProcessor().addScrollListener(this.zoomListener);
     }
 
     @Override

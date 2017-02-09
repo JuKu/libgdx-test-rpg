@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.jukusoft.libgdx.rpg.engine.input.listener.ScrollListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -47,11 +48,22 @@ public class BasicInputProcessor implements InputProcessor {
 
             if (resolved) {
                 //dont execute other listeners
-                break;
+                return true;
             }
         }
 
         return false;
+    }
+
+    public void addScrollListener (ScrollListener listener) {
+        this.scrollListenerList.add(listener);
+
+        //sort list
+        Collections.sort(this.scrollListenerList);
+    }
+
+    public void removeScrollListener (ScrollListener listener) {
+        this.scrollListenerList.remove(listener);
     }
 
 }

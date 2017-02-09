@@ -3,20 +3,19 @@ package com.jukusoft.libgdx.rpg.engine.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.save.SavedGameManager;
 import com.jukusoft.libgdx.rpg.engine.settings.GameSettings;
 import com.jukusoft.libgdx.rpg.engine.settings.IniGameSettings;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.utils.FileUtils;
 import com.jukusoft.libgdx.rpg.engine.version.GameVersion;
 import com.jukusoft.libgdx.rpg.engine.window.ResizeListener;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +74,8 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     protected SavedGameManager savedGameManager = null;
 
+    protected FPSLogger fpsLogger = new FPSLogger();
+
     @Override
     public void resize(final int width, final int height) {
         this.resizeListeners.stream().forEach(consumer -> {
@@ -113,7 +114,20 @@ public abstract class BaseGame extends ApplicationAdapter {
         this.uiCamera.translate(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
         this.uiCamera.update();
 
-        this.initGame();
+        try {
+            this.initGame();
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            try {
+                //write crash dump
+                FileUtils.writeFile("./crash.log", e.getLocalizedMessage(), StandardCharsets.UTF_8);
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+
+            System.exit(0);
+        }
     }
 
     @Override
@@ -142,6 +156,8 @@ public abstract class BaseGame extends ApplicationAdapter {
         this.draw(time, this.batch);
 
         this.batch.end();
+
+        //this.fpsLogger.log();
     }
 
     protected abstract void initGame ();
@@ -152,6 +168,10 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     public Camera getUICamera () {
         return this.uiCamera;
+    }
+
+    public int getFPS () {
+        return Gdx.graphics.getFramesPerSecond();
     }
 
     /**

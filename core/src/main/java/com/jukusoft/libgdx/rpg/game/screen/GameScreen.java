@@ -3,11 +3,13 @@ package com.jukusoft.libgdx.rpg.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
+import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 import com.jukusoft.libgdx.rpg.game.world.GameWorld;
 
 /**
@@ -19,8 +21,17 @@ public class GameScreen extends BaseScreen {
 
     protected GameWorld gameWorld = null;
 
+    protected Texture testTexture = null;
+    protected String testTexturePath = AssetPathUtils.getImagePath("test/water.png");
+
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
-        //
+        game.getAssetManager().load(testTexturePath, Texture.class);
+        game.getAssetManager().finishLoading();
+
+        this.testTexture = game.getAssetManager().get(testTexturePath, Texture.class);
+
+        //create game world
+        this.gameWorld = new GameWorld(this.testTexture);
     }
 
     @Override
@@ -31,9 +42,6 @@ public class GameScreen extends BaseScreen {
 
         //add hud screen overlay
         game.getScreenManager().push("hud");
-
-        //create game world
-        this.gameWorld = new GameWorld();
     }
 
     @Override
@@ -61,7 +69,8 @@ public class GameScreen extends BaseScreen {
     }
 
     @Override public void destroy() {
-
+        this.gameWorld.dispose();
+        this.gameWorld = null;
     }
 
 }

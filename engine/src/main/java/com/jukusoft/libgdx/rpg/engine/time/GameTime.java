@@ -21,7 +21,7 @@ public class GameTime {
 
     public void update () {
         this.time = System.currentTimeMillis();
-        this.delta = Gdx.graphics.getDeltaTime();
+        this.delta = Gdx.graphics.getRawDeltaTime();
     }
 
     public long getTime () {

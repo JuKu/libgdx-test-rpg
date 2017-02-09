@@ -1,5 +1,6 @@
 package com.jukusoft.libgdx.rpg.game.world;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,18 +19,8 @@ public class GameWorldMap extends BaseMap {
 
     protected SectorCoord coord = null;
 
-    //special shader program for water shader
-    protected ShaderProgram waterShader = null;
-    protected ShaderProgram defaultShader = null;
-
     public GameWorldMap (SectorCoord coord) {
         this.coord = coord;
-
-        final String vertexShader = new FileHandle("data/vertexShader.glsl").readString();
-        final String fragmentShader = new FileHandle("data/defaultPixelShader.glsl").readString();
-
-        //create default shader program
-        this.defaultShader = SpriteBatch.createDefaultShader();
 
         //load TMX map
 
@@ -41,6 +32,10 @@ public class GameWorldMap extends BaseMap {
     }
 
     public void draw (GameTime time, Camera camera, SpriteBatch batch) {
+        //
+    }
+
+    public void drawWater (GameTime time, Camera camera, SpriteBatch batch) {
         //
     }
 

@@ -50,7 +50,7 @@ public class GameScreen extends BaseScreen {
         this.lightingSystem = new LightingSystem(game, game.getViewportWidth(), game.getViewportHeight());
 
         //create new test lighting
-        this.testLighting = new TextureLighting(this.lightMap);
+        this.testLighting = new TextureLighting(this.lightMap, 200, 200);
         this.lightingSystem.addLighting(this.testLighting);
     }
 
@@ -92,6 +92,9 @@ public class GameScreen extends BaseScreen {
 
         //draw game world
         this.gameWorld.draw(time, game.getCamera(), batch);
+
+        //draw lightmap (only for testing purposes)
+        //batch.draw(lightingSystem.getFBO().getColorBufferTexture(), 0, 0);
     }
 
     @Override public void destroy() {

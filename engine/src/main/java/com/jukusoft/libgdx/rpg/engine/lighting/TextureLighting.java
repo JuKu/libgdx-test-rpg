@@ -14,10 +14,11 @@ public class TextureLighting extends BaseLighting {
 
     protected Texture lightMapTexture = null;
     protected boolean lightOscillate = false;
-    protected float lightSize = 1;
+    protected float lightSize = 100;
     protected float zAngle = 0;
 
-    public TextureLighting (Texture lightMap) {
+    public TextureLighting (Texture lightMap, float x, float y) {
+        super(x, y);
         this.lightMapTexture = lightMap;
     }
 

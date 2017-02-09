@@ -12,6 +12,11 @@ public abstract class BaseLighting implements Lighting {
     protected float x = 0;
     protected float y = 0;
 
+    public BaseLighting (float x, float y) {
+        this.x = y;
+        this.y = y;
+    }
+
     @Override public float getX() {
         return this.x;
     }

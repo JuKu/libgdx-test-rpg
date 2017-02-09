@@ -40,7 +40,7 @@ public class LightingSystem implements LightingEnvironment {
     public static final float PI2 = 3.1415926535897932384626433832795f * 2.0f;
 
     //used for drawing
-    private boolean lightOscillate = false;
+    private boolean lightOscillate = true;
 
     protected List<Lighting> lightings = new ArrayList<>();
 
@@ -92,7 +92,8 @@ public class LightingSystem implements LightingEnvironment {
         while(zAngle > PI2)
             zAngle -= PI2;
 
-        float lightSize = lightOscillate ? (4.75f + 0.25f * (float) Math.sin(zAngle) + .2f * MathUtils.random()) : 5.0f;
+        float lightSize = lightOscillate ? (4.75f + 0.25f * (float) Math.sin(zAngle) + .2f * MathUtils.random()) * 50 : 200.0f;
+        //System.out.println("lightSize: " + lightSize);
 
         //update lightings
         this.visibleLightings.stream().forEach(lighting -> {
@@ -141,9 +142,6 @@ public class LightingSystem implements LightingEnvironment {
     }
 
     protected void drawLights (GameTime time, SpriteBatch batch) {
-        //float lightSize = lightOscillate ? (4.75f + 0.25f * (float) Math.sin(zAngle) + .2f * MathUtils.random()) : 5.0f;
-        //batch.draw(light, tilemap.campFirePosition.x - lightSize*0.5f + 0.5f,tilemap.campFirePosition.y + 0.5f - lightSize*0.5f, lightSize, lightSize);
-
         //draw lightings
         this.visibleLightings.stream().forEach(lighting -> {
             lighting.draw(time, batch);
@@ -194,4 +192,9 @@ public class LightingSystem implements LightingEnvironment {
             listener.changedAmbientLight(ambientColor.x, ambientColor.y, ambientColor.z, ambientIntensity);
         });
     }
+
+    public FrameBuffer getFBO () {
+        return this.fbo;
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.game.hud;
+package com.jukusoft.libgdx.rpg.engine.hud;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;

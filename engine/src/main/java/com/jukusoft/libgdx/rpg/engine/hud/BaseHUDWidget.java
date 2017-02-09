@@ -1,8 +1,7 @@
-package com.jukusoft.libgdx.rpg.game.hud;
+package com.jukusoft.libgdx.rpg.engine.hud;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
 /**

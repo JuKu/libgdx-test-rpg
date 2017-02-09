@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.game.hud;
+package com.jukusoft.libgdx.rpg.engine.hud;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
-import com.jukusoft.libgdx.rpg.game.hud.BaseHUDWidget;
-import com.jukusoft.libgdx.rpg.game.hud.HUDWidget;
 
 /**
  * Created by Justin on 08.02.2017.

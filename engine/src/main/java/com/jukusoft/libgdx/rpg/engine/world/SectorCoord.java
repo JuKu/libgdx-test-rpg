@@ -42,6 +42,11 @@ public class SectorCoord {
     }
 
     @Override
+    public String toString () {
+        return "Sector (" + x + ", " + y + ", " + layer + ")";
+    }
+
+    @Override
     public boolean equals (Object obj) {
         if (!(obj instanceof SectorCoord)) {
             throw new IllegalArgumentException("object has to be an instance of SectorCoord to check, if equals.");

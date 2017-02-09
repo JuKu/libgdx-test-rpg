@@ -14,6 +14,7 @@ import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skybox.SimpleSkyBox;
 import com.jukusoft.libgdx.rpg.engine.skybox.SkyBox;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 import com.jukusoft.libgdx.rpg.game.world.GameWorld;
@@ -52,9 +53,6 @@ public class GameScreen extends BaseScreen {
         this.lightMap = game.getAssetManager().get(lightMapPath, Texture.class);
         this.skyBoxTexture = game.getAssetManager().get(skyBoxPath, Texture.class);
 
-        //create game world
-        this.gameWorld = new GameWorld(this.testTexture);
-
         //create new lighting system
         this.lightingSystem = new LightingSystem(game, game.getViewportWidth(), game.getViewportHeight());
 
@@ -69,9 +67,16 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void onResume () {
+        //TODO: maybe load data
         this.characterData = new CharacterData();
 
         game.getSharedData().put("character_data", this.characterData);
+
+        //get current sector
+        SectorCoord coord = this.characterData.getCurrentSector();
+
+        //create game world
+        this.gameWorld = new GameWorld(coord, this.testTexture);
 
         //set correct input processor
         game.getInputManager().setInputProcessor();

@@ -61,6 +61,10 @@ public class AssetPathUtils {
         return "./data/lightmap/" + lightMapPath;
     }
 
+    public static String getMapPath (String lightMapPath) {
+        return "./data/maps/" + lightMapPath;
+    }
+
     public static String getStoryPath(String lang, String fileName) {
         return "./data/story/" + lang + "/" + fileName;
     }

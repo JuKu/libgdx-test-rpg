@@ -5,9 +5,11 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
+import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
 /**
  * Created by Justin on 09.02.2017.
@@ -19,8 +21,16 @@ public class GameWorldMap extends BaseMap {
 
     protected SectorCoord coord = null;
 
+    protected String mapDirPath = "";
+    protected String mapPath = "";
+    protected TiledMap tiledMap = null;
+
     public GameWorldMap (SectorCoord coord) {
         this.coord = coord;
+
+        String dirName = "map_" + coord.getX() + "_" + coord.getY() + "_" + coord.getLayer() + "";
+        this.mapDirPath = AssetPathUtils.getMapPath(dirName + "/");
+        this.mapPath = AssetPathUtils.getMapPath(dirName + "/" + dirName + ".tmx");
 
         //load TMX map
 

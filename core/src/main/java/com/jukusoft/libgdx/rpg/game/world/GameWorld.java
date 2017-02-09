@@ -48,14 +48,14 @@ public class GameWorld {
     protected Texture testTexture = null;
 
     protected volatile boolean animateWater = true;
-
     protected ShaderProgram currentShader = null;
-
     protected SkyBox skyBox = null;
+
+    protected SectorCoord currentSector = null;
 
     //https://github.com/libgdx/libgdx/wiki/Tile-maps
 
-    public GameWorld (Texture texture) {
+    public GameWorld (SectorCoord coord, Texture texture) {
         //initialize shader programs
         try {
             this.initShaders();
@@ -65,6 +65,10 @@ public class GameWorld {
         }
 
         this.testTexture = texture;
+        this.currentSector = coord;
+
+        //load first map
+        this.loadMap(coord);
     }
 
     protected void initShaders () throws IOException {
@@ -94,6 +98,7 @@ public class GameWorld {
 
     protected void loadMap (SectorCoord coord) {
         //load map from cache or from file
+
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {

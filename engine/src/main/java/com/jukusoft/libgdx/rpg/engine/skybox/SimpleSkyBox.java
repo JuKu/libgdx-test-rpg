@@ -89,7 +89,7 @@ public class SimpleSkyBox implements SkyBox {
         this.worldPosX += (x * smoothFactorX);
         this.worldPosY += (y * smoothFactorY);
 
-        camera.translate((x * smoothFactorX), (y * smoothFactorY), 0);
+        camera.translate((x * smoothFactorX), /*(y * smoothFactorY)*/0, 0);
     }
 
     @Override public void setSmoothFactor(float x, float y) {

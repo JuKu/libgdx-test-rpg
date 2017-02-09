@@ -53,6 +53,14 @@ public class GameWorld {
 
     protected SectorCoord currentSector = null;
 
+    protected int NEAR_X_MAPS = 1;
+    protected int NEAR_Y_MAPS = 1;
+
+    //map with all cached maps
+    protected Map<SectorCoord,GameWorldMap> mapCache = new ConcurrentHashMap<>();
+
+    protected List<SectorChangedListener> sectorChangedListenerList = new ArrayList<>();
+
     //https://github.com/libgdx/libgdx/wiki/Tile-maps
 
     public GameWorld (SectorCoord coord, Texture texture) {
@@ -98,7 +106,53 @@ public class GameWorld {
 
     protected void loadMap (SectorCoord coord) {
         //load map from cache or from file
+        System.out.println("load map: " + coord);
 
+        GameWorldMap map = this.mapCache.get(coord);
+
+        //check, if map is cached
+        if (map == null) {
+            //load map
+            map = new GameWorldMap(coord);
+
+            //add map to cache
+            this.mapCache.put(coord, map);
+        }
+
+        //check, if map is near current map
+        if (isMapNearCurrent(coord)) {
+            System.out.println("load new visible map: " + coord);
+        }
+    }
+
+    public boolean isMapNearCurrent (SectorCoord coord) {
+        if (this.currentSector.getLayer() != coord.getLayer()) {
+            //maps on other layers arent near by another map
+            return false;
+        }
+
+        if (currentSector.getX() - NEAR_X_MAPS >= coord.getX() || coord.getX() <= currentSector.getX() + NEAR_X_MAPS) {
+            if (currentSector.getY() - NEAR_Y_MAPS >= coord.getY() || coord.getY() <= currentSector.getY() + NEAR_Y_MAPS) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public void cleanUpVisibleMapCache () {
+        for (GameWorldMap map : this.visibleMaps) {
+            if (!this.isMapNearCurrent(map.getSectorCoord())) {
+                //remove map from cache
+                this.visibleMaps.remove(map);
+                this.mapCache.remove(map.getSectorCoord());
+
+                //dispose map
+                map.dispose();
+
+                map = null;
+            }
+        }
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {
@@ -114,6 +168,9 @@ public class GameWorld {
                 this.visibleMaps.remove(map);
             }
         });
+
+        //cleanUp not visible maps
+        this.cleanUpVisibleMapCache();
 
         //TODO: check, if user walk to near maps, if so, load near maps to draw queue
     }
@@ -228,6 +285,32 @@ public class GameWorld {
 
     public void setSkyBox (SkyBox skyBox) {
         this.skyBox = skyBox;
+    }
+
+    public SectorCoord getCurrentSector () {
+        return this.currentSector;
+    }
+
+    public void setCurrentSector (int x, int y, int layer) {
+        this.currentSector.setX(x);
+        this.currentSector.setY(y);
+        this.currentSector.setLayer(layer);
+
+        this.notifySectorChangedListener();
+    }
+
+    protected void notifySectorChangedListener () {
+        this.sectorChangedListenerList.stream().forEach(listener -> {
+            listener.sectorChanged(this.currentSector);
+        });
+    }
+
+    public void addSectorChangedListener (SectorChangedListener listener) {
+        this.sectorChangedListenerList.add(listener);
+    }
+
+    public void removeSectorChangedListener (SectorChangedListener listener) {
+        this.sectorChangedListenerList.remove(listener);
     }
 
 }

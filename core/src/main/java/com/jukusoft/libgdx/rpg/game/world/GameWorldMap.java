@@ -33,8 +33,13 @@ public class GameWorldMap extends BaseMap {
         this.mapPath = AssetPathUtils.getMapPath(dirName + "/" + dirName + ".tmx");
 
         //load TMX map
+        this.load();
 
         //load map information (water, collision, NPCs and so on)
+    }
+
+    public void load () {
+        //
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {
@@ -46,6 +51,14 @@ public class GameWorldMap extends BaseMap {
     }
 
     public void drawWater (GameTime time, Camera camera, SpriteBatch batch) {
+        //
+    }
+
+    public SectorCoord getSectorCoord () {
+        return this.coord;
+    }
+
+    public void dispose () {
         //
     }
 

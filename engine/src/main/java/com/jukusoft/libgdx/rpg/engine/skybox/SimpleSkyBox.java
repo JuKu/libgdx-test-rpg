@@ -73,8 +73,8 @@ public class SimpleSkyBox implements SkyBox {
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
-        System.out.println("draw skybox, x: " + x + ", y: " + y + ", offsetX: " + offsetX + ", skybox width: " + skyBoxTexture.getWidth());
-        System.out.println("pointX1: " + pointX1 + ", pointX2: " + pointX2);
+        //System.out.println("draw skybox, x: " + x + ", y: " + y + ", offsetX: " + offsetX + ", skybox width: " + skyBoxTexture.getWidth());
+        //System.out.println("pointX1: " + pointX1 + ", pointX2: " + pointX2);
 
         //set skybox camera
         batch.setProjectionMatrix(camera.combined);

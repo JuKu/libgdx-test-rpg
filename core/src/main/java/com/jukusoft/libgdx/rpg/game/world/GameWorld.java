@@ -48,6 +48,8 @@ public class GameWorld {
 
     protected volatile boolean animateWater = true;
 
+    //https://github.com/libgdx/libgdx/wiki/Tile-maps
+
     public GameWorld (Texture texture) {
         //initialize shader programs
         try {

@@ -64,11 +64,17 @@ public class GameScreen extends BaseScreen {
             System.out.println("");
         }
 
+        //update lighting system
+        this.lightingSystem.update(game, game.getCamera(), time);
+
         //update game world
         this.gameWorld.update(game, game.getCamera(), time);
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
+        //draw lighting framebuffer
+        this.lightingSystem.drawFBO(time, game.getCamera(), batch);
+
         batch.setProjectionMatrix(game.getCamera().combined);
 
         //draw game world

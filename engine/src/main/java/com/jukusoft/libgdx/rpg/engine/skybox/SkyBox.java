@@ -13,4 +13,6 @@ public interface SkyBox {
 
     public void draw (GameTime time, SpriteBatch batch);
 
+    public void translate (float x, float y);
+
 }

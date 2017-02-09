@@ -215,6 +215,10 @@ public class GameWorld {
         }
     }
 
+    public SkyBox getSkyBox () {
+        return this.skyBox;
+    }
+
     public void setSkyBox (SkyBox skyBox) {
         this.skyBox = skyBox;
     }

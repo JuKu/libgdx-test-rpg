@@ -11,6 +11,8 @@ import com.jukusoft.libgdx.rpg.engine.lighting.Lighting;
 import com.jukusoft.libgdx.rpg.engine.lighting.LightingSystem;
 import com.jukusoft.libgdx.rpg.engine.lighting.TextureLighting;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
+import com.jukusoft.libgdx.rpg.engine.skybox.SimpleSkyBox;
+import com.jukusoft.libgdx.rpg.engine.skybox.SkyBox;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
@@ -29,6 +31,8 @@ public class GameScreen extends BaseScreen {
     protected String testTexturePath = AssetPathUtils.getImagePath("test/water.png");
     protected String lightMapPath = AssetPathUtils.getLightMapPath("lightmap1/light.png");
     protected Texture lightMap = null;
+    protected String skyBoxPath = AssetPathUtils.getWallpaperPath("ocean/Ocean_large.png");
+    protected Texture skyBoxTexture = null;
 
     //lighting system
     LightingSystem lightingSystem = null;
@@ -41,10 +45,12 @@ public class GameScreen extends BaseScreen {
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         game.getAssetManager().load(testTexturePath, Texture.class);
         game.getAssetManager().load(lightMapPath, Texture.class);
+        game.getAssetManager().load(skyBoxPath, Texture.class);
         game.getAssetManager().finishLoading();
 
         this.testTexture = game.getAssetManager().get(testTexturePath, Texture.class);
         this.lightMap = game.getAssetManager().get(lightMapPath, Texture.class);
+        this.skyBoxTexture = game.getAssetManager().get(skyBoxPath, Texture.class);
 
         //create game world
         this.gameWorld = new GameWorld(this.testTexture);
@@ -72,6 +78,10 @@ public class GameScreen extends BaseScreen {
 
         //add hud screen overlay
         game.getScreenManager().push("hud");
+
+        //create skybox
+        SkyBox skyBox = new SimpleSkyBox(this.skyBoxTexture);
+        this.gameWorld.setSkyBox(skyBox);
     }
 
     @Override
@@ -82,9 +92,19 @@ public class GameScreen extends BaseScreen {
 
     @Override public void update(ScreenBasedGame game, GameTime time) {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            game.getCamera().translate(-1, 0, 0);
+            //move camera
+            game.getCamera().translate(-5, 0, 0);
 
-            System.out.println("");
+            //move skybox
+            gameWorld.getSkyBox().translate(-5, 0);
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            //move camera
+            game.getCamera().translate(5, 0, 0);
+
+            //move skybox
+            gameWorld.getSkyBox().translate(5, 0);
         }
 
         //update lighting system
@@ -134,6 +154,9 @@ public class GameScreen extends BaseScreen {
 
         this.lightingSystem.dispose();
         this.lightingSystem = null;
+
+        this.skyBoxTexture.dispose();
+        this.skyBoxTexture = null;
     }
 
 }

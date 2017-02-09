@@ -28,7 +28,7 @@ public abstract class BaseMap {
     protected MapPositionChangedListener changedListener = null;
 
     public BaseMap () {
-        this.boundingBox = new BoundingBox(new Vector3(x, y, 0), new Vector3(getWidthInPixels(), getHeightInPixels(), 0));
+        this.boundingBox = new BoundingBox(new Vector3(x, y, 0), new Vector3(x + getWidthInPixels(), y + getHeightInPixels(), 0));
     }
 
     public float getX () {

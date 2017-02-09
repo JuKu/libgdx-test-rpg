@@ -85,7 +85,7 @@ public class GameScreen extends BaseScreen {
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
-        //draw lighting framebuffer
+        //draw lighting framebuffer first
         this.lightingSystem.drawFBO(time, game.getCamera(), batch);
 
         batch.setProjectionMatrix(game.getCamera().combined);

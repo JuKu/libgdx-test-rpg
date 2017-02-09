@@ -130,6 +130,9 @@ public class LightingSystem implements LightingEnvironment {
             batch.begin();
         }
 
+        //we have to clear buffer, else it will also drawn to actual buffer instad only to framebuffer
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         //after drawing instead of using shaders, you can also use shading:
         //batch.setBlendFunction(GL20.GL_DST_COLOR, GL20.GL_SRC_ALPHA);
         //theLightSprite.draw(batch, parentAlpha);

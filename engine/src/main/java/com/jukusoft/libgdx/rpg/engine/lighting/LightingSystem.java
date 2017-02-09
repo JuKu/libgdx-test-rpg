@@ -27,6 +27,8 @@ public class LightingSystem {
 
     //http://www.alcove-games.com/opengl-es-2-tutorials/lightmap-shader-fire-effect-glsl/
 
+    protected ShaderProgram lightShader = null;
+
     //used to make the light flicker
     public float zAngle;
     public static final float zSpeed = 15.0f;

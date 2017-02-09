@@ -15,4 +15,6 @@ public interface SkyBox {
 
     public void translate (float x, float y);
 
+    public void setSmoothFactor (float x, float y);
+
 }

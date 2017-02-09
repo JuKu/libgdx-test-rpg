@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
+import com.jukusoft.libgdx.rpg.engine.hud.ImageWidget;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
@@ -21,6 +22,8 @@ import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 public class HUDOverlayScreen extends BaseScreen {
 
     protected static final String HEART_ICON_PATH = AssetPathUtils.getImagePath("icons/heart/heart_32.png");
+    protected static final String DIAMOND_ICON_PATH = AssetPathUtils.getImagePath("icons/diamond/diamond_32.png");
+    protected static final String LOGO_PATH = AssetPathUtils.getImagePath("general/icon_transparency.png");
 
     protected CharacterData characterData = null;
 
@@ -28,15 +31,16 @@ public class HUDOverlayScreen extends BaseScreen {
 
     //HUD
     protected HUD hud = null;
-    //protected FilledBar healthBar = null;
     protected static final int FONT_SIZE = 18;
-    //protected ImageWidget heartImageWidget = null;
-    //protected WidgetGroup heartWidgetGroup = null;
     protected FilledIconBar healthBar = null;
+    protected FilledIconBar manaBar = null;
+    protected ImageWidget logoImageWidget = null;
 
     //assets
     protected BitmapFont font = null;
     protected Texture heartTexture = null;
+    protected Texture diamondTexture = null;
+    protected Texture logoTexture = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         this.font = BitmapFontFactory
@@ -44,11 +48,15 @@ public class HUDOverlayScreen extends BaseScreen {
 
         //load assets
         game.getAssetManager().load(HEART_ICON_PATH, Texture.class);
+        game.getAssetManager().load(DIAMOND_ICON_PATH, Texture.class);
+        game.getAssetManager().load(LOGO_PATH, Texture.class);
 
         //wait while all assets was loaded
         game.getAssetManager().finishLoading();
 
         this.heartTexture = game.getAssetManager().get(HEART_ICON_PATH, Texture.class);
+        this.diamondTexture = game.getAssetManager().get(DIAMOND_ICON_PATH, Texture.class);
+        this.logoTexture = game.getAssetManager().get(LOGO_PATH, Texture.class);
     }
 
     @Override
@@ -70,6 +78,18 @@ public class HUDOverlayScreen extends BaseScreen {
         this.healthBar.setMaxValue(this.characterData.getMaxHealth());
         this.healthBar.setValue(this.characterData.getHealth());
         this.hud.addWidget(this.healthBar);
+
+        //create new mana bar
+        this.manaBar = new FilledIconBar(this.diamondTexture, this.font);
+        this.manaBar.setPosition(game.getViewportWidth() - 240, game.getViewportHeight() - 126);
+        this.manaBar.setMaxValue(this.characterData.getMaxMana());
+        this.manaBar.setValue(this.characterData.getMana());
+        this.hud.addWidget(this.manaBar);
+
+        //add logo image widget
+        this.logoImageWidget = new ImageWidget(this.logoTexture);
+        this.logoImageWidget.setPosition(20, game.getViewportHeight() - 20);
+        this.hud.addWidget(this.logoImageWidget);
     }
 
     @Override
@@ -85,6 +105,11 @@ public class HUDOverlayScreen extends BaseScreen {
         this.healthBar.setMaxValue(this.characterData.getMaxHealth());
         this.healthBar.setValue(this.characterData.getHealth());
         this.healthBar.setText(this.healthBar.getPercent() + "%");
+
+        //update mana bar
+        this.manaBar.setMaxValue(this.characterData.getMaxMana());
+        this.manaBar.setValue(this.characterData.getMana());
+        this.manaBar.setText(this.manaBar.getPercent() + "%");
 
         this.hud.update(game, time);
     }

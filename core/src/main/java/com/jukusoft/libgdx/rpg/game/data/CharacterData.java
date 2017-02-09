@@ -8,6 +8,9 @@ public class CharacterData {
     protected float health = 100;
     protected float maxHealth = 200;
 
+    protected float mana = 20;
+    protected float maxMana = 200;
+
     public CharacterData() {
         //
     }
@@ -18,6 +21,14 @@ public class CharacterData {
 
     public float getMaxHealth () {
         return this.maxHealth;
+    }
+
+    public float getMana () {
+        return this.mana;
+    }
+
+    public float getMaxMana () {
+        return this.maxMana;
     }
 
 }

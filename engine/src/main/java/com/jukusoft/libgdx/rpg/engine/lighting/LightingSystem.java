@@ -42,6 +42,9 @@ public class LightingSystem implements LightingEnvironment {
     //used for drawing
     private boolean lightOscillate = false;
 
+    //list with all visible lightings in viewport
+    protected List<Lighting> visibleLightings = new ArrayList<>();
+
     protected List<AmbientLightChangedListener> ambientLightChangedListenerList = new ArrayList<>();
 
     public LightingSystem (BaseGame game, int width, int height) {
@@ -80,7 +83,10 @@ public class LightingSystem implements LightingEnvironment {
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {
-        //
+        //update lightings
+        this.visibleLightings.stream().forEach(lighting -> {
+            lighting.update(game, time);
+        });
     }
 
     public void drawFBO (GameTime time, Camera camera, SpriteBatch batch) {
@@ -117,6 +123,11 @@ public class LightingSystem implements LightingEnvironment {
     protected void drawLights (GameTime time, SpriteBatch batch) {
         float lightSize = lightOscillate ? (4.75f + 0.25f * (float) Math.sin(zAngle) + .2f * MathUtils.random()) : 5.0f;
         //batch.draw(light, tilemap.campFirePosition.x - lightSize*0.5f + 0.5f,tilemap.campFirePosition.y + 0.5f - lightSize*0.5f, lightSize, lightSize);
+
+        //draw lightings
+        this.visibleLightings.stream().forEach(lighting -> {
+            lighting.draw(time, lightSize, batch);
+        });
     }
 
     public void dispose () {

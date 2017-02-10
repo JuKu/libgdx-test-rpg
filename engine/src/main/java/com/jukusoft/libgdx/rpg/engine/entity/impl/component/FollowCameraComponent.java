@@ -12,7 +12,7 @@ import com.jukusoft.libgdx.rpg.engine.time.GameTime;
  */
 public class FollowCameraComponent extends BaseComponent implements IUpdateComponent {
 
-    protected float lerp = 0.1f;
+    protected float lerp = 0.5f;
     protected PositionComponent entityPosition = null;
 
     @Override
@@ -36,6 +36,7 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
         //calculate camera middle
         float currentCameraMiddleX = game.getCamera().position.x + (screenWidth / 2);
         float currentCameraMiddleY = game.getCamera().position.y + (screenHeight / 2);
+        System.out.println("current camera middle X: " + currentCameraMiddleX + ", Y: " + currentCameraMiddleY + ", zoom: " + game.getCamera2D().zoom);
 
         float targetX = entityPosition.getX();
         float targetY = entityPosition.getY();

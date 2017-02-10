@@ -20,7 +20,7 @@ public class DefaultInputMapper implements InputMapper {
         this.map.remove(keyCode, actionCode);
     }
 
-    @Override public int getActionCode(int keyCode) {
+    @Override public long getActionCode(int keyCode) {
         Integer i = map.get(keyCode);
 
         if (i == null) {

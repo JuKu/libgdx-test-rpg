@@ -136,6 +136,17 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
         }
     }
 
+    @Override
+    public void removeAllEntities () {
+        //ierate through all entities
+        for (Map.Entry<Long,Entity> entry : this.entityMap.entrySet()) {
+            if (entry.getValue() != null) {
+                //remove entity
+                removeEntity(entry.getValue());
+            }
+        }
+    }
+
     protected abstract void onEntityAdded (Entity entity);
 
     protected abstract void onEntityRemoved (Entity entity);
@@ -143,5 +154,10 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
     public abstract <T extends IComponent> void onComponentAdded (Entity entity, T component, Class<T> cls);
 
     public abstract <T extends IComponent> void onComponentRemoved (Entity entity, T component, Class<T> cls);
+
+    @Override
+    public void dispose () {
+        //
+    }
 
 }

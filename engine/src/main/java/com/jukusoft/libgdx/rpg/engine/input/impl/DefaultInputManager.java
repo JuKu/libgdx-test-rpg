@@ -25,7 +25,7 @@ public class DefaultInputManager implements InputManager {
     /**
     * list with all actions codes (mapped keys) which are pressed
     */
-    protected List<Integer> pressedActionKeys = new ArrayList<>();
+    protected List<Long> pressedActionKeys = new ArrayList<>();
 
     public DefaultInputManager () {
         //create new input processor
@@ -44,7 +44,7 @@ public class DefaultInputManager implements InputManager {
         this.inputProcessor.addKeyListener(new KeyListener() {
             @Override public boolean keyDown(int keycode) {
                 //get action code for key
-                int actionCode = inputMapper.getActionCode(keycode);
+                long actionCode = inputMapper.getActionCode(keycode);
 
                 //add action code to pressed action keys list
                 pressedActionKeys.add(actionCode);
@@ -54,7 +54,7 @@ public class DefaultInputManager implements InputManager {
 
             @Override public boolean keyUp(int keycode) {
                 //get action code for key
-                int actionCode = inputMapper.getActionCode(keycode);
+                long actionCode = inputMapper.getActionCode(keycode);
 
                 //remove action code from pressed action keys list
                 pressedActionKeys.remove(actionCode);

@@ -16,8 +16,12 @@ public interface EntityManager {
 
     public void removeEntity (final long entityID);
 
+    public void removeAllEntities ();
+
     public void update (BaseGame game, GameTime time);
 
     public void draw (GameTime time, Camera camera, SpriteBatch batch);
+
+    public void dispose ();
 
 }

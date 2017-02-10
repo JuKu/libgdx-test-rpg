@@ -26,6 +26,6 @@ public interface InputMapper {
      *
      * @param keyCode keyCode of key on keyboard
     */
-    public int getActionCode (int keyCode);
+    public long getActionCode (int keyCode);
 
 }

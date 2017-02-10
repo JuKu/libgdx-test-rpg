@@ -97,10 +97,18 @@ public class Entity {
                 }
             });
         }
+
+        this.onComponentAdded(this, component, cls);
     }
 
     public <T extends IComponent> void removeComponent (Class<T> cls) {
         IComponent component = this.componentMap.get(cls);
+
+        if (component != null && cls.isInstance(component)) {
+            this.onComponentRemoved(this, cls.cast(component), cls);
+        } else {
+            this.onComponentRemoved(this, null, cls);
+        }
 
         //remove component from map
         this.componentMap.remove(cls);
@@ -114,6 +122,14 @@ public class Entity {
             //dispose component
             component.dispose();
         }
+    }
+
+    protected <T extends IComponent> void onComponentAdded (Entity entity, T component, Class<T> cls) {
+        //TODO: call ECS listener
+    }
+
+    protected <T extends IComponent> void onComponentRemoved (Entity entity, T component, Class<T> cls) {
+        //TODO: call ECS listener
     }
 
 }

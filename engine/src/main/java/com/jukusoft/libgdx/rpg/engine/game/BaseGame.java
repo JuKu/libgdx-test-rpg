@@ -92,6 +92,8 @@ public abstract class BaseGame extends ApplicationAdapter {
     //tasks which should be executed in OpenGL context thread
     protected Queue<Runnable> uiQueue = new ConcurrentLinkedQueue<>();
 
+    protected long lastFPSWarning = 0;
+
     @Override
     public void resize(final int width, final int height) {
         this.resizeListeners.stream().forEach(consumer -> {
@@ -159,7 +161,16 @@ public abstract class BaseGame extends ApplicationAdapter {
 
         int fps = getFPS();
         if (fps <= 55 && fps != 0) {
-            System.err.println("Warning! FPS is <= 55, FPS: " + fps);
+            //check, if warning was already log this second
+            long now = System.currentTimeMillis();
+            long nowWarnSecond = now / 1000;
+            long lastWarnSecond = lastFPSWarning / 1000;
+
+            if (nowWarnSecond != lastWarnSecond) {
+                System.err.println("Warning! FPS is <= 55, FPS: " + fps);
+                
+                lastFPSWarning = System.currentTimeMillis();
+            }
         }
 
         //execute tasks, which should be executed in OpenGL context thread

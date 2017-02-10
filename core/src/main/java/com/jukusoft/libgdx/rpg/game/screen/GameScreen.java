@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.ECS;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
@@ -48,6 +49,7 @@ public class GameScreen extends BaseScreen {
     protected CameraZoomListener zoomListener = null;
 
     protected EntityManager ecs = null;
+    protected Entity playerEntity = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         game.getAssetManager().load(testTexturePath, Texture.class);
@@ -72,6 +74,9 @@ public class GameScreen extends BaseScreen {
         //create zoom listener to support camera zoom
         this.zoomListener = new CameraZoomListener(game.getCamera2D());
         game.getInputManager().getGameInputProcessor().addScrollListener(this.zoomListener);
+
+        //create new entity component system
+        this.ecs = new ECS(game);
     }
 
     @Override
@@ -98,16 +103,23 @@ public class GameScreen extends BaseScreen {
         //create skybox
         SkyBox skyBox = new SimpleSkyBox(this.skyBoxTexture);
         this.gameWorld.setSkyBox(skyBox);
+
+        //initialize entity component system
+
+        //create an entity for player
     }
 
     @Override
     public void onPause () {
         //remove hud screen overlay
         game.getScreenManager().pop();
+
+        //remove all entitites
+        this.ecs.removeAllEntities();
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
+        /*if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             //move camera
             game.getCamera().translate(-5, 0, 0);
 
@@ -147,13 +159,16 @@ public class GameScreen extends BaseScreen {
         if (Gdx.input.isKeyPressed(Input.Keys.L)) {
             //enable lighting
             lightingSystem.setLightingEnabled(true);
-        }
-
-        //update lighting system
-        this.lightingSystem.update(game, game.getCamera(), time);
+        }*/
 
         //update game world
         this.gameWorld.update(game, game.getCamera(), time);
+
+        //update entities
+        this.ecs.update(game, time);
+
+        //update lighting system
+        this.lightingSystem.update(game, game.getCamera(), time);
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
@@ -176,7 +191,7 @@ public class GameScreen extends BaseScreen {
         //this is because our default and ambiant shader dont use multi texturing...
         //youc can basically bind anything, it doesnt matter
 
-        batch.draw(testTexture, 0, 0);
+        //batch.draw(testTexture, 0, 0);
 
         //draw game world
         if (this.lightingSystem.isLightingEnabled()) {
@@ -184,6 +199,9 @@ public class GameScreen extends BaseScreen {
         } else {
             this.gameWorld.draw(time, game.getCamera(), null, batch);
         }
+
+        //draw entities
+        this.ecs.draw(time, game.getCamera(), batch);
 
         //draw lightmap (only for testing purposes)
         //batch.draw(lightingSystem.getFBO().getColorBufferTexture(), 0, 0);

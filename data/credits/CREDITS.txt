@@ -47,6 +47,7 @@ Specical thanks to:
  - pentaquin.com project
  - libGDX team
  - alcove-games.com for nice tutorials
+ - Patrick D. for some tips about OpenGL & rendering
  - Christian Greiner (smooth camera tip)
 
 ## Links

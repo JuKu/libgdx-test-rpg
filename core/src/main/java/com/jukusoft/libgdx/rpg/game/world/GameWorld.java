@@ -153,9 +153,27 @@ public class GameWorld {
     }
 
     public void cleanUpVisibleMapCache () {
-        for (GameWorldMap map : this.visibleMaps) {
+        /*for (GameWorldMap map : this.visibleMaps) {
             if (!this.isMapNearCurrent(map.getSectorCoord())) {
                 System.out.println("cleanUp map: " + map.getSectorCoord());
+
+                //remove map from cache
+                this.visibleMaps.remove(map);
+                this.mapCache.remove(map.getSectorCoord());
+
+                //dispose map
+                map.dispose();
+
+                map = null;
+            }
+        }*/
+
+        for (Map.Entry<SectorCoord,GameWorldMap> entry : this.mapCache.entrySet()) {
+            SectorCoord coord = entry.getKey();
+            GameWorldMap map = entry.getValue();
+
+            if (!this.isMapNearCurrent(coord)) {
+                System.out.println("cleanUp map: " + coord);
 
                 //remove map from cache
                 this.visibleMaps.remove(map);
@@ -225,8 +243,13 @@ public class GameWorld {
 
         //render all maps which are visible
         this.visibleMaps.stream().forEach(map -> {
-            //draw map
-            map.draw(time, camera, this.currentShader, batch);
+            //check, if map is visible in viewport
+            if (map.isMapVisibleInViewPort(camera)) {
+                //only draw map if map is visible in viewport
+
+                //draw map
+                map.draw(time, camera, this.currentShader, batch);
+            }
         });
     }
 

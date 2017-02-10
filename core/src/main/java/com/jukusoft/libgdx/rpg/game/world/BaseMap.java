@@ -21,8 +21,8 @@ public abstract class BaseMap {
     protected float tileHeight = 32;
 
     //number of tiles
-    protected float widthInTiles = 30;
-    protected float heightInTiles = 30;
+    protected float cols = 30;
+    protected float rows = 30;
 
     protected BoundingBox boundingBox = null;
 
@@ -41,11 +41,11 @@ public abstract class BaseMap {
     }
 
     public float getWidthInPixels () {
-        return this.widthInTiles * tileWidth;
+        return this.cols * tileWidth;
     }
 
     public float getHeightInPixels () {
-        return this.heightInTiles * tileHeight;
+        return this.rows * tileHeight;
     }
 
     public void setPosition (float x, float y) {

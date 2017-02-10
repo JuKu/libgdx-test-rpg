@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.hud.ImageWidget;
@@ -273,19 +275,21 @@ public class HUDOverlayScreen extends BaseScreen {
         horizontalGroup.addActor(blueSlider);
 
         TextButton button = new TextButton("Reset", this.uiSkin);
-        button.addCaptureListener(event -> {
-            System.out.println("reset lighting control.");
+        button.addCaptureListener(new ClickListener() {
 
-            lightingEnvironment.setAmbientIntensity(0.7f);
-            lightingEnvironment.setAmbientColor(0.3f, 0.3f, 0.7f);
+            public void clicked (InputEvent event, float x, float y) {
+                System.out.println("reset lighting control.");
 
-            slider.setValue(0.7f);
+                lightingEnvironment.setAmbientIntensity(0.7f);
+                lightingEnvironment.setAmbientColor(0.3f, 0.3f, 0.7f);
 
-            redSlider.setValue(0.3f);
-            greenSlider.setValue(0.3f);
-            blueSlider.setValue(0.7f);
+                slider.setValue(0.7f);
 
-            return true;
+                redSlider.setValue(0.3f);
+                greenSlider.setValue(0.3f);
+                blueSlider.setValue(0.7f);
+            }
+
         });
         horizontalGroup.addActor(button);
 

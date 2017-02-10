@@ -1,11 +1,10 @@
 package com.jukusoft.libgdx.rpg.game.world;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -66,6 +65,19 @@ public class GameWorldMap extends BaseMap {
         //game.getAssetManager().finishLoadingAsset(this.mapPath);
 
         this.tiledMap = new TmxMapLoader(new AbsoluteFileHandleResolver()).load(this.mapPath);
+        MapProperties prop = tiledMap.getProperties();
+
+        //get properties
+        int mapWidth = prop.get("width", Integer.class);
+        int mapHeight = prop.get("height", Integer.class);
+        int tilePixelWidth = prop.get("tilewidth", Integer.class);
+        int tilePixelHeight = prop.get("tileheight", Integer.class);
+
+        //set values
+        this.cols = mapWidth;
+        this.rows = mapHeight;
+        this.tileWidth = tilePixelWidth;
+        this.tileHeight = tilePixelHeight;
 
         System.out.println("tmx map loaded for " + getSectorCoord() + ", tmx map: " + this.mapPath);
 

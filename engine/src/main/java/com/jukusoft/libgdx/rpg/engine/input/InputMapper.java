@@ -5,6 +5,20 @@ package com.jukusoft.libgdx.rpg.engine.input;
  */
 public interface InputMapper {
 
+    /**
+    * add input mapping
+     *
+     * @param keyCode keyCode of key on keyboard
+     * @param actionCode actionCode of game action
+    */
     public void addMapping (int keyCode, int actionCode);
+
+    /**
+     * remove input mapping
+     *
+     * @param keyCode keyCode of key on keyboard
+     * @param actionCode actionCode of game action
+     */
+    public void removeMapping (int keyCode, int actionCode);
 
 }

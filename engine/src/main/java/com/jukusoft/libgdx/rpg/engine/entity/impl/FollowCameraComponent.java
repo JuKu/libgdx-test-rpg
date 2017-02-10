@@ -21,7 +21,7 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
 
         this.entityPosition = entity.getComponent(PositionComponent.class);
 
-        if (entityPosition == null) {
+        if (this.entityPosition == null) {
             throw new IllegalStateException("entity doesnt have an PositionComponent.");
         }
     }

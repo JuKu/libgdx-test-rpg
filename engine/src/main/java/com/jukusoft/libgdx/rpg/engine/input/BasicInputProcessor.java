@@ -19,6 +19,11 @@ public class BasicInputProcessor implements InputProcessor {
     protected List<KeyListener> keyListenerList = new ArrayList<>();
     protected List<MouseListener> mouseListenerList = new ArrayList<>();
 
+    /**
+    * list with active game actions
+    */
+    protected List<Integer> activeGameActions = new ArrayList<>();
+
     @Override public boolean keyDown(int keycode) {
         for (KeyListener listener : this.keyListenerList) {
             boolean resolved = listener.keyDown(keycode);

@@ -168,7 +168,7 @@ public abstract class BaseGame extends ApplicationAdapter {
 
             if (nowWarnSecond != lastWarnSecond) {
                 System.err.println("Warning! FPS is <= 55, FPS: " + fps);
-                
+
                 lastFPSWarning = System.currentTimeMillis();
             }
         }

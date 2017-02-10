@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
+import com.jukusoft.libgdx.rpg.engine.entity.factory.PlayerFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.ECS;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.input.impl.CameraZoomListener;
 import com.jukusoft.libgdx.rpg.engine.lighting.Lighting;
@@ -107,6 +109,8 @@ public class GameScreen extends BaseScreen {
         //initialize entity component system
 
         //create an entity for player
+        this.playerEntity = PlayerFactory.createPlayer(200, 200);
+        this.ecs.addEntity(this.playerEntity);
     }
 
     @Override

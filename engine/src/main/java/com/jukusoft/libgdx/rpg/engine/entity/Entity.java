@@ -48,6 +48,24 @@ public class Entity {
         });
     }
 
+    public <T extends IComponent> T getComponent (Class<T> cls) {
+        //for HashMap implementation
+        if (!this.componentMap.containsKey(cls)) {
+            //component doesnt exists on this entity
+            return null;
+        }
+
+        IComponent component = this.componentMap.get(cls);
+
+        //for ConcurrentHashMap implementation
+        if (component == null) {
+            //component doesnt exists on this entity
+            return null;
+        }
+
+        return cls.cast(component);
+    }
+
     public <T extends IComponent> void addComponent (T component, Class<T> cls) {
         component.onAddedToEntity(this);
 

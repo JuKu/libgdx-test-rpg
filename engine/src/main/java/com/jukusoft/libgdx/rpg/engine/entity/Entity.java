@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Justin on 10.02.2017.
@@ -80,11 +77,25 @@ public class Entity {
         //check, if component needs to update
         if (component instanceof IUpdateComponent) {
             this.updateComponentList.add((IUpdateComponent) component);
+
+            //sort list
+            Collections.sort(this.updateComponentList, new Comparator<IUpdateComponent>() {
+                @Override public int compare(IUpdateComponent o1, IUpdateComponent o2) {
+                    return ((Integer) o1.getUpdateOrder().getValue()).compareTo(o2.getUpdateOrder().getValue());
+                }
+            });
         }
 
         //check, if component needs to draw
         if (component instanceof IDrawComponent) {
             this.drawComponentList.add((IDrawComponent) component);
+
+            //sort list
+            Collections.sort(this.drawComponentList, new Comparator<IDrawComponent>() {
+                @Override public int compare(IDrawComponent o1, IDrawComponent o2) {
+                    return ((Integer) o1.getDrawOrder().getValue()).compareTo(o2.getDrawOrder().getValue());
+                }
+            });
         }
     }
 

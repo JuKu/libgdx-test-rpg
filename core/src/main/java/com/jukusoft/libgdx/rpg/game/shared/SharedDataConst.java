@@ -11,4 +11,7 @@ public class SharedDataConst {
     //lighting
     public static final String LIGHTING_ENV = "lighting_env";
 
+    //game world (only developer mode!)
+    public static final String GAME_WORLD = "game_world";
+
 }

@@ -28,6 +28,11 @@ import com.jukusoft.libgdx.rpg.engine.hud.HUD;
 import com.jukusoft.libgdx.rpg.engine.hud.FilledIconBar;
 import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
+import com.jukusoft.libgdx.rpg.game.world.GameWorld;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.io.File;
 
 /**
  * Created by Justin on 08.02.2017.
@@ -322,6 +327,53 @@ public class HUDOverlayScreen extends BaseScreen {
 
         });
         verticalGroup.addActor(button);
+
+        //only developer mode
+        TextButton loadMapButton = new TextButton("Load own map", this.uiSkin);
+        loadMapButton.addCaptureListener(new ClickListener() {
+
+            public void clicked (InputEvent event, float x, float y) {
+                System.out.println("load own map");
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override public void run() {
+                        // JFileChooser-Objekt erstellen
+                        JFileChooser chooser = new JFileChooser();
+
+                        chooser.setFileFilter(new FileFilter() {
+                            @Override public boolean accept(File f) {
+                                return f.getName().endsWith(".tmx") || f.isDirectory();
+                            }
+
+                            @Override public String getDescription() {
+                                return "TMX Map";
+                            }
+                        });
+
+                        chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+
+                        // Dialog zum Speichern von Dateien anzeigen
+                        int i = chooser.showDialog(null, "Choose tmx map");
+
+                        //check, if OPEN was clicked
+                        if (i == JFileChooser.APPROVE_OPTION) {
+                            // Ausgabe der ausgewaehlten Datei
+                            System.out.println("open tmx map: " + chooser.getSelectedFile().getAbsolutePath());
+
+                            game.runOnUIThread(() -> {
+                                GameWorld gameWorld = game.getSharedData().get(SharedDataConst.GAME_WORLD, GameWorld.class);
+                                gameWorld.devOptionLoadMap(chooser.getSelectedFile().getAbsolutePath());
+                            });
+                        } else {
+                            System.out.println("No open button clicked.");
+                        }
+                    }
+                });
+                thread.start();
+            }
+
+        });
+        verticalGroup.addActor(loadMapButton);
 
         stage.addActor(verticalGroup);
     }

@@ -12,6 +12,7 @@ import com.jukusoft.libgdx.rpg.engine.utils.FileUtils;
 import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -336,6 +337,33 @@ public class GameWorld {
 
     public void removeSectorChangedListener (SectorChangedListener listener) {
         this.sectorChangedListenerList.remove(listener);
+    }
+
+    public synchronized void devOptionLoadMap (String mapFile) {
+        if (!(new File(mapFile)).exists()) {
+            System.err.println("Map file doesnt exists: " + mapFile);
+            return;
+        }
+
+        SectorCoord NULL_SECTOR = new SectorCoord(0, 0, 0);
+
+        GameWorldMap map = this.mapCache.get(NULL_SECTOR);
+
+        if (map == null) {
+            map = new GameWorldMap(game, NULL_SECTOR);
+        }
+
+        try {
+            map.load(mapFile);
+        } catch (MapNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        this.mapCache.put(NULL_SECTOR, map);
+
+        if (!this.visibleMaps.contains(map)) {
+            this.visibleMaps.add(map);
+        }
     }
 
 }

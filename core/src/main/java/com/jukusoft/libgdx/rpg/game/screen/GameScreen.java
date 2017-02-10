@@ -83,6 +83,8 @@ public class GameScreen extends BaseScreen {
         //create game world
         this.gameWorld = new GameWorld(game, coord, this.testTexture);
 
+        game.getSharedData().put(SharedDataConst.GAME_WORLD, this.gameWorld);
+
         //set correct input processor
         game.getInputManager().setInputProcessor();
 

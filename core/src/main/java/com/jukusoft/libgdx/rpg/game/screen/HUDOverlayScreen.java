@@ -434,7 +434,7 @@ public class HUDOverlayScreen extends BaseScreen {
             }
 
         });
-        verticalGroup.addActor(loadMapButton);
+        verticalGroup.addActor(loadSkyBoxButton);
 
         stage.addActor(verticalGroup);
     }

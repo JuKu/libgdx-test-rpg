@@ -97,4 +97,18 @@ public class SimpleSkyBox implements SkyBox {
         this.smoothFactorY = y;
     }
 
+    @Override public void setTexture(Texture texture) {
+        this.skyBoxTexture = texture;
+
+        this.x = skyBoxWidth / 2;
+
+        this.skyBoxWidth = skyBoxTexture.getWidth();
+
+        this.pointX1 = x - skyBoxWidth;
+        this.pointX2 = x + skyBoxWidth;
+
+        this.camera = new OrthographicCamera(texture.getWidth(), texture.getHeight());
+        this.camera.translate(texture.getWidth() / 2, texture.getHeight() / 2, 0);
+    }
+
 }

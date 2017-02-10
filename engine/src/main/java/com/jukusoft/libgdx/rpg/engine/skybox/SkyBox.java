@@ -1,5 +1,6 @@
 package com.jukusoft.libgdx.rpg.engine.skybox;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -16,5 +17,7 @@ public interface SkyBox {
     public void translate (float x, float y);
 
     public void setSmoothFactor (float x, float y);
+
+    public void setTexture (Texture texture);
 
 }

@@ -1,6 +1,7 @@
 package com.jukusoft.libgdx.rpg.game.screen;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -363,6 +364,66 @@ public class HUDOverlayScreen extends BaseScreen {
                             game.runOnUIThread(() -> {
                                 GameWorld gameWorld = game.getSharedData().get(SharedDataConst.GAME_WORLD, GameWorld.class);
                                 gameWorld.devOptionLoadMap(chooser.getSelectedFile().getAbsolutePath());
+                            });
+                        } else {
+                            System.out.println("No open button clicked.");
+                        }
+                    }
+                });
+                thread.start();
+            }
+
+        });
+        verticalGroup.addActor(loadMapButton);
+
+        //only developer mode
+        TextButton loadSkyBoxButton = new TextButton("Load own SkyBox", this.uiSkin);
+        loadSkyBoxButton.addCaptureListener(new ClickListener() {
+
+            public void clicked (InputEvent event, float x, float y) {
+                System.out.println("load own map");
+
+                Thread thread = new Thread(new Runnable() {
+                    @Override public void run() {
+                        // JFileChooser-Objekt erstellen
+                        JFileChooser chooser = new JFileChooser();
+
+                        chooser.setFileFilter(new FileFilter() {
+                            @Override public boolean accept(File f) {
+                                return f.getName().endsWith(".png") || f.isDirectory();
+                            }
+
+                            @Override public String getDescription() {
+                                return "PNG Graphics File";
+                            }
+                        });
+
+                        chooser.setDialogType(JFileChooser.OPEN_DIALOG);
+
+                        // Dialog zum Speichern von Dateien anzeigen
+                        int i = chooser.showDialog(null, "Choose PNG Graphic for SkyBox");
+
+                        //check, if OPEN was clicked
+                        if (i == JFileChooser.APPROVE_OPTION) {
+                            // Ausgabe der ausgewaehlten Datei
+                            System.out.println("open skybox: " + chooser.getSelectedFile().getAbsolutePath());
+
+                            final String filePath = chooser.getSelectedFile().getAbsolutePath();
+
+                            if (!(new File(filePath).exists())) {
+                                System.err.println("PNG graphic doesnt exists.");
+                                return;
+                            }
+
+                            game.runOnUIThread(() -> {
+                                GameWorld gameWorld = game.getSharedData().get(SharedDataConst.GAME_WORLD, GameWorld.class);
+
+                                //load texture
+                                game.getAssetManager().load(filePath, Texture.class);
+                                game.getAssetManager().finishLoadingAsset(filePath);
+                                Texture skyBoxTexture = game.getAssetManager().get(filePath, Texture.class);
+
+                                gameWorld.getSkyBox().setTexture(skyBoxTexture);
                             });
                         } else {
                             System.out.println("No open button clicked.");

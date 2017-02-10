@@ -5,7 +5,6 @@ import com.jukusoft.libgdx.rpg.engine.entity.listener.PositionChangedListener;
 import com.jukusoft.libgdx.rpg.engine.json.InvalideJSONException;
 import com.jukusoft.libgdx.rpg.engine.json.JSONLoadable;
 import com.jukusoft.libgdx.rpg.engine.json.JSONSerializable;
-import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.json.JSONObject;
 
@@ -39,7 +38,10 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     }
 
     public void setX (float x) {
+        //save old value
         float oldX = this.x;
+
+        //set new value
         this.x = x;
 
         this.notifyPositionChangedListener(oldX, x, this.y, this.y);
@@ -50,7 +52,10 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     }
 
     public void setY (float y) {
+        //save old value
         float oldY = this.y;
+
+        //set new value
         this.y = y;
 
         this.notifyPositionChangedListener(this.x, oldY, this.x, this.y);
@@ -61,10 +66,15 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         float oldX = this.x;
         float oldY = this.y;
 
+        //set new values
         this.x = x;
         this.y = y;
 
         this.notifyPositionChangedListener(oldX, oldY, x, y);
+    }
+
+    public void move (float x, float y) {
+        this.setPosition(this.x + x, this.y + y);
     }
 
     protected void notifyPositionChangedListener (float oldX, float oldY, float newX, float newY) {

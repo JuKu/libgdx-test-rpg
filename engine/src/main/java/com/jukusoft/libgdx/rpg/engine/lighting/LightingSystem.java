@@ -169,12 +169,20 @@ public class LightingSystem implements LightingEnvironment {
         this.fbo = null;
     }
 
+    public Vector3 getAmbientColor () {
+        return this.ambientColor;
+    }
+
     @Override public void setAmbientColor(float r, float g, float b) {
         this.ambientColor.x = r;
         this.ambientColor.y = g;
         this.ambientColor.z = b;
 
         this.notifyAmbientLightChanged();
+    }
+
+    public float getAmbientIntensity () {
+        return this.ambientIntensity;
     }
 
     @Override public void setAmbientIntensity(float ambientIntensity) {

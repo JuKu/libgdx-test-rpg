@@ -30,8 +30,10 @@ public class Entity {
     */
     protected List<IDrawComponent> drawComponentList = new ArrayList<>();
 
-    public void init () {
-        //
+    protected BaseGame game = null;
+
+    public void init (BaseGame game) {
+        this.game = game;
     }
 
     public void update(BaseGame game, GameTime time) {
@@ -67,6 +69,9 @@ public class Entity {
     }
 
     public <T extends IComponent> void addComponent (T component, Class<T> cls) {
+        //initialize component
+        component.init(this.game, this);
+
         component.onAddedToEntity(this);
 
         //add component to map

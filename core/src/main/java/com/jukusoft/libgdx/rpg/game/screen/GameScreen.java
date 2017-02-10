@@ -101,7 +101,7 @@ public class GameScreen extends BaseScreen {
     }
 
     @Override public void update(ScreenBasedGame game, GameTime time) {
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             //move camera
             game.getCamera().translate(-5, 0, 0);
 
@@ -109,7 +109,7 @@ public class GameScreen extends BaseScreen {
             gameWorld.getSkyBox().translate(-5, 0);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
             //move camera
             game.getCamera().translate(5, 0, 0);
 
@@ -117,7 +117,7 @@ public class GameScreen extends BaseScreen {
             gameWorld.getSkyBox().translate(5, 0);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
             //move camera
             game.getCamera().translate(0, 5, 0);
 
@@ -125,7 +125,7 @@ public class GameScreen extends BaseScreen {
             gameWorld.getSkyBox().translate(0, 5);
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
             //move camera
             game.getCamera().translate(0, -5, 0);
 

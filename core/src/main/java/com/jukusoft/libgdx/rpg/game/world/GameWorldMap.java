@@ -54,7 +54,9 @@ public class GameWorldMap extends BaseMap {
     /**
     * load tmx map
     */
-    public void load () throws MapNotFoundException {
+    public void load (String mapPath) throws MapNotFoundException {
+        this.mapPath = mapPath;
+
         if (!(new File(this.mapPath).exists())) {
             throw new MapNotFoundException("Couldnt found tmx map for sector " + getSectorCoord() + ", map path: " + this.mapPath);
         }
@@ -81,9 +83,18 @@ public class GameWorldMap extends BaseMap {
 
         System.out.println("tmx map loaded for " + getSectorCoord() + ", tmx map: " + this.mapPath);
 
+        if (this.mapRenderer != null) {
+            this.mapRenderer.dispose();
+            this.mapRenderer = null;
+        }
+
         //create map renderer (every map needs its own renderer)
         float unitScale = 1f;//1 / 32f;
         this.mapRenderer = new OrthogonalTiledMapRenderer(this.tiledMap, unitScale);
+    }
+
+    public void load () throws MapNotFoundException {
+        this.load(this.mapPath);
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {
@@ -114,7 +125,11 @@ public class GameWorldMap extends BaseMap {
     }
 
     public void dispose () {
-        //
+        this.mapRenderer.dispose();
+        this.mapRenderer = null;
+
+        this.tiledMap.dispose();
+        this.tiledMap = null;
     }
 
 }

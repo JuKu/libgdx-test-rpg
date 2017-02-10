@@ -11,10 +11,14 @@ public interface InputManager {
 
     public BasicInputProcessor getGameInputProcessor ();
 
+    public boolean isActionKeyPressed (int actionCode);
+
     public void addCustomInputProcessor (int index, InputProcessor inputProcessor);
 
     public void addCustomInputProcessor (InputProcessor inputProcessor);
 
     public void removeCustomInputProcessor (InputProcessor inputProcessor);
+
+    public InputMapper getInputMapper ();
 
 }

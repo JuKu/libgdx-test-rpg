@@ -23,6 +23,9 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     protected float speedX = 1f;
     protected float speedY = 1f;
 
+    protected float speedMultiplicatorX = 1f;
+    protected float speedMultiplicatorY = 1f;
+
     //calculated direction
     protected Direction direction = null;
 
@@ -81,7 +84,7 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     }
 
     public void setSpeedX (float speedX) {
-        this.speedX = speedX;
+        this.speedX = speedX * speedMultiplicatorX;
 
         if (speedX != 0) {
             this.isMoving = true;
@@ -93,7 +96,7 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     }
 
     public void setSpeedY (float speedY) {
-        this.speedY = speedY;
+        this.speedY = speedY * speedMultiplicatorY;
 
         if (speedY != 0) {
             this.isMoving = true;
@@ -101,8 +104,8 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     }
 
     public void setSpeed (float speedX, float speedY) {
-        this.speedX = speedX;
-        this.speedY = speedY;
+        this.speedX = speedX * speedMultiplicatorX;
+        this.speedY = speedY * speedMultiplicatorY;
 
         if (speedX == 0 && speedY == 0) {
             this.isMoving = false;

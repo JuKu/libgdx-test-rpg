@@ -3,8 +3,10 @@ package com.jukusoft.libgdx.rpg.engine.entity.impl;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.IUpdateComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.MoveComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ComponentPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
+import com.jukusoft.libgdx.rpg.engine.input.BaseGameActionConst;
 import com.jukusoft.libgdx.rpg.engine.input.InputManager;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
@@ -14,6 +16,9 @@ import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 public class MoveInputComponent extends BaseComponent implements IUpdateComponent {
 
     protected MoveComponent moveComponent = null;
+
+    protected float baseSpeedX = 1f;
+    protected float baseSpeedY = 1f;
 
     @Override
     public void init (BaseGame game, Entity entity) {
@@ -29,10 +34,52 @@ public class MoveInputComponent extends BaseComponent implements IUpdateComponen
     @Override public void update(BaseGame game, GameTime time) {
         //get input manager
         InputManager inputManager = game.getInputManager();
+
+        float speedX = 0f;
+        float speedY = 0;
+
+        if (inputManager.isActionKeyPressed(BaseGameActionConst.MOVE_LEFT)) {
+            speedX = -baseSpeedX;
+        } else if (inputManager.isActionKeyPressed(BaseGameActionConst.MOVE_RIGHT)) {
+            speedX = baseSpeedX;
+        }
+
+        if (inputManager.isActionKeyPressed(BaseGameActionConst.MOVE_UP)) {
+            speedY = baseSpeedY;
+        } else {
+            speedY = -baseSpeedY;
+        }
+
+        //set speed
+        this.moveComponent.setSpeed(speedX, speedY);
     }
 
     @Override public ComponentPriority getUpdateOrder() {
         return ComponentPriority.HIGH;
+    }
+
+    public float getBaseSpeedX () {
+        return this.baseSpeedX;
+    }
+
+    public void setBaseSpeedX (float speedX) {
+        if (speedX <= 0) {
+            throw new IllegalArgumentException("speed has to be greater than 0.");
+        }
+
+        this.baseSpeedX = speedX;
+    }
+
+    public float getBaseSpeedY () {
+        return this.baseSpeedY;
+    }
+
+    public void setBaseSpeedY (float speedY) {
+        if (speedY <= 0) {
+            throw new IllegalArgumentException("speed has to be greater than 0.");
+        }
+
+        this.baseSpeedY = speedY;
     }
 
 }

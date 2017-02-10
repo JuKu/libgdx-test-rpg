@@ -2,17 +2,18 @@ package com.jukusoft.libgdx.rpg.engine.lighting;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.shader.ShaderFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
-import com.jukusoft.libgdx.rpg.engine.window.ResizeListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,6 +53,12 @@ public class LightingSystem implements LightingEnvironment {
     //flag if lighting is enabled
     protected boolean lightingEnabled = true;
 
+    //shape renderer to draw black rectangles on framebuffer
+    protected ShapeRenderer shapeRenderer = null;
+
+    //black rectangles
+    protected List<ColoredLightingBox> coloredFilledRectList = new ArrayList<>();
+
     public LightingSystem (BaseGame game, int width, int height) {
         //create new frame buffer
         this.fbo = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, false);
@@ -88,6 +95,9 @@ public class LightingSystem implements LightingEnvironment {
         this.finalLightingShader.setUniformf("ambientColor", ambientColor.x, ambientColor.y,
             ambientColor.z, ambientIntensity);
         this.finalLightingShader.end();
+
+        //create shape renderer
+        this.shapeRenderer = new ShapeRenderer();
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {
@@ -125,6 +135,9 @@ public class LightingSystem implements LightingEnvironment {
             wasDrawing = true;
         }
 
+        //set shape renderer camera
+        this.shapeRenderer.setProjectionMatrix(camera.combined);
+
         //draw lights to framebuffer
         fbo.begin();
         batch.setProjectionMatrix(camera.combined);
@@ -140,6 +153,14 @@ public class LightingSystem implements LightingEnvironment {
         this.drawLights(time, batch);
 
         batch.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.BLACK);
+
+        //draw colored boxes (overlay), for example for walls which shouldnt be lighted
+        this.drawColoredLightingBoxes(time, this.shapeRenderer);
+
+        shapeRenderer.end();
 
         fbo.end();
 
@@ -161,6 +182,13 @@ public class LightingSystem implements LightingEnvironment {
         //draw lightings
         this.visibleLightings.stream().forEach(lighting -> {
             lighting.draw(time, batch);
+        });
+    }
+
+    protected void drawColoredLightingBoxes (GameTime time, ShapeRenderer shapeRenderer) {
+        //draw black rectangles (for example for wallets, which shouldnt be lighted)
+        this.coloredFilledRectList.stream().forEach(box -> {
+            box.draw(time, shapeRenderer);
         });
     }
 
@@ -209,6 +237,14 @@ public class LightingSystem implements LightingEnvironment {
     @Override public void removeLighting(Lighting lighting) {
         this.visibleLightings.remove(lighting);
         this.lightings.remove(lighting);
+    }
+
+    @Override public void addColoredLightBox(ColoredLightingBox box) {
+        this.coloredFilledRectList.add(box);
+    }
+
+    @Override public void removeColoredLightBox(ColoredLightingBox box) {
+        this.coloredFilledRectList.remove(box);
     }
 
     @Override public boolean isLightingEnabled() {

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.hud.ImageWidget;
+import com.jukusoft.libgdx.rpg.engine.lighting.LightingEnvironment;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
@@ -42,6 +43,9 @@ public class HUDOverlayScreen extends BaseScreen {
     protected Texture diamondTexture = null;
     protected Texture logoTexture = null;
 
+    //lighting environment
+    protected LightingEnvironment lightingEnvironment = null;
+
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         this.font = BitmapFontFactory
             .createFont(AssetPathUtils.getFontPath("arial/arial.ttf"), FONT_SIZE, Color.WHITE);
@@ -68,6 +72,8 @@ public class HUDOverlayScreen extends BaseScreen {
         }
 
         this.shapeRenderer = new ShapeRenderer();
+
+        //get lighting environment
 
         //create new Head-up-Display (HUD)
         this.hud = new HUD();

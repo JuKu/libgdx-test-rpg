@@ -23,6 +23,10 @@ public interface LightingEnvironment {
 
     public void removeLighting (Lighting lighting);
 
+    public void addColoredLightBox (ColoredLightingBox box);
+
+    public void removeColoredLightBox (ColoredLightingBox box);
+
     public boolean isLightingEnabled ();
 
     public void setLightingEnabled (boolean lightingEnabled);

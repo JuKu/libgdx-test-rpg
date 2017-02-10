@@ -90,14 +90,18 @@ public class LightingSystem implements LightingEnvironment {
         }
 
         //initialize lighting shader
+        this.updateShaderUniforms();
+
+        //create shape renderer
+        this.shapeRenderer = new ShapeRenderer();
+    }
+
+    protected void updateShaderUniforms () {
         this.finalLightingShader.begin();
         this.finalLightingShader.setUniformi("u_lightmap", 1);
         this.finalLightingShader.setUniformf("ambientColor", ambientColor.x, ambientColor.y,
             ambientColor.z, ambientIntensity);
         this.finalLightingShader.end();
-
-        //create shape renderer
-        this.shapeRenderer = new ShapeRenderer();
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {
@@ -259,6 +263,8 @@ public class LightingSystem implements LightingEnvironment {
         this.ambientLightChangedListenerList.stream().forEach(listener -> {
             listener.changedAmbientLight(ambientColor.x, ambientColor.y, ambientColor.z, ambientIntensity);
         });
+
+        this.updateShaderUniforms();
     }
 
     public FrameBuffer getFBO () {

@@ -35,6 +35,10 @@ public class DefaultInputManager implements InputManager {
         return this.inputProcessor;
     }
 
+    @Override public void addCustomInputProcessor(int index, InputProcessor inputProcessor) {
+        this.inputMultiplexer.addProcessor(index, inputProcessor);
+    }
+
     @Override public void addCustomInputProcessor(InputProcessor inputProcessor) {
         this.inputMultiplexer.addProcessor(0, inputProcessor);
     }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.input.impl.CameraZoomListener;
 import com.jukusoft.libgdx.rpg.engine.lighting.Lighting;
+import com.jukusoft.libgdx.rpg.engine.lighting.LightingEnvironment;
 import com.jukusoft.libgdx.rpg.engine.lighting.LightingSystem;
 import com.jukusoft.libgdx.rpg.engine.lighting.TextureLighting;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
@@ -16,6 +17,7 @@ import com.jukusoft.libgdx.rpg.engine.skybox.SkyBox;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
+import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 import com.jukusoft.libgdx.rpg.game.world.GameWorld;
 
@@ -59,6 +61,9 @@ public class GameScreen extends BaseScreen {
         //create new test lighting
         this.testLighting = new TextureLighting(this.lightMap, 200, 200);
         this.lightingSystem.addLighting(this.testLighting);
+
+        //save lighting environment to shared data, so HUD can change ambient color & intensity
+        game.getSharedData().put(SharedDataConst.LIGHTING_ENV, this.lightingSystem);
 
         //create zoom listener to support camera zoom
         this.zoomListener = new CameraZoomListener(game.getCamera2D());

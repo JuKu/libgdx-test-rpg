@@ -214,6 +214,8 @@ public class GameWorld {
             this.visibleMaps.remove(map);
         }
 
+        //calculate current sector
+
         //cleanUp not visible maps
         this.cleanUpVisibleMapCache();
 

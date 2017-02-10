@@ -22,6 +22,14 @@ public interface EntityManager {
 
     public void draw (GameTime time, Camera camera, SpriteBatch batch);
 
+    public void onEntityUpdateOrderChanged ();
+
+    public void onEntityDrawOrderChanged ();
+
+    public <T extends IComponent> void onComponentAdded (Entity entity, T component, Class<T> cls);
+
+    public <T extends IComponent> void onComponentRemoved (Entity entity, T component, Class<T> cls);
+
     public void dispose ();
 
 }

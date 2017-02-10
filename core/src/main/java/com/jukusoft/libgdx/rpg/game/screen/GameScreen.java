@@ -109,7 +109,7 @@ public class GameScreen extends BaseScreen {
         //initialize entity component system
 
         //create an entity for player
-        this.playerEntity = PlayerFactory.createPlayer(200, 200);
+        this.playerEntity = PlayerFactory.createPlayer(this.ecs, 200, 200);
         this.ecs.addEntity(this.playerEntity);
     }
 

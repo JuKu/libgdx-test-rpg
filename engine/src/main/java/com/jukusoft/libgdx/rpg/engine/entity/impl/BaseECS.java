@@ -151,10 +151,6 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
 
     protected abstract void onEntityRemoved (Entity entity);
 
-    public abstract <T extends IComponent> void onComponentAdded (Entity entity, T component, Class<T> cls);
-
-    public abstract <T extends IComponent> void onComponentRemoved (Entity entity, T component, Class<T> cls);
-
     @Override
     public void dispose () {
         //

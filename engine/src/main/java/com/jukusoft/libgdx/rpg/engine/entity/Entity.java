@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.entity.annotation.SharableComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.BaseECS;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.ECS;
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -32,7 +33,7 @@ public class Entity {
     protected List<IDrawComponent> drawComponentList = new ArrayList<>();
 
     protected BaseGame game = null;
-    protected BaseECS ecs = null;
+    protected EntityManager ecs = null;
 
     protected static AtomicLong lastID = new AtomicLong(0);
     protected long entityID = lastID.incrementAndGet();
@@ -40,11 +41,11 @@ public class Entity {
     protected ECSPriority updateOrder = ECSPriority.NORMAL;
     protected ECSPriority drawOrder = ECSPriority.NORMAL;
 
-    public Entity () {
-        //
+    public Entity (EntityManager ecs) {
+        this.ecs = ecs;
     }
 
-    public void init (BaseGame game, BaseECS ecs) {
+    public void init (BaseGame game, EntityManager ecs) {
         this.game = game;
         this.ecs = ecs;
     }

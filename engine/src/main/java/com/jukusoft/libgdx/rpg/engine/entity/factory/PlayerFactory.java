@@ -1,6 +1,8 @@
 package com.jukusoft.libgdx.rpg.engine.entity.factory;
 
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
+import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.BaseECS;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.FollowCameraComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.MoveComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.MoveInputComponent;
@@ -11,9 +13,9 @@ import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
  */
 public class PlayerFactory {
 
-    public static Entity createPlayer (float x, float y) {
+    public static Entity createPlayer (EntityManager ecs, float x, float y) {
         //create new entity
-        Entity playerEntity = new Entity();
+        Entity playerEntity = new Entity(ecs);
 
         //add new position component, because every entity has an position
         playerEntity.addComponent(new PositionComponent(200, 200), PositionComponent.class);

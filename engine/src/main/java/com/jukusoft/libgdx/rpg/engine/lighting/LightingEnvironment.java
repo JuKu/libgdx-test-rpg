@@ -1,11 +1,17 @@
 package com.jukusoft.libgdx.rpg.engine.lighting;
 
+import com.badlogic.gdx.math.Vector3;
+
 /**
  * Created by Justin on 09.02.2017.
  */
 public interface LightingEnvironment {
 
+    public Vector3 getAmbientColor ();
+
     public void setAmbientColor (float r, float g, float b);
+
+    public float getAmbientIntensity ();
 
     public void setAmbientIntensity (float ambientIntensity);
 

@@ -2,6 +2,7 @@ package com.jukusoft.libgdx.rpg.engine.entity;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.entity.annotation.SharableComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.BaseECS;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.ECS;
@@ -57,7 +58,7 @@ public class Entity {
         });
     }
 
-    public void draw(GameTime time, Camera camera, SpriteBatch batch) {
+    public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
         //draw all components
         this.drawComponentList.stream().forEach(component -> {
             component.draw(time, camera, batch);

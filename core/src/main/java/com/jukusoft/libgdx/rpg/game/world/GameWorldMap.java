@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.exception.MapNotFoundException;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -102,18 +103,18 @@ public class GameWorldMap extends BaseMap {
         this.load(this.mapPath);
     }
 
-    public void update (BaseGame game, Camera camera, GameTime time) {
+    public void update (BaseGame game, CameraWrapper camera, GameTime time) {
         //update bounding box
     }
 
-    public void draw (GameTime time, Camera camera, ShaderProgram shader, SpriteBatch batch) {
-        float offsetX = getX() - game.getCamera().position.x;
-        float offsetY = getY() - game.getCamera().position.y;
+    public void draw (GameTime time, CameraWrapper camera, ShaderProgram shader, SpriteBatch batch) {
+        float offsetX = getX() - game.getCamera().getX();
+        float offsetY = getY() - game.getCamera().getY();
         float width = getWidthInPixels() - offsetX;
         float height = getHeightInPixels() - offsetY;
 
         //set projection matrix
-        this.mapRenderer.setView(game.getCamera().combined, getX(), getY(), width, height);
+        this.mapRenderer.setView(game.getCamera().getCombined(), getX(), getY(), width, height);
 
         this.mapRenderer.getBatch().setShader(shader);
 
@@ -121,7 +122,7 @@ public class GameWorldMap extends BaseMap {
         this.mapRenderer.render();
     }
 
-    public void drawWater (GameTime time, Camera camera, SpriteBatch batch) {
+    public void drawWater (GameTime time, CameraWrapper camera, SpriteBatch batch) {
         //TODO: render layers with water
     }
 

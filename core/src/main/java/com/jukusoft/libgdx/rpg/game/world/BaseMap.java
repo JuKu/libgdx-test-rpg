@@ -1,10 +1,10 @@
 package com.jukusoft.libgdx.rpg.game.world;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
@@ -87,17 +87,17 @@ public abstract class BaseMap {
     /**
     * check, if map is visible in current viewport
     */
-    public boolean isMapVisibleInViewPort (Camera camera) {
+    public boolean isMapVisibleInViewPort (CameraWrapper CameraWrapper) {
         //check borders
-        //float cameraWidth = camera.viewportWidth;
-        //float cameraHeight = camera.viewportHeight;
+        //float CameraWrapperWidth = CameraWrapper.viewportWidth;
+        //float CameraWrapperHeight = CameraWrapper.viewportHeight;
 
         //check, if map is in frustum (viewport)
-        return camera.frustum.boundsInFrustum(this.boundingBox);
+        return CameraWrapper.getFrustum().boundsInFrustum(this.boundingBox);
     }
 
-    public abstract void update (BaseGame game, Camera camera, GameTime time);
+    public abstract void update (BaseGame game, CameraWrapper CameraWrapper, GameTime time);
 
-    public abstract void draw (GameTime time, Camera camera, ShaderProgram shader, SpriteBatch batch);
+    public abstract void draw (GameTime time, CameraWrapper CameraWrapper, ShaderProgram shader, SpriteBatch batch);
 
 }

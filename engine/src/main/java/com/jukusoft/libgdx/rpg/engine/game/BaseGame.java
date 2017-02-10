@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.input.InputManager;
 import com.jukusoft.libgdx.rpg.engine.input.impl.DefaultInputManager;
 import com.jukusoft.libgdx.rpg.engine.save.SavedGameManager;
@@ -63,7 +64,8 @@ public abstract class BaseGame extends ApplicationAdapter {
     protected static int VIEWPORT_HEIGHT = 720;
 
     protected OrthographicCamera camera = null;
-    protected Camera uiCamera = null;
+    protected CameraWrapper cameraWrapper = null;
+    private Camera uiCamera = null;
 
     protected AtomicBoolean useCamera = new AtomicBoolean(false);
 
@@ -126,6 +128,8 @@ public abstract class BaseGame extends ApplicationAdapter {
         this.camera.translate(VIEWPORT_WIDTH / 2, VIEWPORT_HEIGHT / 2, 0);
         this.camera.update();
         this.batch.setProjectionMatrix(this.camera.combined);
+
+        this.cameraWrapper = new CameraWrapper(this.camera);
 
         //initialize UI camera
         this.uiCamera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
@@ -209,12 +213,12 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     protected abstract void initGame ();
 
-    public Camera getCamera () {
-        return this.camera;
+    public CameraWrapper getCamera () {
+        return this.cameraWrapper;
     }
 
-    public OrthographicCamera getCamera2D () {
-        return this.camera;
+    public /*OrthographicCamera*/CameraWrapper getCamera2D () {
+        return this.cameraWrapper;
     }
 
     public Camera getUICamera () {

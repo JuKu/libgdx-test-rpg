@@ -1,9 +1,9 @@
 package com.jukusoft.libgdx.rpg.game.world;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.exception.MapNotFoundException;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.skybox.SkyBox;
@@ -187,7 +187,7 @@ public class GameWorld {
         }
     }
 
-    public void update (BaseGame game, Camera camera, GameTime time) {
+    public void update (BaseGame game, CameraWrapper CameraWrapper, GameTime time) {
         //update skybox
         if (this.skyBox != null) {
             this.skyBox.update(game, time);
@@ -198,7 +198,7 @@ public class GameWorld {
 
         //check, if some maps arent visible anymore and remove them from draw queue
         for (GameWorldMap map : this.visibleMaps) {
-            if (!map.isMapVisibleInViewPort(camera)) {
+            if (!map.isMapVisibleInViewPort(CameraWrapper)) {
                 //remove map from render queue
 
                 System.out.println("remove map, because its out of viewport: " + map.getSectorCoord());
@@ -222,16 +222,16 @@ public class GameWorld {
         //TODO: check, if user walk to near maps, if so, load near maps to draw queue
     }
 
-    public void draw (GameTime time, Camera camera, ShaderProgram shader, SpriteBatch batch) {
+    public void draw (GameTime time, CameraWrapper CameraWrapper, ShaderProgram shader, SpriteBatch batch) {
         //batch.draw(testTexture, 0, 0);
 
         //first draw water
-        this.drawWater(time, camera, batch);
+        this.drawWater(time, CameraWrapper, batch);
 
         batch.end();
 
         //set default shader
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(CameraWrapper.getCombined());
         batch.setShader(this.currentShader);
         batch.begin();
 
@@ -240,26 +240,26 @@ public class GameWorld {
             this.skyBox.draw(time, batch);
         }
 
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(CameraWrapper.getCombined());
         batch.setShader(this.currentShader);
 
         //render all maps which are visible
         this.visibleMaps.stream().forEach(map -> {
             //check, if map is visible in viewport
-            if (map.isMapVisibleInViewPort(camera)) {
+            if (map.isMapVisibleInViewPort(CameraWrapper)) {
                 //only draw map if map is visible in viewport
 
                 //draw map
-                map.draw(time, camera, this.currentShader, batch);
+                map.draw(time, CameraWrapper, this.currentShader, batch);
             }
         });
     }
 
-    protected void drawWater (GameTime time, Camera camera, SpriteBatch batch) {
+    protected void drawWater (GameTime time, CameraWrapper CameraWrapper, SpriteBatch batch) {
         if (!animateWater) {
             //draw water layer of maps
             this.visibleMaps.stream().forEach(map -> {
-                map.drawWater(time, camera, batch);
+                map.drawWater(time, CameraWrapper, batch);
             });
 
             return;
@@ -294,13 +294,13 @@ public class GameWorld {
 
         //render the first layer (the water) using our special vertex shader
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(CameraWrapper.getCombined());
         batch.setShader(this.waterShader);
         //batch.begin();
 
         //draw water layer of maps
         this.visibleMaps.stream().forEach(map -> {
-            map.drawWater(time, camera, batch);
+            map.drawWater(time, CameraWrapper, batch);
         });
 
         //batch.draw(testTexture, 0, 0);

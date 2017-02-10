@@ -2,6 +2,7 @@ package com.jukusoft.libgdx.rpg.engine.entity.impl;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.IComponent;
@@ -49,7 +50,7 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
     }
 
     @Override
-    public void draw (GameTime time, Camera camera, SpriteBatch batch) {
+    public void draw (GameTime time, CameraWrapper camera, SpriteBatch batch) {
         this.entityDrawList.stream().forEach(entity -> {
             //draw entity
             entity.draw(time, camera, batch);

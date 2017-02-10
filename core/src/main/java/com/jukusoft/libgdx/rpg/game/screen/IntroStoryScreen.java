@@ -123,7 +123,7 @@ public class IntroStoryScreen extends BaseScreen {
 
         batch.end();
 
-        this.shapeRenderer.setProjectionMatrix(game.getCamera().combined);
+        this.shapeRenderer.setProjectionMatrix(game.getCamera().getCombined());
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(this.progressbarColor);
 

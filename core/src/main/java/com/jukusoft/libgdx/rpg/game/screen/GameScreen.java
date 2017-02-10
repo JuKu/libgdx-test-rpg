@@ -179,7 +179,7 @@ public class GameScreen extends BaseScreen {
         //draw lighting framebuffer first
         this.lightingSystem.drawFBO(time, game.getCamera(), batch);
 
-        batch.setProjectionMatrix(game.getCamera().combined);
+        batch.setProjectionMatrix(game.getCamera().getCombined());
 
         //check, if lighting is enabled
         if (this.lightingSystem.isLightingEnabled()) {

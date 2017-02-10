@@ -34,9 +34,9 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
         float screenHeight = game.getViewportHeight();
 
         //calculate camera middle
-        float currentCameraMiddleX = game.getCamera().position.x + (screenWidth / 2);
-        float currentCameraMiddleY = game.getCamera().position.y + (screenHeight / 2);
-        System.out.println("current camera middle X: " + currentCameraMiddleX + ", Y: " + currentCameraMiddleY + ", zoom: " + game.getCamera2D().zoom);
+        float currentCameraMiddleX = game.getCamera()/*.position.x*/.getX() + (screenWidth / 2);
+        float currentCameraMiddleY = game.getCamera()/*.position.y*/.getY() + (screenHeight / 2);
+        System.out.println("current camera middle X: " + currentCameraMiddleX + ", Y: " + currentCameraMiddleY + ", zoom: " + game.getCamera2D()/*.zoom*/.getZoom());
 
         float targetX = entityPosition.getX();
         float targetY = entityPosition.getY();
@@ -45,11 +45,13 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
         float deltaX = targetX - currentCameraMiddleX;
         float deltaY = targetY - currentCameraMiddleY;
 
-        float newCameraX = game.getCamera().position.x + deltaX * lerp * dt;
-        float newCameraY = game.getCamera().position.y = deltaY * lerp * dt;
+        float newCameraX = game.getCamera()/*.position.x*/.getX() + deltaX * lerp * dt;
+        float newCameraY = game.getCamera()/*.position.y*/.getY() + deltaY * lerp * dt;
 
-        game.getCamera().position.x = newCameraX;
-        game.getCamera().position.y = newCameraY;
+        //game.getCamera().position.x = newCameraX;
+        //game.getCamera().position.y = newCameraY;
+
+        //game.getCamera().setPosition(newCameraX, newCameraY);
     }
 
     @Override public ECSPriority getUpdateOrder() {

@@ -125,7 +125,7 @@ public class CreditsScreen extends BaseScreen {
         batch.end();
 
         //set camera matrix to shape renderer
-        this.shapeRenderer.setProjectionMatrix(game.getCamera().combined);
+        this.shapeRenderer.setProjectionMatrix(game.getCamera().getCombined());
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.BLACK);

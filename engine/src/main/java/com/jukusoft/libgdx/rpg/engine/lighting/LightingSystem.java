@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.shader.ShaderFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -104,7 +105,7 @@ public class LightingSystem implements LightingEnvironment {
         this.finalLightingShader.end();
     }
 
-    public void update (BaseGame game, Camera camera, GameTime time) {
+    public void update (BaseGame game, CameraWrapper camera, GameTime time) {
         if (!isLightingEnabled()) {
             //because lighting isnt enabled, we dont have to update lighting system
             return;
@@ -126,7 +127,7 @@ public class LightingSystem implements LightingEnvironment {
         });
     }
 
-    public void drawFBO (GameTime time, Camera camera, SpriteBatch batch) {
+    public void drawFBO (GameTime time, CameraWrapper camera, SpriteBatch batch) {
         if (!this.isLightingEnabled()) {
             //we dont have to do anything, because lighting isnt enabled
             return;
@@ -140,11 +141,11 @@ public class LightingSystem implements LightingEnvironment {
         }
 
         //set shape renderer camera
-        this.shapeRenderer.setProjectionMatrix(camera.combined);
+        this.shapeRenderer.setProjectionMatrix(camera.getCombined());
 
         //draw lights to framebuffer
         fbo.begin();
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.getCombined());
         batch.setShader(defaultShader);
 
         //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

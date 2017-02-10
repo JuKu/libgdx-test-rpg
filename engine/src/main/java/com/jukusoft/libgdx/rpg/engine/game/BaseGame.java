@@ -152,10 +152,10 @@ public abstract class BaseGame extends ApplicationAdapter {
         //update time
         this.time.update();
 
-        /*int fps = getFPS();
-        if (fps <= 50) {
-            System.err.println("Warning! FPS is <= 50, FPS: " + fps);
-        }*/
+        int fps = getFPS();
+        if (fps <= 55 && fps != 0) {
+            System.err.println("Warning! FPS is <= 55, FPS: " + fps);
+        }
 
         //update game
         this.update(this.time);

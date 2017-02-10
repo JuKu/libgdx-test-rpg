@@ -17,6 +17,8 @@ import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.hud.ImageWidget;
 import com.jukusoft.libgdx.rpg.engine.hud.WidgetGroup;
+import com.jukusoft.libgdx.rpg.engine.input.InputPriority;
+import com.jukusoft.libgdx.rpg.engine.input.listener.KeyListener;
 import com.jukusoft.libgdx.rpg.engine.lighting.LightingEnvironment;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
@@ -59,6 +61,8 @@ public class HUDOverlayScreen extends BaseScreen {
     protected Skin uiSkin = null;
 
     protected Stage stage = null;
+
+    protected VerticalGroup verticalGroup = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         this.font = BitmapFontFactory
@@ -120,6 +124,32 @@ public class HUDOverlayScreen extends BaseScreen {
 
         //set stage input processor
         game.getInputManager().addCustomInputProcessor(stage);
+
+        game.getInputManager().getGameInputProcessor().addKeyListener(new KeyListener() {
+            @Override public boolean keyDown(int keycode) {
+                return false;
+            }
+
+            @Override public boolean keyUp(int keycode) {
+                return false;
+            }
+
+            @Override public boolean keyTyped(char character) {
+                if (character == 'o') {
+                    toggleControlsVisible();
+                }
+
+                return false;
+            }
+
+            @Override public InputPriority getInputOrder() {
+                return null;
+            }
+
+            @Override public int compareTo(KeyListener o) {
+                return 0;
+            }
+        });
 
         //add lighting controls
         this.addLightingControls(this.hud);
@@ -197,8 +227,8 @@ public class HUDOverlayScreen extends BaseScreen {
         controlGroup.setPosition(400, 400);
         hud.addWidget(controlGroup);*/
 
-        VerticalGroup horizontalGroup = new VerticalGroup();
-        horizontalGroup.setPosition(1000, 400);
+        this.verticalGroup = new VerticalGroup();
+        verticalGroup.setPosition(1000, 400);
 
         //add checkbox to enable lighting
         CheckBox checkBox = new CheckBox("Lighting enabled", this.uiSkin);
@@ -214,14 +244,14 @@ public class HUDOverlayScreen extends BaseScreen {
                 return false;
             }
         });
-        horizontalGroup.addActor(checkBox);
+        verticalGroup.addActor(checkBox);
 
         if (lightingEnvironment.isLightingEnabled()) {
             checkBox.setChecked(true);
         }
 
         Label label = new Label("Light Intensity", this.uiSkin);
-        horizontalGroup.addActor(label);
+        verticalGroup.addActor(label);
 
         Slider slider = new Slider(0, 3, 0.01f, false, this.uiSkin);
         slider.setValue(lightingEnvironment.getAmbientIntensity());
@@ -230,10 +260,10 @@ public class HUDOverlayScreen extends BaseScreen {
 
             return true;
         });
-        horizontalGroup.addActor(slider);
+        verticalGroup.addActor(slider);
 
         Label redLabel = new Label("Red Color: " + lightingEnvironment.getAmbientColor().x, this.uiSkin);
-        horizontalGroup.addActor(redLabel);
+        verticalGroup.addActor(redLabel);
 
         Slider redSlider = new Slider(0, 1, 0.01f, false, this.uiSkin);
         redSlider.setValue(lightingEnvironment.getAmbientColor().x);
@@ -244,10 +274,10 @@ public class HUDOverlayScreen extends BaseScreen {
 
             return true;
         });
-        horizontalGroup.addActor(redSlider);
+        verticalGroup.addActor(redSlider);
 
         Label greenLabel = new Label("Green Color: " + lightingEnvironment.getAmbientColor().y, this.uiSkin);
-        horizontalGroup.addActor(greenLabel);
+        verticalGroup.addActor(greenLabel);
 
         Slider greenSlider = new Slider(0, 1, 0.01f, false, this.uiSkin);
         greenSlider.setValue(lightingEnvironment.getAmbientColor().y);
@@ -258,10 +288,10 @@ public class HUDOverlayScreen extends BaseScreen {
 
             return true;
         });
-        horizontalGroup.addActor(greenSlider);
+        verticalGroup.addActor(greenSlider);
 
         Label blueLabel = new Label("Blue Color: " + lightingEnvironment.getAmbientColor().z, this.uiSkin);
-        horizontalGroup.addActor(blueLabel);
+        verticalGroup.addActor(blueLabel);
 
         Slider blueSlider = new Slider(0, 1, 0.01f, false, this.uiSkin);
         blueSlider.setValue(lightingEnvironment.getAmbientColor().z);
@@ -272,7 +302,7 @@ public class HUDOverlayScreen extends BaseScreen {
 
             return true;
         });
-        horizontalGroup.addActor(blueSlider);
+        verticalGroup.addActor(blueSlider);
 
         TextButton button = new TextButton("Reset", this.uiSkin);
         button.addCaptureListener(new ClickListener() {
@@ -291,9 +321,17 @@ public class HUDOverlayScreen extends BaseScreen {
             }
 
         });
-        horizontalGroup.addActor(button);
+        verticalGroup.addActor(button);
 
-        stage.addActor(horizontalGroup);
+        stage.addActor(verticalGroup);
+    }
+
+    protected void setControlsVisible (boolean visible) {
+        this.verticalGroup.setVisible(visible);
+    }
+
+    protected void toggleControlsVisible () {
+        this.verticalGroup.setVisible(!this.verticalGroup.isVisible());
     }
 
 }

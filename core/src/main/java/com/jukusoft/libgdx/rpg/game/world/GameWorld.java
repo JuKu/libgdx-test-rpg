@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by Justin on 09.02.2017.
@@ -170,12 +172,12 @@ public class GameWorld {
         }
 
         //check, if some maps arent visible anymore and remove them from draw queue
-        this.visibleMaps.stream().forEach(map -> {
+        for (GameWorldMap map : this.visibleMaps) {
             if (!map.isMapVisibleInViewPort(camera)) {
                 //remove map from render queue
                 this.visibleMaps.remove(map);
             }
-        });
+        }
 
         //cleanUp not visible maps
         this.cleanUpVisibleMapCache();

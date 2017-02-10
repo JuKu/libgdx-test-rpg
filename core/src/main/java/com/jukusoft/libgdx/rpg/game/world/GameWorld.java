@@ -33,6 +33,9 @@ public class GameWorld {
     */
     protected List<GameWorldMap> visibleMaps = new ArrayList<>();
 
+    //because we cannot add or remove entries to list, while iterating over it, we need an extra list for this
+    List<GameWorldMap> mapsToRemove = new ArrayList<>();
+
     //special shader program for water shader
     protected ShaderProgram waterShader = null;
     protected ShaderProgram defaultShader = null;
@@ -171,12 +174,23 @@ public class GameWorld {
             this.skyBox.update(game, time);
         }
 
+        //because we cannot add or remove entries to list, while iterating over it, we need an extra list for this
+        this.mapsToRemove.clear();
+
         //check, if some maps arent visible anymore and remove them from draw queue
         for (GameWorldMap map : this.visibleMaps) {
             if (!map.isMapVisibleInViewPort(camera)) {
                 //remove map from render queue
-                this.visibleMaps.remove(map);
+
+                //because we cannot add or remove entries to list, while iterating over it, we need an extra list for this
+                this.mapsToRemove.add(map);
+
+                //this.visibleMaps.remove(map);
             }
+        }
+
+        for (GameWorldMap map : mapsToRemove) {
+            this.visibleMaps.remove(map);
         }
 
         //cleanUp not visible maps

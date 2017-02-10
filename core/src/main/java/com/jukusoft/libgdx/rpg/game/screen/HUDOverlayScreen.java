@@ -1,5 +1,6 @@
 package com.jukusoft.libgdx.rpg.game.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
@@ -415,18 +416,17 @@ public class HUDOverlayScreen extends BaseScreen {
                                 return;
                             }
 
-                            game.runOnUIThread(() -> {
-                                GameWorld gameWorld = game.getSharedData().get(SharedDataConst.GAME_WORLD, GameWorld.class);
+                            final GameWorld gameWorld = game.getSharedData().get(SharedDataConst.GAME_WORLD, GameWorld.class);
 
+                            game.runOnUIThread(() -> {
                                 //load texture
-                                game.getAssetManager().load(filePath, Texture.class);
-                                game.getAssetManager().finishLoadingAsset(filePath);
-                                Texture skyBoxTexture = game.getAssetManager().get(filePath, Texture.class);
+                                FileHandle handle = Gdx.files.absolute(filePath);
+                                Texture skyBoxTexture = new Texture(handle);
 
                                 gameWorld.getSkyBox().setTexture(skyBoxTexture);
                             });
                         } else {
-                            System.out.println("No open button clicked.");
+                            System.out.println("No skybox open button clicked.");
                         }
                     }
                 });

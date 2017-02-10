@@ -41,7 +41,7 @@ public class SimpleSkyBox implements SkyBox {
 
     public SimpleSkyBox (Texture texture) {
         this.skyBoxTexture = texture;
-        this.x = skyBoxWidth / 2;
+        //this.x = skyBoxWidth / 2;
 
         this.skyBoxWidth = skyBoxTexture.getWidth();
 
@@ -97,7 +97,10 @@ public class SimpleSkyBox implements SkyBox {
         this.smoothFactorY = y;
     }
 
-    @Override public void setTexture(Texture texture) {
+    @Override public synchronized void setTexture(Texture texture) {
+        Texture oldTexture = this.skyBoxTexture;
+
+        System.out.println("set new skybox texture.");
         this.skyBoxTexture = texture;
 
         this.x = skyBoxWidth / 2;
@@ -109,6 +112,12 @@ public class SimpleSkyBox implements SkyBox {
 
         this.camera = new OrthographicCamera(texture.getWidth(), texture.getHeight());
         this.camera.translate(texture.getWidth() / 2, texture.getHeight() / 2, 0);
+
+        if (oldTexture != null) {
+            //dispose old texture
+            oldTexture.dispose();
+            oldTexture = null;
+        }
     }
 
 }

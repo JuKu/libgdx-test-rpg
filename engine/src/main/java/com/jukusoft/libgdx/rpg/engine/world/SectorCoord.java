@@ -13,6 +13,12 @@ public class SectorCoord {
     protected int y = 0;
     protected int layer = 0;
 
+    public SectorCoord (int x, int y, int layer) {
+        this.x = x;
+        this.y = y;
+        this.layer = layer;
+    }
+
     public SectorCoord () {
         //
     }

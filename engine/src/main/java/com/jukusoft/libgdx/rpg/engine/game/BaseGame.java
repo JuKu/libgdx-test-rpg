@@ -24,7 +24,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -86,6 +88,9 @@ public abstract class BaseGame extends ApplicationAdapter {
     * instance of input manager
     */
     protected InputManager inputManager = null;
+
+    //tasks which should be executed in OpenGL context thread
+    protected Queue<Runnable> uiQueue = new ConcurrentLinkedQueue<>();
 
     @Override
     public void resize(final int width, final int height) {
@@ -157,6 +162,15 @@ public abstract class BaseGame extends ApplicationAdapter {
             System.err.println("Warning! FPS is <= 55, FPS: " + fps);
         }
 
+        //execute tasks, which should be executed in OpenGL context thread
+        Runnable runnable = uiQueue.peek();
+
+        while (runnable != null) {
+            runnable.run();
+
+            runnable = uiQueue.peek();
+        }
+
         //update game
         this.update(this.time);
 
@@ -206,6 +220,10 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     public String getShaderDir () {
         return this.shaderPath;
+    }
+
+    public void runOnUIThread (Runnable runnable) {
+        this.uiQueue.offer(runnable);
     }
 
     /**

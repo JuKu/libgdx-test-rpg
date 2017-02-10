@@ -2,7 +2,8 @@ package com.jukusoft.libgdx.rpg.engine.entity.impl;
 
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.PositionChangedListener;
-import com.jukusoft.libgdx.rpg.engine.json.InvalideJSONException;
+import com.jukusoft.libgdx.rpg.engine.exception.InvalideJSONException;
+import com.jukusoft.libgdx.rpg.engine.exception.ReadOnlyException;
 import com.jukusoft.libgdx.rpg.engine.json.JSONLoadable;
 import com.jukusoft.libgdx.rpg.engine.json.JSONSerializable;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -19,7 +20,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * Created by Justin on 10.02.2017.
  */
-public class PositionComponent extends BaseComponent implements JSONSerializable, JSONLoadable {
+public class PositionComponent extends BaseComponent implements JSONSerializable, JSONLoadable, Cloneable {
 
     protected volatile float x = 0;
     protected volatile float y = 0;
@@ -33,11 +34,24 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
 
     protected AtomicBoolean readOnly = new AtomicBoolean(false);
 
+    public PositionComponent (float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public PositionComponent () {
+        //
+    }
+
     public float getX () {
         return this.x;
     }
 
     public void setX (float x) {
+        if (readOnly.get()) {
+            throw new ReadOnlyException("Cannot set X position, because PositionComponent is readonly.");
+        }
+
         //save old value
         float oldX = this.x;
 
@@ -52,6 +66,10 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     }
 
     public void setY (float y) {
+        if (readOnly.get()) {
+            throw new ReadOnlyException("Cannot set Y position, because PositionComponent is readonly.");
+        }
+
         //save old value
         float oldY = this.y;
 
@@ -62,6 +80,10 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     }
 
     public void setPosition (float x, float y) {
+        if (readOnly.get()) {
+            throw new ReadOnlyException("Cannot set position, because PositionComponent is readonly.");
+        }
+
         //save old values
         float oldX = this.x;
         float oldY = this.y;
@@ -75,6 +97,11 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
 
     public void move (float x, float y) {
         this.setPosition(this.x + x, this.y + y);
+    }
+
+    @Override
+    public PositionComponent clone () {
+        return new PositionComponent(this.x, this.y);
     }
 
     protected void notifyPositionChangedListener (float oldX, float oldY, float newX, float newY) {

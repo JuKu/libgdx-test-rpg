@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.engine.json;
+package com.jukusoft.libgdx.rpg.engine.exception;
 
 /**
  * Created by Justin on 10.02.2017.

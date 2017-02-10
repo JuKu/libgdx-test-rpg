@@ -1,6 +1,7 @@
 package com.jukusoft.libgdx.rpg.engine.entity.impl;
 
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.annotation.ThreadSafeComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.PositionChangedListener;
 import com.jukusoft.libgdx.rpg.engine.exception.InvalideJSONException;
 import com.jukusoft.libgdx.rpg.engine.exception.ReadOnlyException;
@@ -20,6 +21,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * Created by Justin on 10.02.2017.
  */
+@ThreadSafeComponent
 public class PositionComponent extends BaseComponent implements JSONSerializable, JSONLoadable, Cloneable {
 
     protected volatile float x = 0;

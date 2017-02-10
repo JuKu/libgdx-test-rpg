@@ -1,9 +1,9 @@
-package com.jukusoft.libgdx.rpg.engine.entity.impl;
+package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
 
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.IUpdateComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.priority.ComponentPriority;
+import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
@@ -51,9 +51,9 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
         game.getCamera().position.y = newCameraY;
     }
 
-    @Override public ComponentPriority getUpdateOrder() {
+    @Override public ECSPriority getUpdateOrder() {
         //camera should be updated after all entities
-        return ComponentPriority.VERY_LOW;
+        return ECSPriority.VERY_LOW;
     }
 
 }

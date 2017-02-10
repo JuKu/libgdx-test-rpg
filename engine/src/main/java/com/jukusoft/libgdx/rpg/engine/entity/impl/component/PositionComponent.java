@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.engine.entity.impl;
+package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
 
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.annotation.ThreadSafeComponent;

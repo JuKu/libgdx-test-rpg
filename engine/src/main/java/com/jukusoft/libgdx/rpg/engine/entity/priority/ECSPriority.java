@@ -3,7 +3,7 @@ package com.jukusoft.libgdx.rpg.engine.entity.priority;
 /**
  * Created by Justin on 10.02.2017.
  */
-public enum ComponentPriority {
+public enum ECSPriority {
 
     VERY_LOW(1),
 
@@ -19,7 +19,7 @@ public enum ComponentPriority {
 
     private final int id;
 
-    ComponentPriority (int id) {
+    ECSPriority(int id) {
         this.id = id;
     }
 

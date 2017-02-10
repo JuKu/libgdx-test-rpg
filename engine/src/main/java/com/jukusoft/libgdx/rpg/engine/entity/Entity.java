@@ -2,6 +2,9 @@ package com.jukusoft.libgdx.rpg.engine.entity;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jukusoft.libgdx.rpg.engine.entity.annotation.SharableComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.BaseECS;
+import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
@@ -29,16 +32,21 @@ public class Entity {
     protected List<IDrawComponent> drawComponentList = new ArrayList<>();
 
     protected BaseGame game = null;
+    protected BaseECS ecs = null;
 
     protected static AtomicLong lastID = new AtomicLong(0);
     protected long entityID = lastID.incrementAndGet();
+
+    protected ECSPriority updateOrder = ECSPriority.NORMAL;
+    protected ECSPriority drawOrder = ECSPriority.NORMAL;
 
     public Entity () {
         //
     }
 
-    public void init (BaseGame game) {
+    public void init (BaseGame game, BaseECS ecs) {
         this.game = game;
+        this.ecs = ecs;
     }
 
     public void update(BaseGame game, GameTime time) {
@@ -53,6 +61,10 @@ public class Entity {
         this.drawComponentList.stream().forEach(component -> {
             component.draw(time, camera, batch);
         });
+    }
+
+    public long getEntityID () {
+        return this.entityID;
     }
 
     public <T extends IComponent> T getComponent (Class<T> cls) {
@@ -127,17 +139,57 @@ public class Entity {
             this.updateComponentList.remove(component);
             this.drawComponentList.remove(component);
 
-            //dispose component
-            component.dispose();
+            //dispose component which arent sharable
+            if (!cls.isAnnotationPresent(SharableComponent.class)) {
+                component.dispose();
+            }
         }
     }
 
+    public ECSPriority getUpdateOrder () {
+        return this.updateOrder;
+    }
+
+    public void setUpdateOrder (ECSPriority updateOrder) {
+        this.updateOrder = updateOrder;
+
+        //call listeners
+        ecs.onEntityUpdateOrderChanged();
+    }
+
+    public ECSPriority getDrawOrder () {
+        return this.drawOrder;
+    }
+
+    public void setDrawOrder (ECSPriority drawOrder) {
+        this.drawOrder = drawOrder;
+
+        //call listeners
+        ecs.onEntityDrawOrderChanged();
+    }
+
     protected <T extends IComponent> void onComponentAdded (Entity entity, T component, Class<T> cls) {
-        //TODO: call ECS listener
+        this.ecs.onComponentAdded(entity, component, cls);
     }
 
     protected <T extends IComponent> void onComponentRemoved (Entity entity, T component, Class<T> cls) {
-        //TODO: call ECS listener
+        this.ecs.onComponentRemoved(entity, component, cls);
+    }
+
+    public void dispose () {
+        List<Class> componentsToRemoveList = new ArrayList<>();
+
+        //dispose all components
+        for (Map.Entry<Class,IComponent> entry : this.componentMap.entrySet()) {
+            Class cls = entry.getKey();
+
+            //remove component
+            componentsToRemoveList.add(cls);
+        }
+
+        componentsToRemoveList.stream().forEach(cls -> {
+            this.removeComponent(cls);
+        });
     }
 
 }

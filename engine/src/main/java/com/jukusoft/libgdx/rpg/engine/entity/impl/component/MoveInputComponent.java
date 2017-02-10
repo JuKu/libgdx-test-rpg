@@ -1,10 +1,9 @@
-package com.jukusoft.libgdx.rpg.engine.entity.impl;
+package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
 
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.IUpdateComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.MoveComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.priority.ComponentPriority;
+import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.input.BaseGameActionConst;
 import com.jukusoft.libgdx.rpg.engine.input.InputManager;
@@ -54,8 +53,8 @@ public class MoveInputComponent extends BaseComponent implements IUpdateComponen
         this.moveComponent.setSpeed(speedX, speedY);
     }
 
-    @Override public ComponentPriority getUpdateOrder() {
-        return ComponentPriority.HIGH;
+    @Override public ECSPriority getUpdateOrder() {
+        return ECSPriority.HIGH;
     }
 
     public float getBaseSpeedX () {

@@ -1,10 +1,10 @@
-package com.jukusoft.libgdx.rpg.engine.entity.impl;
+package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
 
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.IUpdateComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.DirectionChangedListener;
-import com.jukusoft.libgdx.rpg.engine.entity.priority.ComponentPriority;
+import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.utils.Direction;
@@ -67,8 +67,8 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         this.updateDirection();
     }
 
-    @Override public ComponentPriority getUpdateOrder() {
-        return ComponentPriority.NORMAL;
+    @Override public ECSPriority getUpdateOrder() {
+        return ECSPriority.NORMAL;
     }
 
     public boolean isMoving () {

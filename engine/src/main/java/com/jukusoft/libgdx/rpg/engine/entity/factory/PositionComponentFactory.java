@@ -1,6 +1,6 @@
 package com.jukusoft.libgdx.rpg.engine.entity.factory;
 
-import com.jukusoft.libgdx.rpg.engine.entity.impl.PositionComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
 import org.json.JSONObject;
 
 /**

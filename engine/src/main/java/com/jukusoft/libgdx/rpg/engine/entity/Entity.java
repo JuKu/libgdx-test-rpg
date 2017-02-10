@@ -6,6 +6,7 @@ import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Created by Justin on 10.02.2017.
@@ -28,6 +29,13 @@ public class Entity {
     protected List<IDrawComponent> drawComponentList = new ArrayList<>();
 
     protected BaseGame game = null;
+
+    protected static AtomicLong lastID = new AtomicLong(0);
+    protected long entityID = lastID.incrementAndGet();
+
+    public Entity () {
+        //
+    }
 
     public void init (BaseGame game) {
         this.game = game;

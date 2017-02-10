@@ -1,5 +1,6 @@
 package com.jukusoft.libgdx.rpg.engine.input;
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.jukusoft.libgdx.rpg.engine.input.listener.KeyListener;
 import com.jukusoft.libgdx.rpg.engine.input.listener.MouseListener;

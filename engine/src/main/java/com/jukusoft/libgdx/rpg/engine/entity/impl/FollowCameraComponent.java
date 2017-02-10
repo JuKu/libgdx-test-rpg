@@ -52,7 +52,8 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
     }
 
     @Override public ComponentPriority getUpdateOrder() {
-        return null;
+        //camera should be updated after all entities
+        return ComponentPriority.VERY_LOW;
     }
 
 }

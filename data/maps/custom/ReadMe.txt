@@ -1,0 +1,1 @@
+Directory for custom maps, created by user.

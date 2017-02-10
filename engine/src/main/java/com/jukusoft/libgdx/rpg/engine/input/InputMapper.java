@@ -21,4 +21,11 @@ public interface InputMapper {
      */
     public void removeMapping (int keyCode, int actionCode);
 
+    /**
+    * get action code by key code
+     *
+     * @param keyCode keyCode of key on keyboard
+    */
+    public int getActionCode (int keyCode);
+
 }

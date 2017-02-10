@@ -149,6 +149,14 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         this.listenerLock.unlock();
     }
 
+    public boolean isReadOnly () {
+        return this.readOnly.get();
+    }
+
+    public void setReadOnly (boolean readOnly) {
+        this.readOnly.set(readOnly);
+    }
+
     @Override public JSONObject toJSON() {
         JSONObject json = new JSONObject();
 

@@ -183,6 +183,8 @@ public class GameWorld {
             if (!map.isMapVisibleInViewPort(camera)) {
                 //remove map from render queue
 
+                System.out.println("remove map, because its out of viewport: " + map.getSectorCoord());
+
                 //because we cannot add or remove entries to list, while iterating over it, we need an extra list for this
                 this.mapsToRemove.add(map);
 

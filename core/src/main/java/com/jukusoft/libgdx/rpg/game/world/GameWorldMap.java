@@ -8,6 +8,8 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.jukusoft.libgdx.rpg.engine.exception.MapNotFoundException;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -88,6 +90,9 @@ public class GameWorldMap extends BaseMap {
             this.mapRenderer = null;
         }
 
+        //update bounding box
+        this.boundingBox = new BoundingBox(new Vector3(x, y, 0), new Vector3(x + getWidthInPixels(), y + getHeightInPixels(), 0));
+
         //create map renderer (every map needs its own renderer)
         float unitScale = 1f;//1 / 32f;
         this.mapRenderer = new OrthogonalTiledMapRenderer(this.tiledMap, unitScale);
@@ -98,7 +103,7 @@ public class GameWorldMap extends BaseMap {
     }
 
     public void update (BaseGame game, Camera camera, GameTime time) {
-        //
+        //update bounding box
     }
 
     public void draw (GameTime time, Camera camera, ShaderProgram shader, SpriteBatch batch) {

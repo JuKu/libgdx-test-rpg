@@ -163,12 +163,12 @@ public abstract class BaseGame extends ApplicationAdapter {
         }
 
         //execute tasks, which should be executed in OpenGL context thread
-        Runnable runnable = uiQueue.peek();
+        Runnable runnable = uiQueue.poll();
 
         while (runnable != null) {
             runnable.run();
 
-            runnable = uiQueue.peek();
+            runnable = uiQueue.poll();
         }
 
         //update game

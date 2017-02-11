@@ -43,6 +43,8 @@ public class GameScreen extends BaseScreen {
     protected Texture skyBoxTexture = null;
     protected String characterTexturePath = AssetPathUtils.getImagePath("test/character.png");
     protected Texture characterTexture = null;
+    protected String blackTexturePath = AssetPathUtils.getLightMapPath("blackmap/blackmap.png");
+    protected Texture blackTexture = null;
 
     //lighting system
     LightingSystem lightingSystem = null;
@@ -59,6 +61,7 @@ public class GameScreen extends BaseScreen {
         game.getAssetManager().load(testTexturePath, Texture.class);
         game.getAssetManager().load(lightMapPath, Texture.class);
         game.getAssetManager().load(skyBoxPath, Texture.class);
+        game.getAssetManager().load(blackTexturePath, Texture.class);
         game.getAssetManager().load(characterTexturePath, Texture.class);
         game.getAssetManager().finishLoading();
 
@@ -66,9 +69,10 @@ public class GameScreen extends BaseScreen {
         this.lightMap = game.getAssetManager().get(lightMapPath, Texture.class);
         this.skyBoxTexture = game.getAssetManager().get(skyBoxPath, Texture.class);
         this.characterTexture = game.getAssetManager().get(characterTexturePath, Texture.class);
+        this.blackTexture = game.getAssetManager().get(blackTexturePath, Texture.class);
 
         //create new lighting system
-        this.lightingSystem = new LightingSystem(game, game.getViewportWidth(), game.getViewportHeight());
+        this.lightingSystem = new LightingSystem(game, blackTexture, game.getViewportWidth(), game.getViewportHeight());
 
         //create new test lighting
         this.testLighting = new TextureLighting(this.lightMap, 200, 200);

@@ -108,10 +108,10 @@ public class Entity {
             });
         }
 
-        System.out.println("======== Update List =========");
+        /*System.out.println("======== Update List =========");
         for (IUpdateComponent component1 : this.updateComponentList) {
             System.out.println("Order: " + component1.getUpdateOrder().getValue() + ", Classname: " + component1.getClass().getName());
-        }
+        }*/
 
         //check, if component needs to draw
         if (component instanceof IDrawComponent) {

@@ -20,6 +20,14 @@ public class TextureDrawComponent extends BaseComponent implements IDrawComponen
     protected Texture texture = null;
 
     public TextureDrawComponent (Texture texture) {
+        if (texture == null) {
+            throw new NullPointerException("texture cannot be null.");
+        }
+
+        if (!texture.isManaged()) {
+            throw new IllegalStateException("texture isnt loaded.");
+        }
+
         this.texture = texture;
     }
 
@@ -31,6 +39,9 @@ public class TextureDrawComponent extends BaseComponent implements IDrawComponen
         if (this.positionComponent == null) {
             throw new IllegalStateException("entity doesnt have an PositionComponent.");
         }
+
+        //set new width and height of entity
+        positionComponent.setDimension(texture.getWidth(), texture.getHeight());
     }
 
     @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {

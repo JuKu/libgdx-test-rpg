@@ -107,6 +107,14 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         this.notifyPositionChangedListener(oldX, oldY, x, y);
     }
 
+    public float getMiddleX () {
+        return this.x + (this.getWidth() / 2);
+    }
+
+    public float getMiddleY () {
+        return this.y + (this.getHeight() / 2);
+    }
+
     public void move (float x, float y) {
         this.setPosition(this.x + x, this.y + y);
     }
@@ -127,8 +135,17 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         this.height = heigth;
     }
 
+    public void setDimension (float width, float height) {
+        this.width = width;
+        this.height = height;
+    }
+
     public float getScale () {
         return this.scale;
+    }
+
+    public void setScale (float scale) {
+        this.scale = scale;
     }
 
     @Override

@@ -39,8 +39,8 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
         //System.out.println("current camera middle X: " + currentCameraMiddleX + ", Y: " + currentCameraMiddleY + ", zoom: " + game.getCamera2D()/*.zoom*/.getZoom());
         //System.out.println("current camera X: " + game.getCamera().getX() + ", Y: " + game.getCamera().getY());
 
-        float targetX = entityPosition.getX() - (game.getViewportWidth() / 2);
-        float targetY = entityPosition.getY() - (game.getViewportHeight() / 2);
+        float targetX = entityPosition.getMiddleX() - (game.getViewportWidth() / 2);
+        float targetY = entityPosition.getMiddleY() - (game.getViewportHeight() / 2);
         //System.out.println("targetX: " + targetX + ", targetY: " + targetY);
 
         //move camera

@@ -103,9 +103,14 @@ public class Entity {
             //sort list
             Collections.sort(this.updateComponentList, new Comparator<IUpdateComponent>() {
                 @Override public int compare(IUpdateComponent o1, IUpdateComponent o2) {
-                    return ((Integer) o1.getUpdateOrder().getValue()).compareTo(o2.getUpdateOrder().getValue());
+                    return ((Integer) o2.getUpdateOrder().getValue()).compareTo(o1.getUpdateOrder().getValue());
                 }
             });
+        }
+
+        System.out.println("======== Update List =========");
+        for (IUpdateComponent component1 : this.updateComponentList) {
+            System.out.println("Order: " + component1.getUpdateOrder().getValue() + ", Classname: " + component1.getClass().getName());
         }
 
         //check, if component needs to draw
@@ -115,7 +120,7 @@ public class Entity {
             //sort list
             Collections.sort(this.drawComponentList, new Comparator<IDrawComponent>() {
                 @Override public int compare(IDrawComponent o1, IDrawComponent o2) {
-                    return ((Integer) o1.getDrawOrder().getValue()).compareTo(o2.getDrawOrder().getValue());
+                    return ((Integer) o2.getDrawOrder().getValue()).compareTo(o1.getDrawOrder().getValue());
                 }
             });
         }

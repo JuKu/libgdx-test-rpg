@@ -62,7 +62,7 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
         //sort list
         Collections.sort(this.entityUpdateList, new Comparator<Entity>() {
             @Override public int compare(Entity o1, Entity o2) {
-                return ((Integer) o1.getUpdateOrder().getValue()).compareTo(o2.getUpdateOrder().getValue());
+                return ((Integer) o2.getUpdateOrder().getValue()).compareTo(o1.getUpdateOrder().getValue());
             }
         });
     }
@@ -72,7 +72,7 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
         //sort list
         Collections.sort(this.entityDrawList, new Comparator<Entity>() {
             @Override public int compare(Entity o1, Entity o2) {
-                return ((Integer) o1.getDrawOrder().getValue()).compareTo(o2.getDrawOrder().getValue());
+                return ((Integer) o2.getDrawOrder().getValue()).compareTo(o1.getDrawOrder().getValue());
             }
         });
     }

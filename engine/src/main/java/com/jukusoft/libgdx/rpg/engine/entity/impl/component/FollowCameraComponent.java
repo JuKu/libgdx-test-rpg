@@ -34,10 +34,8 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
         float screenHeight = game.getViewportHeight();
 
         //calculate camera middle
-        float currentCameraMiddleX = game.getCamera()/*.position.x*/.getX() + (screenWidth / 2);
-        float currentCameraMiddleY = game.getCamera()/*.position.y*/.getY() + (screenHeight / 2);
-        //System.out.println("current camera middle X: " + currentCameraMiddleX + ", Y: " + currentCameraMiddleY + ", zoom: " + game.getCamera2D()/*.zoom*/.getZoom());
-        //System.out.println("current camera X: " + game.getCamera().getX() + ", Y: " + game.getCamera().getY());
+        float currentCameraMiddleX = game.getCamera().getX() + (screenWidth / 2);
+        float currentCameraMiddleY = game.getCamera().getY() + (screenHeight / 2);
 
         float targetX = entityPosition.getMiddleX() - (game.getViewportWidth() / 2);
         float targetY = entityPosition.getMiddleY() - (game.getViewportHeight() / 2);

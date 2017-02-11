@@ -210,6 +210,8 @@ public abstract class BaseGame extends ApplicationAdapter {
 
         this.batch.end();
 
+        //System.out.println("render calls: " + this.batch.renderCalls);
+
         //this.fpsLogger.log();
     }
 

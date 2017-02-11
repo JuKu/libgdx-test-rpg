@@ -13,13 +13,13 @@ import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 /**
  * Created by Justin on 10.02.2017.
  */
-public class TextureDrawComponent extends BaseComponent implements IDrawComponent {
+public class DrawTextureComponent extends BaseComponent implements IDrawComponent {
 
     protected PositionComponent positionComponent = null;
 
     protected Texture texture = null;
 
-    public TextureDrawComponent (Texture texture) {
+    public DrawTextureComponent(Texture texture) {
         if (texture == null) {
             throw new NullPointerException("texture cannot be null.");
         }
@@ -31,6 +31,7 @@ public class TextureDrawComponent extends BaseComponent implements IDrawComponen
         this.texture = texture;
     }
 
+    @Override
     public void init (BaseGame game, Entity entity) {
         super.init(game, entity);
 

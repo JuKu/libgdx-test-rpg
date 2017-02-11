@@ -3,7 +3,6 @@ package com.jukusoft.libgdx.rpg.engine.entity.factory;
 import com.badlogic.gdx.graphics.Texture;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.BaseECS;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 
 /**
@@ -28,7 +27,7 @@ public class PlayerFactory {
         playerEntity.addComponent(new FollowCameraComponent(), FollowCameraComponent.class);
 
         //add texture component to draw player
-        playerEntity.addComponent(new TextureDrawComponent(texture), TextureDrawComponent.class);
+        playerEntity.addComponent(new DrawTextureComponent(texture), DrawTextureComponent.class);
 
         return playerEntity;
     }

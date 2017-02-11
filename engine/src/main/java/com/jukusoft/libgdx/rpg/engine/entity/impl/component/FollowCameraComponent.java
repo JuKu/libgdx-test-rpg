@@ -39,7 +39,6 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
 
         float targetX = entityPosition.getMiddleX() - (game.getViewportWidth() / 2);
         float targetY = entityPosition.getMiddleY() - (game.getViewportHeight() / 2);
-        //System.out.println("targetX: " + targetX + ", targetY: " + targetY);
 
         //move camera
         float deltaX = targetX - currentCameraMiddleX;
@@ -53,10 +52,8 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
             deltaY = 0;
         }
 
-        //System.out.println("deltaX: " + deltaX + ", deltaY: " + deltaY + ", delta: " + dt);
-
-        float newCameraX = game.getCamera()/*.position.x*/.getX() + (deltaX * lerp * dt);
-        float newCameraY = game.getCamera()/*.position.y*/.getY() + (deltaY * lerp * dt);
+        float newCameraX = game.getCamera().getX() + (deltaX * lerp * dt);
+        float newCameraY = game.getCamera().getY() + (deltaY * lerp * dt);
 
         if (Math.abs(deltaX) <= 1) {
             newCameraX = targetX;
@@ -69,9 +66,6 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
         } else if (Math.abs(deltaY) <= 10) {
             newCameraY = game.getCamera().getY() + deltaY;
         }
-
-        //game.getCamera().position.x = newCameraX;
-        //game.getCamera().position.y = newCameraY;
 
         //game.getCamera().setPosition(newCameraX, newCameraY);
         game.getCamera().setPosition(entityPosition.getX() - (game.getViewportWidth() / 2), entityPosition.getY() - (game.getViewportHeight() / 2));

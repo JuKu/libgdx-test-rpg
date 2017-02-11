@@ -27,6 +27,11 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     protected volatile float x = 0;
     protected volatile float y = 0;
 
+    protected volatile float width = 0;
+    protected volatile float height = 0;
+
+    protected volatile float scale = 1;
+
     //list with listeners
     protected List<PositionChangedListener> changedListenerList = new ArrayList<>();
     protected ReentrantLock listenerLock = new ReentrantLock();
@@ -37,6 +42,11 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     protected AtomicBoolean readOnly = new AtomicBoolean(false);
 
     public PositionComponent (float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public PositionComponent (float x, float y, float width, float height) {
         this.x = x;
         this.y = y;
     }
@@ -99,6 +109,26 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
 
     public void move (float x, float y) {
         this.setPosition(this.x + x, this.y + y);
+    }
+
+    public float getWidth () {
+        return this.width * this.scale;
+    }
+
+    public void setWidth (float width) {
+        this.width = width;
+    }
+
+    public float getHeight () {
+        return this.height * this.scale;
+    }
+
+    public void setHeight (float heigth) {
+        this.height = heigth;
+    }
+
+    public float getScale () {
+        return this.scale;
     }
 
     @Override
@@ -167,6 +197,11 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         json.put("x", this.x);
         json.put("y", this.y);
 
+        json.put("width", this.width);
+        json.put("height", this.height);
+
+        json.put("scale", this.scale);
+
         return json;
     }
 
@@ -181,6 +216,9 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
 
         this.x = Float.parseFloat(json.getString("x"));
         this.y = Float.parseFloat(json.getString("y"));
+        this.width = Float.parseFloat(json.getString("width"));
+        this.height = Float.parseFloat(json.getString("height"));
+        this.scale = Float.parseFloat(json.getString("scale"));
     }
 
     @Override

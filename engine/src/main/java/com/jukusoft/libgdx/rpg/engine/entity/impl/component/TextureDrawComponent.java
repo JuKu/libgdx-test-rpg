@@ -35,7 +35,7 @@ public class TextureDrawComponent extends BaseComponent implements IDrawComponen
 
     @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
         //draw texture
-        batch.draw(this.texture, this.positionComponent.getX(), this.positionComponent.getY());
+        batch.draw(this.texture, this.positionComponent.getX(), this.positionComponent.getY(), this.positionComponent.getWidth(), this.positionComponent.getHeight());
     }
 
     @Override public ECSPriority getDrawOrder() {

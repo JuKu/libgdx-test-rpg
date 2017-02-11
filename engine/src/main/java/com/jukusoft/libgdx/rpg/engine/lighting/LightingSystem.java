@@ -1,10 +1,7 @@
 package com.jukusoft.libgdx.rpg.engine.lighting;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -57,10 +54,16 @@ public class LightingSystem implements LightingEnvironment {
     //shape renderer to draw black rectangles on framebuffer
     protected ShapeRenderer shapeRenderer = null;
 
+    protected BaseGame game = null;
+    protected Texture blackTexture = null;
+
     //black rectangles
     protected List<ColoredLightingBox> coloredFilledRectList = new ArrayList<>();
 
-    public LightingSystem (BaseGame game, int width, int height) {
+    public LightingSystem (BaseGame game, Texture blackTexture, int width, int height) {
+        this.game = game;
+        this.blackTexture = blackTexture;
+
         //create new frame buffer
         this.fbo = new FrameBuffer(Pixmap.Format.RGBA8888, width, height, false);
 
@@ -153,6 +156,9 @@ public class LightingSystem implements LightingEnvironment {
         //setBlendFunction(GL20.GL_SRC_COLOR, GL20.GL_SRC_ALPHA)
 
         batch.begin();
+
+        //draw black background
+        batch.draw(this.blackTexture, camera.getX(), camera.getY(), game.getViewportWidth(), game.getViewportHeight());
 
         //draw lights
         this.drawLights(time, batch);

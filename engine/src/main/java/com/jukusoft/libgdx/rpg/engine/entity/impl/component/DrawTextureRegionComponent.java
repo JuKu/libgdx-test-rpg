@@ -64,6 +64,10 @@ public class DrawTextureRegionComponent extends BaseComponent implements IDrawCo
         return ECSPriority.NORMAL;
     }
 
+    public TextureRegion getTextureRegion () {
+        return this.textureRegion;
+    }
+
     public void setTextureRegion (TextureRegion textureRegion, boolean setNewDimension) {
         TextureRegion oldTextureRegion = this.textureRegion;
         this.textureRegion = textureRegion;

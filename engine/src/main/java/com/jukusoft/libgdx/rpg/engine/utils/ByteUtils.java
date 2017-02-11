@@ -261,6 +261,10 @@ public class ByteUtils {
 		};
 	}
 
+	public static final int convertByteToInteger (Byte b) {
+		return b.intValue();
+	}
+
 	/**
 	 * Optimization for multiplization an long with 2.
 	 *

@@ -103,8 +103,6 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
             float sin = (float) Math.sin(angle);
             float cos = (float) Math.cos(angle);
 
-            System.out.println("sin: " + sin);
-
             transform.setToTranslation(positionComponent.getX(), positionComponent.getY());
             transform.shear(/*0.5f*//*-1f*/sin, 0);  // <- modify skew here
 

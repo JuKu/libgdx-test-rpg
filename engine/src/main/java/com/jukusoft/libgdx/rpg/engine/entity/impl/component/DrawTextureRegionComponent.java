@@ -6,9 +6,13 @@ import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.IDrawComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.listener.TextureRegionChangedListener;
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Justin on 11.02.2017.
@@ -18,6 +22,7 @@ public class DrawTextureRegionComponent extends BaseComponent implements IDrawCo
     protected PositionComponent positionComponent = null;
 
     protected TextureRegion textureRegion = null;
+    protected List<TextureRegionChangedListener> textureRegionChangedListenerList = new ArrayList<>();
 
     public DrawTextureRegionComponent (TextureRegion textureRegion) {
         this.textureRegion = textureRegion;
@@ -50,6 +55,8 @@ public class DrawTextureRegionComponent extends BaseComponent implements IDrawCo
             return;
         }
 
+        //https://github.com/libgdx/libgdx/wiki/2D-Animation
+
         batch.draw(this.textureRegion, this.positionComponent.getX(), this.positionComponent.getY(), this.positionComponent.getWidth(), this.positionComponent.getHeight());
     }
 
@@ -58,12 +65,25 @@ public class DrawTextureRegionComponent extends BaseComponent implements IDrawCo
     }
 
     public void setTextureRegion (TextureRegion textureRegion, boolean setNewDimension) {
+        TextureRegion oldTextureRegion = this.textureRegion;
         this.textureRegion = textureRegion;
 
         if (setNewDimension) {
             //set new width and height
             this.positionComponent.setDimension(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
         }
+
+        this.textureRegionChangedListenerList.stream().forEach(listener -> {
+            listener.onTextureRegionChanged(oldTextureRegion, this.textureRegion);
+        });
+    }
+
+    public void addTextureRegionChangedListener (TextureRegionChangedListener listener) {
+        this.textureRegionChangedListenerList.add(listener);
+    }
+
+    public void removeTextureRegionChangedListener (TextureRegionChangedListener listener) {
+        this.textureRegionChangedListenerList.remove(listener);
     }
 
 }

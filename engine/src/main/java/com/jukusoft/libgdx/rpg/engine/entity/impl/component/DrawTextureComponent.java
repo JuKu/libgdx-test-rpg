@@ -6,9 +6,13 @@ import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.IDrawComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.listener.TextureChangedListener;
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Justin on 10.02.2017.
@@ -16,6 +20,7 @@ import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 public class DrawTextureComponent extends BaseComponent implements IDrawComponent {
 
     protected PositionComponent positionComponent = null;
+    protected List<TextureChangedListener> textureChangedListenerList = new ArrayList<>();
 
     protected Texture texture = null;
 
@@ -52,6 +57,27 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
 
     @Override public ECSPriority getDrawOrder() {
         return ECSPriority.LOW;
+    }
+
+    public Texture getTexture () {
+        return this.texture;
+    }
+
+    public void setTexture (Texture texture) {
+        Texture oldTexture = this.texture;
+        this.texture = texture;
+
+        this.textureChangedListenerList.stream().forEach(listener -> {
+            listener.onTextureChanged(oldTexture, this.texture);
+        });
+    }
+
+    public void addTextureChangedListener (TextureChangedListener listener) {
+        this.textureChangedListenerList.add(listener);
+    }
+
+    public void removeTextureChangedListener (TextureChangedListener listener) {
+        this.textureChangedListenerList.remove(listener);
     }
 
 }

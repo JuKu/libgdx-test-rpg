@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.hud.ImageWidget;
@@ -435,6 +436,50 @@ public class HUDOverlayScreen extends BaseScreen {
 
         });
         verticalGroup.addActor(loadSkyBoxButton);
+
+        Label shakeIntensityLabel = new Label("Shake Intensity: " + 10, this.uiSkin);
+        verticalGroup.addActor(shakeIntensityLabel);
+
+        Slider shakeIntensitySlider = new Slider(0, 50, 0.1f, false, this.uiSkin);
+        shakeIntensitySlider.setValue(10);
+        shakeIntensitySlider.addCaptureListener(event -> {
+            shakeIntensityLabel.setText("Shake Intensity: " + shakeIntensitySlider.getValue());
+
+            return true;
+        });
+        verticalGroup.addActor(shakeIntensitySlider);
+
+        Label shakeDurationLabel = new Label("Shake Duraction: " + 5000 + "ms", this.uiSkin);
+        verticalGroup.addActor(shakeDurationLabel);
+
+        Slider shakeDurationSlider = new Slider(0, 10000, 1f, false, this.uiSkin);
+        shakeDurationSlider.setValue(5000);
+        shakeDurationSlider.addCaptureListener(event -> {
+            shakeDurationLabel.setText("Shake Duration: " + shakeDurationSlider.getValue() + "ms");
+
+            return true;
+        });
+        verticalGroup.addActor(shakeDurationSlider);
+
+        TextButton shakeCameraButton = new TextButton("Shake Camera", this.uiSkin);
+        shakeCameraButton.addCaptureListener(new ClickListener() {
+
+            public void clicked (InputEvent event, float x, float y) {
+                float intensity = shakeIntensitySlider.getValue();
+                float duration = shakeDurationSlider.getValue();
+
+                Shake1CameraModification mod = game.getCamera().getMod(Shake1CameraModification.class);
+
+                if (!mod.isShaking()) {
+                    System.out.println("shake camera, intensity: " + intensity + ", duration: " + duration + "ms");
+
+                    //shake camera 3 seconds
+                    mod.shake(intensity, duration);
+                }
+            }
+
+        });
+        verticalGroup.addActor(shakeCameraButton);
 
         stage.addActor(verticalGroup);
     }

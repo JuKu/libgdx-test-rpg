@@ -26,11 +26,15 @@ public class CameraWrapper implements ModificationFinishedListener {
     protected Map<Class,CameraModification> cameraModificationMap = new ConcurrentHashMap<>();
     protected List<CameraModification> activeModifications = new ArrayList<>();
 
+    protected TempCameraPosition tempCameraPosition = null;
+
     public CameraWrapper (OrthographicCamera camera) {
         this.camera = camera;
 
         this.cameraOffsetX = this.camera.position.x;
         this.cameraOffsetY = this.camera.position.y;
+
+        this.tempCameraPosition = new TempCameraPosition(0, 0, 1);
 
         //this.sync();
     }
@@ -114,10 +118,17 @@ public class CameraWrapper implements ModificationFinishedListener {
     }
 
     public void update () {
+        //reset temporary camera position
+        this.tempCameraPosition.reset(getX(), getY(), getZoom());
+
         //update modifications first
         for (CameraModification mod : this.activeModifications) {
-            mod.onUpdate(this);
+            mod.onUpdate(this.tempCameraPosition, this);
         }
+
+        this.camera.position.x = this.tempCameraPosition.getX() + cameraOffsetX;
+        this.camera.position.y = this.tempCameraPosition.getY() + cameraOffsetY;
+        this.camera.zoom = this.tempCameraPosition.getZoom();
 
         this.camera.update();
     }
@@ -132,7 +143,8 @@ public class CameraWrapper implements ModificationFinishedListener {
             throw new NullPointerException("mod cannot be null.");
         }
 
-        this.activeModifications.remove(mod);
+        this.deactivateMod(cls);
+        //this.activeModifications.remove(mod);
     }
 
     public <T extends CameraModification> void registerMod (T mod, Class<T> cls) {
@@ -147,8 +159,68 @@ public class CameraWrapper implements ModificationFinishedListener {
         this.cameraModificationMap.put(cls, mod);
     }
 
-    public <T extends CameraModification> void removeMod (T mod, Class<T> cls) {
-        //
+    public <T extends CameraModification> void removeMod (Class<T> cls) {
+        if (cls == null) {
+            throw new NullPointerException("class cannot be null.");
+        }
+
+        CameraModification mod = this.cameraModificationMap.get(cls);
+
+        if (mod != null) {
+            this.activeModifications.remove(mod);
+        }
+
+        this.cameraModificationMap.remove(cls);
+    }
+
+    public <T extends CameraModification> T getMod (Class<T> cls) {
+        if (cls == null) {
+            throw new NullPointerException("class cannot be null.");
+        }
+
+        CameraModification mod = this.cameraModificationMap.get(cls);
+
+        if (mod == null) {
+            return null;
+        }
+
+        return cls.cast(mod);
+    }
+
+    public <T extends CameraModification> void activateMod (Class<T> cls) {
+        if (cls == null) {
+            throw new NullPointerException("class cannot be null.");
+        }
+
+        CameraModification mod = this.cameraModificationMap.get(cls);
+
+        if (mod == null) {
+            throw new IllegalStateException("camera modification is not registered: " + cls.getName());
+        }
+
+        if (!this.activeModifications.contains(mod)) {
+            this.activeModifications.add(mod);
+        }
+    }
+
+    public <T extends CameraModification> void deactivateMod (Class<T> cls) {
+        if (cls == null) {
+            throw new NullPointerException("class cannot be null.");
+        }
+
+        CameraModification mod = this.cameraModificationMap.get(cls);
+
+        if (mod == null) {
+            throw new IllegalStateException("camera modification is not registered: " + cls.getName());
+        }
+
+        if (this.activeModifications.contains(mod)) {
+            this.activeModifications.remove(mod);
+        }
+    }
+
+    public int countActiveMods () {
+        return this.activeModifications.size();
     }
 
 }

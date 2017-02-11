@@ -5,7 +5,7 @@ package com.jukusoft.libgdx.rpg.engine.camera;
  */
 public interface CameraModification {
 
-    public void onUpdate (CameraWrapper cameraWrapper);
+    public void onUpdate (TempCameraPosition position, ModificationFinishedListener listener);
 
     public void dispose ();
 

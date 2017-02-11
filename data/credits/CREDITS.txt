@@ -47,6 +47,7 @@ Specical thanks to:
  - pentaquin.com project
  - libGDX team
  - alcove-games.com for nice tutorials
+ - http://www.netprogs.com/libgdx-screen-shaking/ for camera shake tutorials
  - Patrick D. for some tips about OpenGL & rendering
  - Christian Greiner (smooth camera tip)
 

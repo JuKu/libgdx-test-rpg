@@ -130,7 +130,7 @@ public abstract class BaseGame extends ApplicationAdapter {
         this.batch.setProjectionMatrix(this.camera.combined);
 
         this.cameraWrapper = new CameraWrapper(this.camera);
-        this.cameraWrapper.update();
+        this.cameraWrapper.update(this.time);
 
         //initialize UI camera
         this.uiCamera = new OrthographicCamera(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
@@ -192,7 +192,7 @@ public abstract class BaseGame extends ApplicationAdapter {
 
         //update camera
         //this.camera.update();
-        this.cameraWrapper.update();
+        this.cameraWrapper.update(this.time);
 
         //update UI camera
         this.uiCamera.update();

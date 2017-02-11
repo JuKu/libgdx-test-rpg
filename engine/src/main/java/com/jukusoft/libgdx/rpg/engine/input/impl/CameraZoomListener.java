@@ -22,7 +22,7 @@ public class CameraZoomListener implements ScrollListener {
     @Override public boolean scrolled(float amount) {
         //calculate camera zoom
         this.camera.setZoom(camera.getZoom() + amount * 0.04f);//.zoom += amount * 0.04f;
-        this.camera.update();
+        //this.camera.update();
 
         //input event was used, so we return true
         return true;

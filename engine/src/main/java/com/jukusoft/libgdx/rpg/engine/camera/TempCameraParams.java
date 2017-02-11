@@ -3,13 +3,13 @@ package com.jukusoft.libgdx.rpg.engine.camera;
 /**
  * Created by Justin on 11.02.2017.
  */
-public class TempCameraPosition {
+public class TempCameraParams {
 
     protected float x = 0;
     protected float y = 0;
     protected float zoom = 1;
 
-    public TempCameraPosition (float x, float y, float zoom) {
+    public TempCameraParams(float x, float y, float zoom) {
         this.x = x;
         this.y = y;
         this.zoom = zoom;
@@ -34,6 +34,11 @@ public class TempCameraPosition {
     public void setPosition (float x, float y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void translate (float x, float y) {
+        this.x += x;
+        this.y += y;
     }
 
     public float getZoom () {

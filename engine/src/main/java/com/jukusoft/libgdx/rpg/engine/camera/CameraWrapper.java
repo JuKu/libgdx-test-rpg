@@ -3,6 +3,8 @@ package com.jukusoft.libgdx.rpg.engine.camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Matrix4;
+import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
+import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +28,7 @@ public class CameraWrapper implements ModificationFinishedListener {
     protected Map<Class,CameraModification> cameraModificationMap = new ConcurrentHashMap<>();
     protected List<CameraModification> activeModifications = new ArrayList<>();
 
-    protected TempCameraPosition tempCameraPosition = null;
+    protected TempCameraParams tempCameraParams = null;
 
     public CameraWrapper (OrthographicCamera camera) {
         this.camera = camera;
@@ -34,9 +36,12 @@ public class CameraWrapper implements ModificationFinishedListener {
         this.cameraOffsetX = this.camera.position.x;
         this.cameraOffsetY = this.camera.position.y;
 
-        this.tempCameraPosition = new TempCameraPosition(0, 0, 1);
+        this.tempCameraParams = new TempCameraParams(0, 0, 1);
 
         //this.sync();
+
+        //add some basic modifications
+        this.registerMod(new Shake1CameraModification(), Shake1CameraModification.class);
     }
 
     public void translate (float x, float y, float zoom) {
@@ -117,18 +122,18 @@ public class CameraWrapper implements ModificationFinishedListener {
         return this.camera.frustum;
     }
 
-    public void update () {
+    public void update (GameTime time) {
         //reset temporary camera position
-        this.tempCameraPosition.reset(getX(), getY(), getZoom());
+        this.tempCameraParams.reset(getX(), getY(), getZoom());
 
         //update modifications first
         for (CameraModification mod : this.activeModifications) {
-            mod.onUpdate(this.tempCameraPosition, this);
+            mod.onUpdate(time, this.tempCameraParams, this);
         }
 
-        this.camera.position.x = this.tempCameraPosition.getX() + cameraOffsetX;
-        this.camera.position.y = this.tempCameraPosition.getY() + cameraOffsetY;
-        this.camera.zoom = this.tempCameraPosition.getZoom();
+        this.camera.position.x = this.tempCameraParams.getX() + cameraOffsetX;
+        this.camera.position.y = this.tempCameraParams.getY() + cameraOffsetY;
+        this.camera.zoom = this.tempCameraParams.getZoom();
 
         this.camera.update();
     }

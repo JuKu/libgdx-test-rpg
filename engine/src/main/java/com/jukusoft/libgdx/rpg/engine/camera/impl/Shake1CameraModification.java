@@ -13,6 +13,7 @@ import java.util.Random;
 public class Shake1CameraModification implements CameraModification {
 
     protected volatile boolean isActive = false;
+    protected volatile boolean permanentShake = false;
 
     protected float elapsed = 0;
     protected float intensity = 0;
@@ -27,12 +28,12 @@ public class Shake1CameraModification implements CameraModification {
             return;
         }
 
-        float delta = time.getDeltaTime();
+        float delta = time.getDeltaTime() * 1000;
 
         //http://www.netprogs.com/libgdx-screen-shaking/
 
         //shake only, if activated
-        if(elapsed < duration) {
+        if(elapsed < duration || permanentShake) {
             // Calculate the amount of shake based on how long it has been shaking already
             float currentPower = intensity * camera.getZoom() * ((duration - elapsed) / duration);
             float x = (random.nextFloat() - 0.5f) * 2 * currentPower;
@@ -43,7 +44,7 @@ public class Shake1CameraModification implements CameraModification {
             elapsed += delta;
         } else {
             //shake was finsihed
-            this.isActive = true;
+            this.isActive = false;
             //listener.onModificationFinished(this, Shake1CameraModification.class);
         }
     }
@@ -53,7 +54,7 @@ public class Shake1CameraModification implements CameraModification {
 
     }
 
-    public boolean isActive () {
+    public boolean isShaking () {
         return this.isActive;
     }
 
@@ -69,6 +70,18 @@ public class Shake1CameraModification implements CameraModification {
         this.duration = duration;
 
         this.isActive = true;
+    }
+
+    public void startPermantentShake (float intensity) {
+        this.elapsed = 0;
+        this.intensity = intensity;
+
+        this.permanentShake = true;
+        this.isActive = true;
+    }
+
+    public void stopPermanentShake () {
+        this.permanentShake = false;
     }
 
 }

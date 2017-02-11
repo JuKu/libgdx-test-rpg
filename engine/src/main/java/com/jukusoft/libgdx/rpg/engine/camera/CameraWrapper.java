@@ -4,10 +4,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Matrix4;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * Created by Justin on 10.02.2017.
  */
-public class CameraWrapper {
+public class CameraWrapper implements ModificationFinishedListener {
 
     protected float x = 0;
     protected float y = 0;
@@ -17,6 +22,9 @@ public class CameraWrapper {
     protected float cameraOffsetY = 0;
 
     protected OrthographicCamera camera = null;
+
+    protected Map<Class,CameraModification> cameraModificationMap = new ConcurrentHashMap<>();
+    protected List<CameraModification> activeModifications = new ArrayList<>();
 
     public CameraWrapper (OrthographicCamera camera) {
         this.camera = camera;
@@ -106,12 +114,41 @@ public class CameraWrapper {
     }
 
     public void update () {
+        //update modifications first
+        for (CameraModification mod : this.activeModifications) {
+            mod.onUpdate(this);
+        }
+
         this.camera.update();
     }
 
     @Deprecated
     public OrthographicCamera getOriginalCamera () {
         return this.camera;
+    }
+
+    @Override public <T extends CameraModification> void onModificationFinished(T mod, Class<T> cls) {
+        if (mod == null) {
+            throw new NullPointerException("mod cannot be null.");
+        }
+
+        this.activeModifications.remove(mod);
+    }
+
+    public <T extends CameraModification> void registerMod (T mod, Class<T> cls) {
+        if (mod == null) {
+            throw new NullPointerException("mod cannot be null.");
+        }
+
+        if (cls == null) {
+            throw new NullPointerException("class cannot be null.");
+        }
+
+        this.cameraModificationMap.put(cls, mod);
+    }
+
+    public <T extends CameraModification> void removeMod (T mod, Class<T> cls) {
+        //
     }
 
 }

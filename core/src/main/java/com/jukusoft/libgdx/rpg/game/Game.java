@@ -3,6 +3,7 @@ package com.jukusoft.libgdx.rpg.game;
 import com.badlogic.gdx.Input;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake2CameraModification;
+import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.input.InputMapper;
 import com.jukusoft.libgdx.rpg.engine.save.impl.DefaultSavedGameManager;
@@ -53,6 +54,7 @@ public class Game extends ScreenBasedGame {
         //activate camera shake modifications
         this.getCamera().activateMod(Shake1CameraModification.class);
         this.getCamera().activateMod(Shake2CameraModification.class);
+        this.getCamera().activateMod(Shake3CameraModification.class);
 
         //create screen
         screenManager.addScreen("jukusoft_intro", new JuKuSoftIntroScreen());

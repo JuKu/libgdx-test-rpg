@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
+import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake2CameraModification;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.factory.PlayerFactory;
@@ -175,13 +176,13 @@ public class GameScreen extends BaseScreen {
         }*/
 
         if (Gdx.input.isKeyPressed(Input.Keys.C)) {
-            Shake1CameraModification mod = game.getCamera().getMod(Shake1CameraModification.class);
+            Shake2CameraModification mod = game.getCamera().getMod(Shake2CameraModification.class);
 
             if (!mod.isShaking()) {
                 System.out.println("shake camera.");
 
                 //shake camera 3 seconds
-                mod.shake(10, 3000);
+                mod.shake(30, 500);
             }
         }
 

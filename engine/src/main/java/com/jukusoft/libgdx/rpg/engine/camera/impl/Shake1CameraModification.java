@@ -20,6 +20,7 @@ public class Shake1CameraModification implements CameraModification {
     protected float duration = 0;
 
     protected Random random = new Random();
+    protected long startTime = 0l;
 
     @Override
     public void onUpdate(GameTime time, TempCameraParams camera, ModificationFinishedListener listener) {
@@ -41,6 +42,7 @@ public class Shake1CameraModification implements CameraModification {
             camera.translate(-x, -y);
 
             // Increase the elapsed time by the delta provided.
+            //elapsed = time.getTime() - startTime;
             elapsed += delta;
         } else {
             //shake was finsihed
@@ -69,6 +71,7 @@ public class Shake1CameraModification implements CameraModification {
         this.intensity = intensity;
         this.duration = duration;
 
+        this.startTime = System.currentTimeMillis();
         this.isActive = true;
     }
 

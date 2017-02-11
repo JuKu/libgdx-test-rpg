@@ -5,17 +5,19 @@ package com.jukusoft.libgdx.rpg.engine.entity.priority;
  */
 public enum ECSPriority {
 
-    VERY_LOW(1),
+    BACKGROUND(1),
 
-    LOW(2),
+    VERY_LOW(2),
 
-    NORMAL(3),
+    LOW(3),
 
-    HIGH(4),
+    NORMAL(4),
 
-    VERY_HIGHT(5),
+    HIGH(5),
 
-    HUD(6);
+    VERY_HIGHT(6),
+
+    HUD(7);
 
     private final int id;
 

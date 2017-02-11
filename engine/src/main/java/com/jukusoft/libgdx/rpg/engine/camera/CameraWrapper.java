@@ -11,7 +11,7 @@ public class CameraWrapper {
 
     protected float x = 0;
     protected float y = 0;
-    protected float zoom = 0;
+    protected float zoom = 1;
 
     protected float cameraOffsetX = 0;
     protected float cameraOffsetY = 0;
@@ -40,7 +40,7 @@ public class CameraWrapper {
     }
 
     public void setX (float x) {
-        this.x = x + cameraOffsetX;
+        this.x = x;
 
         this.syncPosToCamera();
     }
@@ -50,7 +50,7 @@ public class CameraWrapper {
     }
 
     public void setY (float y) {
-        this.y = y + cameraOffsetY;
+        this.y = y;
 
         this.syncPosToCamera();
     }
@@ -66,8 +66,8 @@ public class CameraWrapper {
     }
 
     public void setPosition (float x, float y, float zoom) {
-        this.x = x + cameraOffsetX;
-        this.y = y + cameraOffsetY;
+        this.x = x;
+        this.y = y;
         this.zoom = zoom;
 
         this.syncPosToCamera();
@@ -90,8 +90,11 @@ public class CameraWrapper {
     }
 
     protected void syncPosToCamera () {
-        this.camera.position.x = x;
-        this.camera.position.y = y;
+        this.camera.position.x = x + cameraOffsetX;
+        this.camera.position.y = y + cameraOffsetY;
+        this.camera.zoom = zoom;
+
+        //System.out.println("offsetX: " + this.cameraOffsetX + ", offsetY: " + this.cameraOffsetY);
     }
 
     public Matrix4 getCombined () {

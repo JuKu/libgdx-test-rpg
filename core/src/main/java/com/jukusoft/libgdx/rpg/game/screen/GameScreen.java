@@ -41,6 +41,8 @@ public class GameScreen extends BaseScreen {
     protected Texture lightMap = null;
     protected String skyBoxPath = AssetPathUtils.getWallpaperPath("ocean/Ocean_large.png");
     protected Texture skyBoxTexture = null;
+    protected String characterTexturePath = AssetPathUtils.getImagePath("test/character.png");
+    protected Texture characterTexture = null;
 
     //lighting system
     LightingSystem lightingSystem = null;
@@ -57,11 +59,13 @@ public class GameScreen extends BaseScreen {
         game.getAssetManager().load(testTexturePath, Texture.class);
         game.getAssetManager().load(lightMapPath, Texture.class);
         game.getAssetManager().load(skyBoxPath, Texture.class);
+        game.getAssetManager().load(characterTexturePath, Texture.class);
         game.getAssetManager().finishLoading();
 
         this.testTexture = game.getAssetManager().get(testTexturePath, Texture.class);
         this.lightMap = game.getAssetManager().get(lightMapPath, Texture.class);
         this.skyBoxTexture = game.getAssetManager().get(skyBoxPath, Texture.class);
+        this.characterTexture = game.getAssetManager().get(characterTexturePath, Texture.class);
 
         //create new lighting system
         this.lightingSystem = new LightingSystem(game, game.getViewportWidth(), game.getViewportHeight());
@@ -109,7 +113,7 @@ public class GameScreen extends BaseScreen {
         //initialize entity component system
 
         //create an entity for player
-        this.playerEntity = PlayerFactory.createPlayer(this.ecs, 200, 200);
+        this.playerEntity = PlayerFactory.createPlayer(this.ecs, this.characterTexture, 200, 200);
         this.ecs.addEntity(this.playerEntity);
     }
 
@@ -203,6 +207,10 @@ public class GameScreen extends BaseScreen {
         } else {
             this.gameWorld.draw(time, game.getCamera(), null, batch);
         }
+
+        batch.end();
+        batch.begin();
+        batch.setProjectionMatrix(game.getCamera().getCombined());
 
         //draw entities
         this.ecs.draw(time, game.getCamera(), batch);

@@ -57,8 +57,8 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         float dt = time.getDeltaTime();
 
         //calculate new entity position
-        float newX = positionComponent.getX() + (this.speedX * dt);
-        float newY = positionComponent.getY() + (this.speedY * dt);
+        float newX = positionComponent.getX() + (this.speedX * dt * 10);
+        float newY = positionComponent.getY() + (this.speedY * dt * 10);
 
         //set new position
         positionComponent.setPosition(newX, newY);

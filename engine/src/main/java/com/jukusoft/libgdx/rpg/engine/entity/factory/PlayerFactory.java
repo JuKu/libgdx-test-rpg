@@ -1,19 +1,17 @@
 package com.jukusoft.libgdx.rpg.engine.entity.factory;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.BaseECS;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.FollowCameraComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.MoveComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.MoveInputComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 
 /**
  * Created by Justin on 10.02.2017.
  */
 public class PlayerFactory {
 
-    public static Entity createPlayer (EntityManager ecs, float x, float y) {
+    public static Entity createPlayer (EntityManager ecs, Texture texture, float x, float y) {
         //create new entity
         Entity playerEntity = new Entity(ecs);
 
@@ -28,6 +26,9 @@ public class PlayerFactory {
 
         //add follow camera component, so camera is following player
         playerEntity.addComponent(new FollowCameraComponent(), FollowCameraComponent.class);
+
+        //add texture component to draw player
+        playerEntity.addComponent(new TextureDrawComponent(texture), TextureDrawComponent.class);
 
         return playerEntity;
     }

@@ -35,9 +35,10 @@ public class MoveInputComponent extends BaseComponent implements IUpdateComponen
         InputManager inputManager = game.getInputManager();
 
         float speedX = 0f;
-        float speedY = 0;
+        float speedY = 0f;
 
         if (inputManager.isActionKeyPressed(BaseGameActionConst.MOVE_LEFT)) {
+            System.out.println("MOVE_LEFT");
             speedX = -baseSpeedX;
         } else if (inputManager.isActionKeyPressed(BaseGameActionConst.MOVE_RIGHT)) {
             speedX = baseSpeedX;
@@ -45,7 +46,7 @@ public class MoveInputComponent extends BaseComponent implements IUpdateComponen
 
         if (inputManager.isActionKeyPressed(BaseGameActionConst.MOVE_UP)) {
             speedY = baseSpeedY;
-        } else {
+        } else if (inputManager.isActionKeyPressed(BaseGameActionConst.MOVE_DOWN)) {
             speedY = -baseSpeedY;
         }
 

@@ -36,22 +36,47 @@ public class FollowCameraComponent extends BaseComponent implements IUpdateCompo
         //calculate camera middle
         float currentCameraMiddleX = game.getCamera()/*.position.x*/.getX() + (screenWidth / 2);
         float currentCameraMiddleY = game.getCamera()/*.position.y*/.getY() + (screenHeight / 2);
-        System.out.println("current camera middle X: " + currentCameraMiddleX + ", Y: " + currentCameraMiddleY + ", zoom: " + game.getCamera2D()/*.zoom*/.getZoom());
+        //System.out.println("current camera middle X: " + currentCameraMiddleX + ", Y: " + currentCameraMiddleY + ", zoom: " + game.getCamera2D()/*.zoom*/.getZoom());
+        //System.out.println("current camera X: " + game.getCamera().getX() + ", Y: " + game.getCamera().getY());
 
-        float targetX = entityPosition.getX();
-        float targetY = entityPosition.getY();
+        float targetX = entityPosition.getX() - (game.getViewportWidth() / 2);
+        float targetY = entityPosition.getY() - (game.getViewportHeight() / 2);
+        //System.out.println("targetX: " + targetX + ", targetY: " + targetY);
 
         //move camera
         float deltaX = targetX - currentCameraMiddleX;
         float deltaY = targetY - currentCameraMiddleY;
 
-        float newCameraX = game.getCamera()/*.position.x*/.getX() + deltaX * lerp * dt;
-        float newCameraY = game.getCamera()/*.position.y*/.getY() + deltaY * lerp * dt;
+        if (Math.abs(deltaX) <= 10) {
+            deltaX = 0;
+        }
+
+        if (Math.abs(deltaY) <= 10) {
+            deltaY = 0;
+        }
+
+        //System.out.println("deltaX: " + deltaX + ", deltaY: " + deltaY + ", delta: " + dt);
+
+        float newCameraX = game.getCamera()/*.position.x*/.getX() + (deltaX * lerp * dt);
+        float newCameraY = game.getCamera()/*.position.y*/.getY() + (deltaY * lerp * dt);
+
+        if (Math.abs(deltaX) <= 1) {
+            newCameraX = targetX;
+        } else if (Math.abs(deltaX) <= 10) {
+            newCameraX = game.getCamera().getX() + deltaX;
+        }
+
+        if (Math.abs(deltaY) <= 1) {
+            newCameraY = targetY;
+        } else if (Math.abs(deltaY) <= 10) {
+            newCameraY = game.getCamera().getY() + deltaY;
+        }
 
         //game.getCamera().position.x = newCameraX;
         //game.getCamera().position.y = newCameraY;
 
         //game.getCamera().setPosition(newCameraX, newCameraY);
+        game.getCamera().setPosition(entityPosition.getX() - (game.getViewportWidth() / 2), entityPosition.getY() - (game.getViewportHeight() / 2));
     }
 
     @Override public ECSPriority getUpdateOrder() {

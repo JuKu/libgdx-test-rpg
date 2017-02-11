@@ -86,7 +86,9 @@ public class DefaultInputManager implements InputManager {
     }
 
     @Override public boolean isActionKeyPressed(int actionCode) {
-        return this.pressedActionKeys.contains(actionCode);
+        //System.out.println("actionCode: " + actionCode);
+
+        return this.pressedActionKeys.contains((long) actionCode);
     }
 
     @Override public void addCustomInputProcessor(int index, InputProcessor inputProcessor) {

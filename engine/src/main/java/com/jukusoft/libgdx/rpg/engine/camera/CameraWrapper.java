@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Matrix4;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
+import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake2CameraModification;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class CameraWrapper implements ModificationFinishedListener {
 
         //add some basic modifications
         this.registerMod(new Shake1CameraModification(), Shake1CameraModification.class);
+        this.registerMod(new Shake2CameraModification(), Shake2CameraModification.class);
     }
 
     public void translate (float x, float y, float zoom) {

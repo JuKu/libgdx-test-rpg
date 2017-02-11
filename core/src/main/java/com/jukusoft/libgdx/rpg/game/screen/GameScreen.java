@@ -122,6 +122,7 @@ public class GameScreen extends BaseScreen {
         //create an entity for player
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, this.characterTexture, 200, 200);
         this.ecs.addEntity(this.playerEntity);
+        game.getSharedData().put(SharedDataConst.PLAYER_ENTITY, this.playerEntity);
     }
 
     @Override

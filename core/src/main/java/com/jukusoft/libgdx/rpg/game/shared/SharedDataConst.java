@@ -14,4 +14,7 @@ public class SharedDataConst {
     //game world (only developer mode!)
     public static final String GAME_WORLD = "game_world";
 
+    //player
+    public static final String PLAYER_ENTITY = "player_entity";
+
 }

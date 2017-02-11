@@ -17,6 +17,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
+import com.jukusoft.libgdx.rpg.engine.entity.Entity;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.ShadowComponent;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.hud.ImageWidget;
@@ -501,6 +503,22 @@ public class HUDOverlayScreen extends BaseScreen {
 
         });
         verticalGroup.addActor(shake2CameraButton);
+
+        Label shadowLabel = new Label("Shadow Angle: " + 315 + " degree", this.uiSkin);
+        verticalGroup.addActor(shadowLabel);
+
+        Slider shadowAngleSlider = new Slider(0, 360, 1f, false, this.uiSkin);
+        shadowAngleSlider.setValue(315);
+        shadowAngleSlider.addCaptureListener(event -> {
+            shadowLabel.setText("Shadow Angle: " + shadowAngleSlider.getValue() + " degree");
+
+            Entity playerEntity = game.getSharedData().get(SharedDataConst.PLAYER_ENTITY, Entity.class);
+            ShadowComponent shadowComponent = playerEntity.getComponent(ShadowComponent.class);
+            shadowComponent.setShadowAngle(shadowAngleSlider.getValue());
+
+            return true;
+        });
+        verticalGroup.addActor(shadowAngleSlider);
 
         stage.addActor(verticalGroup);
     }

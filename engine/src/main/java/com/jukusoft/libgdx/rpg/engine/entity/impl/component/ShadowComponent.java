@@ -99,8 +99,14 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
             //http://stackoverflow.com/questions/24034352/libgdx-change-color-of-texture-at-runtime
             //batch.draw(this.shadowTexture, positionComponent.getX(), positionComponent.getY(), shadowWidth, shadowHeight);
 
+            float angle = FastMath.toRadians(this.shadowAngleDegree);
+            float sin = (float) Math.sin(angle);
+            float cos = (float) Math.cos(angle);
+
+            System.out.println("sin: " + sin);
+
             transform.setToTranslation(positionComponent.getX(), positionComponent.getY());
-            transform.shear(/*0.5f*/-1f, 0);  // <- modify skew here
+            transform.shear(/*0.5f*//*-1f*/sin, 0);  // <- modify skew here
 
             //TextureRegion tex = new TextureRegion(this.shadowTexture, 0, 0, shadowWidth, shadowHeight);
             batch.draw(this.shadowTextureRegion, shadowWidth, shadowHeight, transform);
@@ -244,6 +250,17 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
         //dispose pixmaps
         shadowPixmap.dispose();
         halfPixmap.dispose();
+    }
+
+    public float getShadowAngle () {
+        return this.shadowAngleDegree;
+    }
+
+    public void setShadowAngle (float angle) {
+        angle = angle % 360;
+        this.shadowAngleDegree = angle;
+
+        this.generateShadowTexture();
     }
 
 }

@@ -1,9 +1,7 @@
 package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.TextureData;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Affine2;
@@ -123,8 +121,11 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
         Pixmap halfPixmap = null;
         TextureData textureData = null;
 
+        float lightIntensity = 1;
+
         Color shadowColor = this.shadowColor;
         float angle = FastMath.toRadians(shadowAngleDegree);
+        Color tmpColor = new Color();
 
         if (this.textureRegionComponent != null) {
             //get texture region of entity
@@ -190,19 +191,25 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
                 //get color alpha value
                 float alpha = color.a;
 
-                if (alpha > 0f) {
+                if (alpha == 1) {
                     shadowPixmap.setColor(this.shadowColor);
+
+                    //draw pixel in shadow color
+                    shadowPixmap.fillRectangle(x, y, 1, 1);
+                } else if (alpha > 0f) {
+                    //calculate alpha value
+                    float newAlpha = alpha * lightIntensity * shadowColor.a;
+                    System.out.println(newAlpha + "");
+
+                    //set new shadow color for this pixel
+                    tmpColor.set(shadowColor.r, shadowColor.g, shadowColor.b, newAlpha);
+                    System.out.println(tmpColor.toString());
+
+                    shadowPixmap.setColor(tmpColor.r, tmpColor.g, tmpColor.b, newAlpha);
+
                     //get current position with point (0, 0)
                     int x2 = x;
                     int y2 = y;
-
-                    //we need to draw this pixel into shadow texture
-                    //vector.x = -x;
-                    //vector.y = -y;
-
-                    //System.out.println("x: " + y + ", y: " + y);
-
-                    //shadow
 
                     //draw pixel in shadow color
                     shadowPixmap.fillRectangle(x2, y2, 1, 1);
@@ -212,6 +219,8 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
                 }
             }
         }
+
+        //PixmapIO.writePNG(Gdx.files.absolute("./shadowMap.png"), shadowPixmap);
 
         //get pixmap from entity texture
         /*Pixmap textureMap = texture.getTextureData().consumePixmap();

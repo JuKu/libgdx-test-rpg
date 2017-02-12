@@ -41,11 +41,14 @@ public class Game extends ScreenBasedGame {
         InputMapper inputMapper = getInputManager().getInputMapper();
 
         //add mappings for movements
+
+        //WASD keys
         inputMapper.addMapping(Input.Keys.W, GameActionsConst.MOVE_UP);
         inputMapper.addMapping(Input.Keys.S, GameActionsConst.MOVE_DOWN);
         inputMapper.addMapping(Input.Keys.A, GameActionsConst.MOVE_LEFT);
         inputMapper.addMapping(Input.Keys.D, GameActionsConst.MOVE_RIGHT);
 
+        //arrow keys
         inputMapper.addMapping(Input.Keys.UP, GameActionsConst.MOVE_UP);
         inputMapper.addMapping(Input.Keys.DOWN, GameActionsConst.MOVE_DOWN);
         inputMapper.addMapping(Input.Keys.LEFT, GameActionsConst.MOVE_LEFT);

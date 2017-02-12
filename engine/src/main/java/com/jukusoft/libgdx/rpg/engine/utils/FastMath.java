@@ -12,6 +12,10 @@ public class FastMath {
     * convert degree to "bogenmaß" radians
     */
     public static final float toRadians (float angleGrad) {
+        while (angleGrad < 0) {
+            angleGrad += 360;
+        }
+
         angleGrad = angleGrad % 360;
         return FastMath.PI / 180 * angleGrad;
     }

@@ -191,13 +191,14 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
                 float alpha = color.a;
 
                 if (alpha > 0f) {
+                    shadowPixmap.setColor(this.shadowColor);
                     //get current position with point (0, 0)
                     int x2 = x;
                     int y2 = y;
 
                     //we need to draw this pixel into shadow texture
-                    vector.x = -x;
-                    vector.y = -y;
+                    //vector.x = -x;
+                    //vector.y = -y;
 
                     //System.out.println("x: " + y + ", y: " + y);
 
@@ -205,6 +206,9 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
 
                     //draw pixel in shadow color
                     shadowPixmap.fillRectangle(x2, y2, 1, 1);
+                } else {
+                    shadowPixmap.setColor(new Color(0, 0, 0, 0));
+                    shadowPixmap.fillRectangle(x, y, 1, 1);
                 }
             }
         }

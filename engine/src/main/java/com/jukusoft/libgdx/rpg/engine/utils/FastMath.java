@@ -13,7 +13,7 @@ public class FastMath {
     */
     public static final float toRadians (float angleGrad) {
         angleGrad = angleGrad % 360;
-        return FastMath.PI2 / 360 * angleGrad;
+        return FastMath.PI / 180 * angleGrad;
     }
 
 }

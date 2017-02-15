@@ -58,8 +58,7 @@ public class LightMapComponent extends BaseComponent {
                     float newX = positionComponent.getX();
                     float newY = positionComponent.getY();
 
-                    textureLighting.setPosition(newX/* - (positionComponent.getWidth() / 2)*/ + offsetX, newY/* - (positionComponent.getHeight() / 2)*/ + offsetY);
-                    System.out.println("new light X: " + textureLighting.getX() + ", " + textureLighting.getY());
+                    textureLighting.setPosition(newX + offsetX, newY + offsetY);
                 }
             });
         }

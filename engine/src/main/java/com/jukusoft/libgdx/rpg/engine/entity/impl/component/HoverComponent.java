@@ -106,7 +106,7 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
             //float height = positionComponent.getHeight() + (2 * padding);
 
             //draw hover texture behind entity
-            batch.draw(this.hoverTexture, positionComponent.getX() - padding, positionComponent.getY() - padding - 1, width, height);
+            batch.draw(this.hoverTexture, positionComponent.getX() - padding, positionComponent.getY() - padding, width, height);
         }
     }
 
@@ -121,8 +121,8 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
         int texWidth = 0;
         int texHeight = 0;
 
-        int startX = padding;
-        int startY = padding;
+        int startX = padding - 1;
+        int startY = padding - 1;
 
         if (this.textureComponent != null) {
             //get texture of entity
@@ -222,6 +222,12 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
             }
         }
 
+        //remove old texture
+        if (this.hoverTexture != null) {
+            this.hoverTexture.dispose();
+            this.hoverTexture = null;
+        }
+
         this.hoverTexture = new Texture(hoverPixmap);
 
         textureData.disposePixmap();
@@ -232,6 +238,13 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
 
     public boolean isHovered () {
         return this.hovered;
+    }
+
+    public void setHoverColor (Color hoverColor) {
+        this.hoverColor = hoverColor;
+
+        //generate new hover texture
+        this.updateHoverTexture();
     }
 
 }

@@ -195,6 +195,9 @@ public abstract class BaseGame extends ApplicationAdapter {
         //update game
         this.update(this.time);
 
+        //set cursor
+        this.cursorManager.update(this, this.time);
+
         //update camera
         //this.camera.update();
         this.cameraWrapper.update(this.time);

@@ -32,4 +32,8 @@ public class TextureLighting extends BaseLighting {
         batch.draw(this.lightMapTexture, getX() - lightSize * 0.5f + 0.5f, getY() + 0.5f - lightSize*0.5f, lightSize, lightSize);
     }
 
+    public float getLightSize () {
+        return this.lightSize;
+    }
+
 }

@@ -104,7 +104,7 @@ public class GameScreen extends BaseScreen {
         game.getInputManager().getGameInputProcessor().addScrollListener(this.zoomListener);
 
         //create new entity component system
-        this.ecs = new ECS(game);
+        this.ecs = new ECS(game, this.lightingSystem);
     }
 
     @Override
@@ -146,6 +146,10 @@ public class GameScreen extends BaseScreen {
         //create campfire
         Entity campfireEntity = AnimatedEnvObjectFactory.createBasicAnimatedEntity(this.ecs, this.campfireTexture, 300, 300, 150, 1, 5);
         this.ecs.addEntity(campfireEntity);
+
+        //create campfire with lighting
+        Entity campfireEntity1 = AnimatedEnvObjectFactory.createBasicAnimatedLightingEntity(this.ecs, this.campfireTexture, this.lightMap, 200, 600, 150, 1, 5);
+        this.ecs.addEntity(campfireEntity1);
     }
 
     @Override

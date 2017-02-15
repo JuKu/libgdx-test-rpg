@@ -1,5 +1,13 @@
 # Changelog
 
+## Version v1.1.0 pre-alpha
+
+### Features
+  - added support for lighting in entities (lighting component)
+  - added support for shadows
+  - added support to draw an texture (also character)
+  - added support for basic animations
+
 ## Version v1.0.0 pre-alpha
 
 An first pre-alpha of my new game client, based on libGDX game engine.

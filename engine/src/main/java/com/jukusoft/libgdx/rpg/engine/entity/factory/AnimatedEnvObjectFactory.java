@@ -33,4 +33,30 @@ public class AnimatedEnvObjectFactory {
         return  entity;
     }
 
+    public static Entity createBasicAnimatedLightingEntity (EntityManager ecs, Texture texture, Texture lightMap, float x, float y, float duration, int rows, int cols) {
+        if (texture == null) {
+            throw new NullPointerException("texture cannot be null.");
+        }
+
+        //create new entity
+        Entity entity = new Entity(ecs);
+
+        //add new position component, because every entity has an position
+        entity.addComponent(new PositionComponent(x, y), PositionComponent.class);
+
+        //add texture region component
+        entity.addComponent(new DrawTextureRegionComponent(), DrawTextureRegionComponent.class);
+
+        //add basic animation component
+        entity.addComponent(new BasicAnimationComponent(texture, duration, rows, cols), BasicAnimationComponent.class);
+
+        //add lighting component
+        entity.addComponent(new LightMapComponent(lightMap, 20, 20), LightMapComponent.class);
+
+        //add shadow component
+        entity.addComponent(new ShadowComponent(), ShadowComponent.class);
+
+        return  entity;
+    }
+
 }

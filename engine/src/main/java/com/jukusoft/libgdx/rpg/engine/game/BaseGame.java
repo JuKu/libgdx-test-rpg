@@ -91,6 +91,8 @@ public abstract class BaseGame extends ApplicationAdapter {
     */
     protected InputManager inputManager = null;
 
+    protected CursorManager cursorManager = null;
+
     //tasks which should be executed in OpenGL context thread
     protected Queue<Runnable> uiQueue = new ConcurrentLinkedQueue<>();
 
@@ -139,6 +141,9 @@ public abstract class BaseGame extends ApplicationAdapter {
 
         //create new input manager
         this.inputManager = new DefaultInputManager();
+
+        //create new cursor manager
+        this.cursorManager = new DefaultCursorManager();
 
         //add loader for tmx maps
         assetManager.setLoader(TiledMap.class, new TmxMapLoader(new AbsoluteFileHandleResolver()));
@@ -309,6 +314,10 @@ public abstract class BaseGame extends ApplicationAdapter {
 
     public String getLang () {
         return this.getSettings().getOrDefault("Game", "lang", "en");
+    }
+
+    public CursorManager getCursorManager () {
+        return this.cursorManager;
     }
 
     /**

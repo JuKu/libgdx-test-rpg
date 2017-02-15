@@ -76,13 +76,7 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
         Vector3 mousePos = game.getCamera().getMousePosition();
 
         float mouseX = mousePos.x;
-        //MouseUtils.getMouseX(game.getInputManager().getMouseX(), game.getCamera());
         float mouseY = mousePos.y;
-            //MouseUtils.getMouseY(game.getInputManager().getMouseY(), game.getCamera());
-
-        /*this.cachedVector.set(mouseX, mouseY, 0);
-        System.out.println("mouseX: " + mouseX + ", mouseY: " + mouseY + ", zoom: " + game.getCamera().getZoom());
-        System.out.println("entityX: " + positionComponent.getBoundingBox().getMin(new Vector3()).x + ", entityY: " + positionComponent.getBoundingBox().getMin(new Vector3()).y);*/
 
         this.hovered = false;
 

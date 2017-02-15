@@ -3,6 +3,7 @@ package com.jukusoft.libgdx.rpg.engine.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -37,7 +38,7 @@ public class DefaultCursorManager implements CursorManager {
         }
     }
 
-    @Override public void update() {
+    @Override public void update(BaseGame game, GameTime time) {
         if (this.changed) {
             if (this.newCursorImage != null) {
                 Cursor currentCursor = this.cursorCacheMap.get(this.newCursorImage);

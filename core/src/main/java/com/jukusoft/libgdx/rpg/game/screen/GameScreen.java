@@ -146,9 +146,6 @@ public class GameScreen extends BaseScreen {
         //create campfire
         Entity campfireEntity = AnimatedEnvObjectFactory.createBasicAnimatedEntity(this.ecs, this.campfireTexture, 300, 300, 150, 1, 5);
         this.ecs.addEntity(campfireEntity);
-
-        campfireEntity.printUpdateList();
-        campfireEntity.printDrawList();
     }
 
     @Override

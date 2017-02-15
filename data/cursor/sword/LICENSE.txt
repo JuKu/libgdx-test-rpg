@@ -1,0 +1,8 @@
+LICENSE: Creative Commons (Attribution 3.0 Unported)
+link to license: https://creativecommons.org/licenses/by/3.0/
+
+By Geovanny Gavilanes
+found at: https://www.iconfinder.com/icons/707463/creative_line_sword_weapon_icon#size=128
+
+Changes:
+The rotation & size of the image(s) was changed by me under the same license.

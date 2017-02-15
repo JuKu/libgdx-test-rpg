@@ -57,6 +57,10 @@ public class AssetPathUtils {
         return "./data/shader/" + shaderFileName;
     }
 
+    public static String getCursorPath (String cursorPath) {
+        return "./data/cursor/" + cursorPath;
+    }
+
     public static String getLightMapPath (String lightMapPath) {
         return "./data/lightmap/" + lightMapPath;
     }

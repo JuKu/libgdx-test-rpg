@@ -90,7 +90,11 @@ Links with some example image idea (license wasnt checked yet, but images also a
  - https://www.iconfinder.com/icons/128447/adamant_almaz_brilliant_crystal_diamond_diamonds_fake_gem_glass_hardness_imitation_jevel_jewellery_jewelry_minikin_rich_transparency_transparent_icon#size=64
 
  - http://opengameart.org/content/basic-map-32x32-by-silver-iv
- - http://opengameart.org/content/sewer-tileset 
+ - http://opengameart.org/content/sewer-tileset
+ - http://opengameart.org/content/spell-set
+
+user interface:
+http://opengameart.org/content/golden-ui-bigger-than-ever-edition
 
 sound:
 http://opengameart.org/content/oves-essential-game-audio-pack-collection-160-files-updated

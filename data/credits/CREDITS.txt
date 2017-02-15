@@ -29,6 +29,7 @@ assets directory (./data)!
   - tileset by by Zabin, Daneeklu, Jetrel, Hyptosis, Redshrike, Bertram (CC-BY-SA 3.0)
   - some images from pexels.com
   - palm icon by aha-soft
+  - sword cursor by Geovanny Gavilanes
 
 ## Fonts
 

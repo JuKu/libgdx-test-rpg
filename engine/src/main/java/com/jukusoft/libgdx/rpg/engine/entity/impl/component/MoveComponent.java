@@ -20,8 +20,8 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     protected PositionComponent positionComponent = null;
 
     protected boolean isMoving = false;
-    protected float speedX = 1f;
-    protected float speedY = 1f;
+    protected float speedX = 0f;
+    protected float speedY = 0f;
 
     protected float speedMultiplicatorX = 1f;
     protected float speedMultiplicatorY = 1f;

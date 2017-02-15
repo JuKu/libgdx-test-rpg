@@ -3,6 +3,7 @@ package com.jukusoft.libgdx.rpg.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
@@ -10,6 +11,7 @@ import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake2CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
+import com.jukusoft.libgdx.rpg.engine.entity.factory.NPCFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.factory.PlayerFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.ECS;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
@@ -46,6 +48,8 @@ public class GameScreen extends BaseScreen {
     protected Texture skyBoxTexture = null;
     protected String characterTexturePath = AssetPathUtils.getImagePath("test/character.png");
     protected Texture characterTexture = null;
+    protected String cursorPath = AssetPathUtils.getCursorPath("attack/attack.png");
+    protected Pixmap cursorImage = null;
     protected String blackTexturePath = AssetPathUtils.getLightMapPath("blackmap/blackmap.png");
     protected Texture blackTexture = null;
 
@@ -65,12 +69,14 @@ public class GameScreen extends BaseScreen {
         game.getAssetManager().load(lightMapPath, Texture.class);
         game.getAssetManager().load(skyBoxPath, Texture.class);
         game.getAssetManager().load(blackTexturePath, Texture.class);
+        game.getAssetManager().load(cursorPath, Pixmap.class);
         game.getAssetManager().load(characterTexturePath, Texture.class);
         game.getAssetManager().finishLoading();
 
         this.testTexture = game.getAssetManager().get(testTexturePath, Texture.class);
         this.lightMap = game.getAssetManager().get(lightMapPath, Texture.class);
         this.skyBoxTexture = game.getAssetManager().get(skyBoxPath, Texture.class);
+        this.cursorImage = game.getAssetManager().get(cursorPath, Pixmap.class);
         this.characterTexture = game.getAssetManager().get(characterTexturePath, Texture.class);
         this.blackTexture = game.getAssetManager().get(blackTexturePath, Texture.class);
 
@@ -123,6 +129,10 @@ public class GameScreen extends BaseScreen {
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, this.characterTexture, 200, 200);
         this.ecs.addEntity(this.playerEntity);
         game.getSharedData().put(SharedDataConst.PLAYER_ENTITY, this.playerEntity);
+
+        //create an entity for dummy NPC
+        Entity npcEntity = NPCFactory.createDummyNPC(this.ecs, this.characterTexture, this.cursorImage, 400, 400);
+        this.ecs.addEntity(npcEntity);
     }
 
     @Override

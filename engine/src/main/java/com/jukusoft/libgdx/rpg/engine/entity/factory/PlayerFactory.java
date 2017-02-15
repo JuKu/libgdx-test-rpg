@@ -17,7 +17,7 @@ public class PlayerFactory {
         Entity playerEntity = new Entity(ecs);
 
         //add new position component, because every entity has an position
-        playerEntity.addComponent(new PositionComponent(200, 200), PositionComponent.class);
+        playerEntity.addComponent(new PositionComponent(x, y), PositionComponent.class);
 
         //add an movement component, so entity can be moved by update() method
         playerEntity.addComponent(new MoveComponent(), MoveComponent.class);

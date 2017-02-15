@@ -228,6 +228,28 @@ public class Entity {
         ecs.onEntityUILayerDrawOrderChanged();
     }
 
+    public void printUpdateList () {
+        System.out.println("======== update list of entity ========");
+
+        int i = 0;
+        for (IUpdateComponent component : this.updateComponentList) {
+            System.out.println("Index " + i + ": " + component.getClass().getName());
+
+            i++;
+        }
+    }
+
+    public void printDrawList () {
+        System.out.println("======== draw list of entity ========");
+
+        int i = 0;
+        for (IDrawComponent component : this.drawComponentList) {
+            System.out.println("Index " + i + ": " + component.getClass().getName());
+
+            i++;
+        }
+    }
+
     protected <T extends IComponent> void onComponentAdded (Entity entity, T component, Class<T> cls) {
         this.ecs.onComponentAdded(entity, component, cls);
     }

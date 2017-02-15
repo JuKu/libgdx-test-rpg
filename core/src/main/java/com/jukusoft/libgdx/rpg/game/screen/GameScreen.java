@@ -11,6 +11,7 @@ import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake2CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
+import com.jukusoft.libgdx.rpg.engine.entity.factory.AnimatedEnvObjectFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.factory.NPCFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.factory.PlayerFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.ECS;
@@ -50,6 +51,8 @@ public class GameScreen extends BaseScreen {
     protected Texture characterTexture = null;
     protected String cursorPath = AssetPathUtils.getCursorPath("attack/attack.png");
     protected Pixmap cursorImage = null;
+    protected String campfireTexturePath = AssetPathUtils.getSpritesheetPath("campfire/campfire1.png");
+    protected Texture campfireTexture = null;
     protected String blackTexturePath = AssetPathUtils.getLightMapPath("blackmap/blackmap.png");
     protected Texture blackTexture = null;
 
@@ -70,6 +73,7 @@ public class GameScreen extends BaseScreen {
         game.getAssetManager().load(skyBoxPath, Texture.class);
         game.getAssetManager().load(blackTexturePath, Texture.class);
         game.getAssetManager().load(cursorPath, Pixmap.class);
+        game.getAssetManager().load(campfireTexturePath, Texture.class);
         game.getAssetManager().load(characterTexturePath, Texture.class);
         game.getAssetManager().finishLoading();
 
@@ -77,8 +81,13 @@ public class GameScreen extends BaseScreen {
         this.lightMap = game.getAssetManager().get(lightMapPath, Texture.class);
         this.skyBoxTexture = game.getAssetManager().get(skyBoxPath, Texture.class);
         this.cursorImage = game.getAssetManager().get(cursorPath, Pixmap.class);
+        this.campfireTexture = game.getAssetManager().get(campfireTexturePath, Texture.class);
         this.characterTexture = game.getAssetManager().get(characterTexturePath, Texture.class);
         this.blackTexture = game.getAssetManager().get(blackTexturePath, Texture.class);
+
+        if (this.campfireTexture == null) {
+            throw new NullPointerException("campfire texture is null, path: " + campfireTexturePath);
+        }
 
         //create new lighting system
         this.lightingSystem = new LightingSystem(game, blackTexture, game.getViewportWidth(), game.getViewportHeight());
@@ -133,6 +142,13 @@ public class GameScreen extends BaseScreen {
         //create an entity for dummy NPC
         Entity npcEntity = NPCFactory.createDummyNPC(this.ecs, this.characterTexture, this.cursorImage, 400, 400);
         this.ecs.addEntity(npcEntity);
+
+        //create campfire
+        Entity campfireEntity = AnimatedEnvObjectFactory.createBasicAnimatedEntity(this.ecs, this.campfireTexture, 300, 300, 150, 1, 5);
+        this.ecs.addEntity(campfireEntity);
+
+        campfireEntity.printUpdateList();
+        campfireEntity.printDrawList();
     }
 
     @Override

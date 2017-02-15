@@ -61,6 +61,10 @@ public class AssetPathUtils {
         return "./data/cursor/" + cursorPath;
     }
 
+    public static String getSpritesheetPath (String spritesheetPath) {
+        return "./data/spritesheets/" + spritesheetPath;
+    }
+
     public static String getLightMapPath (String lightMapPath) {
         return "./data/lightmap/" + lightMapPath;
     }

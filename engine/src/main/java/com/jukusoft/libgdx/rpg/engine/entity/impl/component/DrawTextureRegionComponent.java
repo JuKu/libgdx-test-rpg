@@ -61,7 +61,7 @@ public class DrawTextureRegionComponent extends BaseComponent implements IDrawCo
     }
 
     @Override public ECSPriority getDrawOrder() {
-        return ECSPriority.NORMAL;
+        return ECSPriority.LOW;
     }
 
     public TextureRegion getTextureRegion () {

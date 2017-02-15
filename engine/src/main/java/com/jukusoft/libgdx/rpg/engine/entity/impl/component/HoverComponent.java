@@ -121,8 +121,8 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
         int texWidth = 0;
         int texHeight = 0;
 
-        int startX = padding - 1;
-        int startY = padding - 1;
+        int startX = padding;
+        int startY = padding;
 
         if (this.textureComponent != null) {
             //get texture of entity

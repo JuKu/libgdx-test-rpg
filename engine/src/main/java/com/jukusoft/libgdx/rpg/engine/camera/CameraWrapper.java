@@ -1,8 +1,10 @@
 package com.jukusoft.libgdx.rpg.engine.camera;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Frustum;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.math.Vector3;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake2CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
@@ -31,6 +33,9 @@ public class CameraWrapper implements ModificationFinishedListener {
     protected List<CameraModification> activeModifications = new ArrayList<>();
 
     protected TempCameraParams tempCameraParams = null;
+
+    //temporary vector to avoid creation of new vector in gameloop
+    protected Vector3 tmpScreenVector = new Vector3(0, 0, 0);
 
     public CameraWrapper (OrthographicCamera camera) {
         this.camera = camera;
@@ -124,6 +129,12 @@ public class CameraWrapper implements ModificationFinishedListener {
 
     public Frustum getFrustum () {
         return this.camera.frustum;
+    }
+
+    public Vector3 getMousePosition () {
+        this.tmpScreenVector.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+
+        return camera.unproject(this.tmpScreenVector);
     }
 
     public void update (GameTime time) {

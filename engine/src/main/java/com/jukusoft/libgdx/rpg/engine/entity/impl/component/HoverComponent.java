@@ -97,14 +97,6 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
                 this.hovered = true;
             }
         }
-
-        //check, if entity is hovered
-        /*if (positionComponent.getBoundingBox().contains(this.cachedVector)) {
-            System.out.println("hovered.");
-            hovered = true;
-        } else {
-            hovered = false;
-        }*/
     }
 
     @Override public ECSPriority getUpdateOrder() {

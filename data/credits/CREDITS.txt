@@ -18,12 +18,11 @@ See also CONTRIBUTORS.md file!
 This project is using many thirdparty graphics.
 They are free to use for THIS project.
 
-Open Source Graphics:
-  - Reiner Tilesets http://www.reinerstilesets.de/de/
-
 For complete list please see CONTRIBUTORS.md file and look into
 assets directory (./data)!
 
+  - Reiner „Tiles“ Prokein
+  - Reiner Tilesets http://www.reinerstilesets.de/de/
   - lostgarden.com
   - opengameart.org (see CONTRIBUTORS.md)
   - Reiner Tilesets http://www.reinerstilesets.de/de/

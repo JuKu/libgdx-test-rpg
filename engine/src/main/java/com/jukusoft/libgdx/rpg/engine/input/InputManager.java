@@ -13,6 +13,10 @@ public interface InputManager {
 
     public boolean isActionKeyPressed (int actionCode);
 
+    public float getMouseX ();
+
+    public float getMouseY ();
+
     public void addCustomInputProcessor (int index, InputProcessor inputProcessor);
 
     public void addCustomInputProcessor (InputProcessor inputProcessor);

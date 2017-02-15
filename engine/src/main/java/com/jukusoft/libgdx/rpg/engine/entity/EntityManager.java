@@ -23,9 +23,13 @@ public interface EntityManager {
 
     public void draw (GameTime time, CameraWrapper camera, SpriteBatch batch);
 
+    public void drawUILayer (GameTime time, CameraWrapper camera, SpriteBatch batch);
+
     public void onEntityUpdateOrderChanged ();
 
     public void onEntityDrawOrderChanged ();
+
+    public void onEntityUILayerDrawOrderChanged ();
 
     public <T extends IComponent> void onComponentAdded (Entity entity, T component, Class<T> cls);
 

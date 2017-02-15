@@ -33,6 +33,11 @@ public class Entity {
     */
     protected List<IDrawComponent> drawComponentList = new ArrayList<>();
 
+    /**
+     * list with all components which implements drawUILayer() method
+     */
+    protected List<IDrawUILayerComponent> drawUILayerComponentList = new ArrayList<>();
+
     protected BaseGame game = null;
     protected EntityManager ecs = null;
 
@@ -41,6 +46,7 @@ public class Entity {
 
     protected ECSPriority updateOrder = ECSPriority.NORMAL;
     protected ECSPriority drawOrder = ECSPriority.NORMAL;
+    protected ECSPriority drawUILayerOrder = ECSPriority.NORMAL;
 
     public Entity (EntityManager ecs) {
         this.ecs = ecs;
@@ -62,6 +68,13 @@ public class Entity {
         //draw all components
         this.drawComponentList.stream().forEach(component -> {
             component.draw(time, camera, batch);
+        });
+    }
+
+    public void drawUILayer (GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        //draw all components
+        this.drawUILayerComponentList.stream().forEach(component -> {
+            component.drawUILayer(time, camera, batch);
         });
     }
 
@@ -103,6 +116,22 @@ public class Entity {
             //sort list
             Collections.sort(this.updateComponentList, new Comparator<IUpdateComponent>() {
                 @Override public int compare(IUpdateComponent o1, IUpdateComponent o2) {
+                    if (o1 == null) {
+                        throw new NullPointerException("o1 is null.");
+                    }
+
+                    if (o2 == null) {
+                        throw new NullPointerException("o2 is null.");
+                    }
+
+                    if (o1.getUpdateOrder() == null) {
+                        throw new NullPointerException("Please return an non null value on getUpdateOrder() method.");
+                    }
+
+                    if (o2.getUpdateOrder() == null) {
+                        throw new NullPointerException("Please return an non null value on getUpdateOrder() method.");
+                    }
+
                     return ((Integer) o2.getUpdateOrder().getValue()).compareTo(o1.getUpdateOrder().getValue());
                 }
             });
@@ -121,6 +150,18 @@ public class Entity {
             Collections.sort(this.drawComponentList, new Comparator<IDrawComponent>() {
                 @Override public int compare(IDrawComponent o1, IDrawComponent o2) {
                     return ((Integer) o2.getDrawOrder().getValue()).compareTo(o1.getDrawOrder().getValue());
+                }
+            });
+        }
+
+        //check, if component needs to draw on user interface layer
+        if (component instanceof IDrawUILayerComponent) {
+            this.drawUILayerComponentList.add((IDrawUILayerComponent) component);
+
+            //sort list
+            Collections.sort(this.drawUILayerComponentList, new Comparator<IDrawUILayerComponent>() {
+                @Override public int compare(IDrawUILayerComponent o1, IDrawUILayerComponent o2) {
+                    return ((Integer) o2.getUILayerDrawOrder().getValue()).compareTo(o1.getUILayerDrawOrder().getValue());
                 }
             });
         }
@@ -145,6 +186,7 @@ public class Entity {
 
             this.updateComponentList.remove(component);
             this.drawComponentList.remove(component);
+            this.drawUILayerComponentList.remove(component);
 
             //dispose component which arent sharable
             if (!cls.isAnnotationPresent(SharableComponent.class)) {
@@ -173,6 +215,17 @@ public class Entity {
 
         //call listeners
         ecs.onEntityDrawOrderChanged();
+    }
+
+    public ECSPriority getUILayerDrawOrder () {
+        return this.drawUILayerOrder;
+    }
+
+    public void setUILayerDrawOrder (ECSPriority drawOrder) {
+        this.drawUILayerOrder = drawOrder;
+
+        //call listeners
+        ecs.onEntityUILayerDrawOrderChanged();
     }
 
     protected <T extends IComponent> void onComponentAdded (Entity entity, T component, Class<T> cls) {

@@ -31,6 +31,11 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
     protected List<Entity> entityDrawList = new ArrayList<>();
 
     /**
+     * list with entities
+     */
+    protected List<Entity> entityUILayerDrawList = new ArrayList<>();
+
+    /**
     * map with entities
     */
     protected Map<Long,Entity> entityMap = new ConcurrentHashMap<>();
@@ -58,6 +63,14 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
     }
 
     @Override
+    public void drawUILayer (GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        this.entityUILayerDrawList.stream().forEach(entity -> {
+            //draw entity
+            entity.drawUILayer(time, camera, batch);
+        });
+    }
+
+    @Override
     public void onEntityUpdateOrderChanged() {
         //sort list
         Collections.sort(this.entityUpdateList, new Comparator<Entity>() {
@@ -77,6 +90,16 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
         });
     }
 
+    @Override
+    public void onEntityUILayerDrawOrderChanged() {
+        //sort list
+        Collections.sort(this.entityUILayerDrawList, new Comparator<Entity>() {
+            @Override public int compare(Entity o1, Entity o2) {
+                return ((Integer) o2.getUILayerDrawOrder().getValue()).compareTo(o1.getUILayerDrawOrder().getValue());
+            }
+        });
+    }
+
     public void addEntity (Entity entity) {
         if (entity == null) {
             throw new NullPointerException("entity cannot be null.");
@@ -91,6 +114,10 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
 
         synchronized (this.entityDrawList) {
             this.entityDrawList.add(entity);
+        }
+
+        synchronized (this.entityUILayerDrawList) {
+            this.entityUILayerDrawList.add(entity);
         }
 
         //call listeners to sort lists
@@ -117,6 +144,11 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
         synchronized (this.entityDrawList) {
             //remove entity
             this.entityDrawList.remove(entity);
+        }
+
+        synchronized (this.entityUILayerDrawList) {
+            //remove entity
+            this.entityUILayerDrawList.remove(entity);
         }
 
         this.entityMap.remove(entityID);

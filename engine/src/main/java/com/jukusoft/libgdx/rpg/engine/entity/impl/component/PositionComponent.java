@@ -1,5 +1,7 @@
 package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
 
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.annotation.ThreadSafeComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.PositionChangedListener;
@@ -40,6 +42,11 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     protected static final String COMPONENT_NAME = "PositionComponent";
 
     protected AtomicBoolean readOnly = new AtomicBoolean(false);
+
+    protected Vector3 min = new Vector3(0, 0, 0);
+    protected Vector3 max = new Vector3(0, 0, 0);
+
+    protected BoundingBox boundingBox = new BoundingBox(min, max);
 
     public PositionComponent (float x, float y) {
         this.x = x;
@@ -124,7 +131,10 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     }
 
     public void setWidth (float width) {
+        float oldWidth = this.width;
         this.width = width;
+
+        this.notifyDimensionChangedListener(oldWidth, this.height, this.width, this.height);
     }
 
     public float getHeight () {
@@ -132,12 +142,21 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     }
 
     public void setHeight (float heigth) {
+        float oldHeight = this.height;
         this.height = heigth;
+
+        this.notifyDimensionChangedListener(this.width, oldHeight, this.width, this.height);
     }
 
     public void setDimension (float width, float height) {
+        //save old values
+        float oldWidth = width;
+        float oldHeight = height;
+
         this.width = width;
         this.height = height;
+
+        notifyDimensionChangedListener(oldWidth, oldHeight, width, height);
     }
 
     public float getScale () {
@@ -154,6 +173,9 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     }
 
     protected void notifyPositionChangedListener (float oldX, float oldY, float newX, float newY) {
+        //update bounding box
+        this.updateBoundingBox();
+
         try {
             //lock list to avoid ConcurrentModificationException
             this.listenerLock.tryLock(LOCK_TIMEOUT, TimeUnit.MILLISECONDS);
@@ -168,6 +190,13 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         });
 
         this.listenerLock.unlock();
+    }
+
+    protected void notifyDimensionChangedListener (float oldWidth, float oldHeight, float newWidth, float newHeight) {
+        //update bounding box
+        this.updateBoundingBox();
+
+        //TODO: call listeners
     }
 
     public void addPositionChangedListener (PositionChangedListener listener) {
@@ -220,6 +249,16 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         json.put("scale", this.scale);
 
         return json;
+    }
+
+    public void updateBoundingBox () {
+        this.min.set(getX(), getY(), 0);
+        this.max.set(getX() + getWidth(), getY() + getHeight(), 0);
+        this.boundingBox.set(this.min, this.max);
+    }
+
+    public BoundingBox getBoundingBox () {
+        return this.boundingBox;
     }
 
     @Override public void loadFromJSON(JSONObject json) {

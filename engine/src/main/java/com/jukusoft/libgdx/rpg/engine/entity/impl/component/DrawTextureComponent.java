@@ -63,9 +63,14 @@ public class DrawTextureComponent extends BaseComponent implements IDrawComponen
         return this.texture;
     }
 
-    public void setTexture (Texture texture) {
+    public void setTexture (Texture texture, boolean setNewDimension) {
         Texture oldTexture = this.texture;
         this.texture = texture;
+
+        if (setNewDimension) {
+            //update width and height
+            this.positionComponent.setDimension(texture.getWidth(), texture.getHeight());
+        }
 
         this.textureChangedListenerList.stream().forEach(listener -> {
             listener.onTextureChanged(oldTexture, this.texture);

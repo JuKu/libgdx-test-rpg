@@ -91,6 +91,14 @@ public class DefaultInputManager implements InputManager {
         return this.pressedActionKeys.contains((long) actionCode);
     }
 
+    @Override public float getMouseX() {
+        return Gdx.input.getX();
+    }
+
+    @Override public float getMouseY() {
+        return Gdx.input.getY();
+    }
+
     @Override public void addCustomInputProcessor(int index, InputProcessor inputProcessor) {
         this.inputMultiplexer.addProcessor(index, inputProcessor);
     }

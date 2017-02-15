@@ -38,6 +38,7 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
     protected int shadowHeight = 100;
 
     protected Affine2 transform = new Affine2();
+    protected Vector2 cachedVector = new Vector2(0, 0);
 
     //http://stackoverflow.com/questions/32146442/libgdx-overlapping-2d-shadows
 
@@ -97,11 +98,31 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
             //http://stackoverflow.com/questions/24034352/libgdx-change-color-of-texture-at-runtime
             //batch.draw(this.shadowTexture, positionComponent.getX(), positionComponent.getY(), shadowWidth, shadowHeight);
 
-            float angle = FastMath.toRadians(this.shadowAngleDegree);
+            float angle = FastMath.toRadians(this.shadowAngleDegree/* - 45 - 90*/ % 360);
             float sin = (float) Math.sin(angle);
             float cos = (float) Math.cos(angle);
+            float tan = (float) Math.tan(angle);
+            //System.out.println("angle: " + (this.shadowAngleDegree % 360));
 
-            transform.setToTranslation(positionComponent.getX(), positionComponent.getY());
+            //TODO: debug
+
+            if (shadowAngleDegree > 90 && shadowAngleDegree <= 270) {
+                //mirrored texture
+                transform.setToTranslation(positionComponent.getX(), positionComponent.getY() - shadowHeight);
+                this.cachedVector.set(positionComponent.getX(), positionComponent.getY() - shadowHeight);
+            } else {
+                transform.setToTranslation(positionComponent.getX(), positionComponent.getY());
+                this.cachedVector.set(positionComponent.getX(), positionComponent.getY());
+            }
+
+            //System.out.println("sin: " + sin + ", cos: " + cos + ", tan: " + tan);
+
+            //System.out.println("transformated vector: " + transform.getTranslation(this.cachedVector));
+
+            if (sin < 0) {
+                sin = sin * 2;
+            }
+
             transform.shear(/*0.5f*//*-1f*/sin, 0);  // <- modify skew here
 
             //TextureRegion tex = new TextureRegion(this.shadowTexture, 0, 0, shadowWidth, shadowHeight);
@@ -158,13 +179,16 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
             this.shadowWidth = texture.getWidth() * 2;
             this.shadowHeight = texture.getHeight() / 2;
 
+            //float cos = (float) Math.cos(angle);
+            //this.shadowHeight = Math.round(texture.getHeight() * Math.abs(cos) / 2);
+
             //http://stackoverflow.com/questions/24034352/libgdx-change-color-of-texture-at-runtime
 
             //get and prepare texture data
             textureData = texture.getTextureData();
             textureData.prepare();
 
-            halfPixmap = new Pixmap(texture.getWidth(), texture.getHeight() / 2, Pixmap.Format.RGBA8888);
+            halfPixmap = new Pixmap(texture.getWidth(), /*texture.getHeight() / 2*/this.shadowHeight, Pixmap.Format.RGBA8888);
 
             //draw entity texture with half height into temporary pixmap, reduce height of texture by 50%
             halfPixmap.drawPixmap(textureData.consumePixmap(), 0, 0, texture.getWidth(), texture.getHeight(), 0, 0, halfPixmap.getWidth(), halfPixmap.getHeight());
@@ -199,11 +223,9 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
                 } else if (alpha > 0f) {
                     //calculate alpha value
                     float newAlpha = alpha * lightIntensity * shadowColor.a;
-                    System.out.println(newAlpha + "");
 
                     //set new shadow color for this pixel
                     tmpColor.set(shadowColor.r, shadowColor.g, shadowColor.b, newAlpha);
-                    System.out.println(tmpColor.toString());
 
                     shadowPixmap.setColor(tmpColor.r, tmpColor.g, tmpColor.b, newAlpha);
 
@@ -254,6 +276,11 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
         //generate texture
         this.shadowTexture = new Texture(shadowPixmap);
         this.shadowTextureRegion = new TextureRegion(this.shadowTexture, 0, 0, this.shadowTexture.getWidth(), this.shadowTexture.getHeight());
+
+        if (shadowAngleDegree > 90 && shadowAngleDegree <= 270) {
+            //mirror texture
+            this.shadowTextureRegion.flip(false, true);
+        }
 
         //dispose texture data pixmap
         textureData.disposePixmap();

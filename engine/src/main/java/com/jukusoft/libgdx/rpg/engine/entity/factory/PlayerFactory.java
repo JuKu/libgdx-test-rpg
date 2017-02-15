@@ -31,6 +31,9 @@ public class PlayerFactory {
         //add texture component to draw player
         playerEntity.addComponent(new DrawTextureComponent(texture), DrawTextureComponent.class);
 
+        //add hover component
+        playerEntity.addComponent(new HoverComponent(Color.BLUE), HoverComponent.class);
+
         //add shadow component
         playerEntity.addComponent(new ShadowComponent(), ShadowComponent.class);
 

@@ -245,6 +245,13 @@ public class GameScreen extends BaseScreen {
         //draw entities
         this.ecs.draw(time, game.getCamera(), batch);
 
+        //reset shader
+        batch.setShader(null);
+        batch.setProjectionMatrix(game.getCamera().getCombined());
+
+        //draw abilities and son on
+        this.ecs.drawUILayer(time, game.getCamera(), batch);
+
         //draw lightmap (only for testing purposes)
         //batch.draw(lightingSystem.getFBO().getColorBufferTexture(), 0, 0);
 

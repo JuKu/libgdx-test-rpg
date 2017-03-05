@@ -49,6 +49,8 @@ public class GameScreen extends BaseScreen {
     protected Texture skyBoxTexture = null;
     protected String characterTexturePath = AssetPathUtils.getImagePath("test/character.png");
     protected Texture characterTexture = null;
+    protected String characterTexturePath2 = AssetPathUtils.getImagePath("test/character2.png");
+    protected Texture characterTexture2 = null;
     protected String cursorPath = AssetPathUtils.getCursorPath("attack/attack.png");
     protected Pixmap cursorImage = null;
     protected String campfireTexturePath = AssetPathUtils.getSpritesheetPath("campfire/campfire1.png");
@@ -75,6 +77,7 @@ public class GameScreen extends BaseScreen {
         game.getAssetManager().load(cursorPath, Pixmap.class);
         game.getAssetManager().load(campfireTexturePath, Texture.class);
         game.getAssetManager().load(characterTexturePath, Texture.class);
+        game.getAssetManager().load(characterTexturePath2, Texture.class);
         game.getAssetManager().finishLoading();
 
         this.testTexture = game.getAssetManager().get(testTexturePath, Texture.class);
@@ -83,6 +86,7 @@ public class GameScreen extends BaseScreen {
         this.cursorImage = game.getAssetManager().get(cursorPath, Pixmap.class);
         this.campfireTexture = game.getAssetManager().get(campfireTexturePath, Texture.class);
         this.characterTexture = game.getAssetManager().get(characterTexturePath, Texture.class);
+        this.characterTexture2 = game.getAssetManager().get(characterTexturePath2, Texture.class);
         this.blackTexture = game.getAssetManager().get(blackTexturePath, Texture.class);
 
         if (this.campfireTexture == null) {
@@ -142,6 +146,10 @@ public class GameScreen extends BaseScreen {
         //create an entity for dummy NPC
         Entity npcEntity = NPCFactory.createDummyNPC(this.ecs, this.characterTexture, this.cursorImage, 400, 400);
         this.ecs.addEntity(npcEntity);
+
+        //create an entity for dummy NPC
+        Entity npcEntity1 = NPCFactory.createDummyWithBlobShadowNPC(this.ecs, this.characterTexture2, this.cursorImage, 300, 100);
+        this.ecs.addEntity(npcEntity1);
 
         //create campfire
         Entity campfireEntity = AnimatedEnvObjectFactory.createBasicAnimatedEntity(this.ecs, this.campfireTexture, 300, 300, 150, 1, 5);

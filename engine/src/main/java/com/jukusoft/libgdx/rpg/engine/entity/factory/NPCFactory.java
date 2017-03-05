@@ -37,4 +37,29 @@ public class NPCFactory {
         return npcEntity;
     }
 
+    public static Entity createDummyWithBlobShadowNPC (EntityManager ecs, Texture texture, Pixmap cursor, float x, float y) {
+        //create new entity
+        Entity npcEntity = new Entity(ecs);
+
+        //add new position component, because every entity has an position
+        npcEntity.addComponent(new PositionComponent(x, y), PositionComponent.class);
+
+        //add an movement component, so entity can be moved by update() method
+        npcEntity.addComponent(new MoveComponent(), MoveComponent.class);
+
+        //add texture component to draw player
+        npcEntity.addComponent(new DrawTextureComponent(texture), DrawTextureComponent.class);
+
+        //add hover component
+        npcEntity.addComponent(new HoverComponent(Color.RED), HoverComponent.class);
+
+        //add specific attack cursor
+        npcEntity.addComponent(new CursorComponent(cursor), CursorComponent.class);
+
+        //add shadow component
+        npcEntity.addComponent(new BlobShadowComponent(), BlobShadowComponent.class);
+
+        return npcEntity;
+    }
+
 }

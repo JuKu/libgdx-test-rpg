@@ -33,6 +33,7 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
      * default constructor
      *
      * @param shadowColor color of blob shadow
+     * @param paddingBottom padding bottom
      */
     public BlobShadowComponent (Color shadowColor, float paddingBottom) {
         this.shadowColor = shadowColor;
@@ -46,6 +47,15 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
     */
     public BlobShadowComponent (Color shadowColor) {
         this.shadowColor = shadowColor;
+    }
+
+    /**
+     * default constructor
+     *
+     * @param paddingBottom padding bottom
+     */
+    public BlobShadowComponent (float paddingBottom) {
+        this.paddingBottom = paddingBottom;
     }
 
     /**
@@ -168,6 +178,14 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
         //shadowHeight / 3 * 2;
 
         return this.shadowWidth != oldWidth || this.shadowHeight != oldHeight;
+    }
+
+    public float getPaddingBottom () {
+        return this.paddingBottom;
+    }
+
+    public void setPaddingBottom (float paddingBottom) {
+        this.paddingBottom = paddingBottom;
     }
 
     public void notifyDimensionChanged () {

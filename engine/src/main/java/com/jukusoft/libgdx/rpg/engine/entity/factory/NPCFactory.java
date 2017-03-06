@@ -57,7 +57,7 @@ public class NPCFactory {
         npcEntity.addComponent(new CursorComponent(cursor), CursorComponent.class);
 
         //add shadow component
-        npcEntity.addComponent(new BlobShadowComponent(), BlobShadowComponent.class);
+        npcEntity.addComponent(new BlobShadowComponent(8), BlobShadowComponent.class);
 
         return npcEntity;
     }

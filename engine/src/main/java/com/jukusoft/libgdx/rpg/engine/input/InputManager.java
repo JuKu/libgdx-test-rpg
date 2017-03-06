@@ -17,7 +17,9 @@ public interface InputManager {
 
     public float getMouseY ();
 
-    public boolean isMousePressed ();
+    public boolean isLeftMouseButtonPressed ();
+
+    public boolean isRightMouseButtonPressed ();
 
     public void addCustomInputProcessor (int index, InputProcessor inputProcessor);
 

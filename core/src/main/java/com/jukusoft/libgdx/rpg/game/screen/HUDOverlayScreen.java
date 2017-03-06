@@ -20,10 +20,13 @@ import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.ShadowComponent;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
+import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.hud.ImageWidget;
 import com.jukusoft.libgdx.rpg.engine.hud.WidgetGroup;
 import com.jukusoft.libgdx.rpg.engine.hud.actionbar.ActionBar;
+import com.jukusoft.libgdx.rpg.engine.hud.actionbar.ActionBarItem;
+import com.jukusoft.libgdx.rpg.engine.hud.actionbar.CustomHoverAdapter;
 import com.jukusoft.libgdx.rpg.engine.input.InputPriority;
 import com.jukusoft.libgdx.rpg.engine.input.listener.KeyListener;
 import com.jukusoft.libgdx.rpg.engine.lighting.LightingEnvironment;
@@ -161,8 +164,20 @@ public class HUDOverlayScreen extends BaseScreen {
         //set actionbar items
         this.actionBar.getItem(0, 0).setTexture(this.actionBarProjectilTexture);
         this.actionBar.getItem(0, 0).setKeyText("LMB");
+        this.actionBar.getItem(0, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isLeftMouseButtonPressed();
+        });
+        this.actionBar.getItem(0, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isLeftMouseButtonPressed();
+        });
         this.actionBar.getItem(1, 0).setTexture(this.actionBarIceShardsTexture);
         this.actionBar.getItem(1, 0).setKeyText("RMB");
+        this.actionBar.getItem(1, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isRightMouseButtonPressed();
+        });
+        this.actionBar.getItem(1, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isRightMouseButtonPressed();
+        });
         this.actionBar.getItem(2, 0).setKeyText("1");
         this.actionBar.getItem(3, 0).setKeyText("2");
         this.actionBar.getItem(4, 0).setKeyText("3");

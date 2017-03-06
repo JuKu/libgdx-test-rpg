@@ -1,6 +1,7 @@
 package com.jukusoft.libgdx.rpg.engine.input.impl;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.jukusoft.libgdx.rpg.engine.input.BasicInputProcessor;
@@ -99,8 +100,12 @@ public class DefaultInputManager implements InputManager {
         return Gdx.input.getY();
     }
 
-    @Override public boolean isMousePressed() {
-        return Gdx.input.isTouched();
+    @Override public boolean isLeftMouseButtonPressed() {
+        return Gdx.input.isButtonPressed(Input.Buttons.LEFT);
+    }
+
+    @Override public boolean isRightMouseButtonPressed() {
+        return Gdx.input.isButtonPressed(Input.Buttons.RIGHT);
     }
 
     @Override public void addCustomInputProcessor(int index, InputProcessor inputProcessor) {

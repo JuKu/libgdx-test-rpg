@@ -29,11 +29,35 @@ public class ActionBarItem extends BaseHUDWidget {
     protected boolean isHoverable = true;
     protected boolean clickable = true;
 
+    protected CustomHoverAdapter customHoverAdapter = null;
+    protected CustomClickAdapter customClickAdapter = new CustomClickAdapter() {
+        @Override public boolean isPressed(BaseGame game, ActionBarItem item, GameTime time) {
+            Vector3 mousePos = MouseUtils.getMousePositionWithCamera(game.getUICamera());
+            float mouseX = mousePos.x;
+            float mouseY = mousePos.y;
+
+            return game.getInputManager().isLeftMouseButtonPressed() && isInner(mouseX, mouseY);
+        }
+    };
+
     public ActionBarItem (Texture texture, BitmapFont font) {
         this.texture = texture;
         this.font = font;
 
         this.setDimension(texture.getWidth(), texture.getHeight());
+    }
+
+    public boolean isInner (float mouseX, float mouseY) {
+        float x = getX();
+        float y = getY();
+
+        if (x <= mouseX && mouseX <= x + getWidth()) {
+            if (y <= mouseY && mouseY <= y + getHeight()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override public void update(BaseGame game, GameTime time) {
@@ -44,17 +68,27 @@ public class ActionBarItem extends BaseHUDWidget {
         float mouseX = mousePos.x;
         float mouseY = mousePos.y;
 
-        float x = getX();
-        float y = getY();
+        if (isInner(mouseX, mouseY)) {
+            hovered = true;
+        }
 
-        if (x <= mouseX && mouseX <= x + getWidth()) {
-            if (y <= mouseY && mouseY <= y + getHeight()) {
-                hovered = true;
+        if (!hovered && this.customHoverAdapter != null) {
+            hovered = this.customHoverAdapter.isHovered(game, this, time);
+        }
+
+        if (!clicked && this.customClickAdapter != null) {
+            if (this.customClickAdapter.isPressed(game, this, time)) {
+                clicked = true;
             }
         }
 
-        if (hovered) {
-            if (game.getInputManager().isMousePressed() && clickable) {
+        if (clicked && !this.customClickAdapter.isPressed(game, this, time)) {
+            onClick();
+            clicked = false;
+        }
+
+        /*if (hovered) {
+            if (this.customClickAdapter.isPressed(game, this, time) && clickable) {
                 clicked = true;
             } else {
                 if (clicked) {
@@ -65,12 +99,17 @@ public class ActionBarItem extends BaseHUDWidget {
                 clicked = false;
             }
         } else {
+            if (clicked) {
+                //execute onClick action
+                this.onClick();
+            }
+
             clicked = false;
         }
 
         if (!isHoverable) {
             hovered = false;
-        }
+        }*/
     }
 
     @Override public void drawLayer0(GameTime time, SpriteBatch batch) {
@@ -108,10 +147,12 @@ public class ActionBarItem extends BaseHUDWidget {
         this.command = null;
     }
 
-    protected void onClick () {
+    public void onClick () {
         if (this.clickable && this.command != null) {
             this.command.execute();
         }
+
+        System.out.println("click.");
     }
 
     public boolean isHovered () {
@@ -124,6 +165,22 @@ public class ActionBarItem extends BaseHUDWidget {
 
     public void setClickable (boolean clickable) {
         this.clickable = clickable;
+    }
+
+    public void setCustomHoverAdapter (CustomHoverAdapter hoverAdapter) {
+        this.customHoverAdapter = hoverAdapter;
+    }
+
+    public void removeCustomHoverAdapter () {
+        this.customHoverAdapter = null;
+    }
+
+    public void setCustomClickAdapter (CustomClickAdapter clickAdapter) {
+        this.customClickAdapter = clickAdapter;
+    }
+
+    public void removeCustomClickAdapter () {
+        this.customClickAdapter = null;
     }
 
 }

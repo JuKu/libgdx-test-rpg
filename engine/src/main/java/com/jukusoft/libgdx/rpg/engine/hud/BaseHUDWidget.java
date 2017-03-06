@@ -56,4 +56,9 @@ public abstract class BaseHUDWidget implements HUDWidget {
         this.groupY = groupY;
     }
 
+    @Override
+    public void dispose () {
+        //
+    }
+
 }

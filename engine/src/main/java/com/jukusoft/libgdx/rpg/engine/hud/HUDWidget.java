@@ -26,4 +26,6 @@ public interface HUDWidget {
 
     public void onMoveGroup (float groupX, float groupY);
 
+    public void dispose ();
+
 }

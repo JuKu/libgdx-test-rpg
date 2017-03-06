@@ -23,6 +23,7 @@ import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.hud.ImageWidget;
 import com.jukusoft.libgdx.rpg.engine.hud.WidgetGroup;
+import com.jukusoft.libgdx.rpg.engine.hud.actionbar.ActionBar;
 import com.jukusoft.libgdx.rpg.engine.input.InputPriority;
 import com.jukusoft.libgdx.rpg.engine.input.listener.KeyListener;
 import com.jukusoft.libgdx.rpg.engine.lighting.LightingEnvironment;
@@ -48,6 +49,10 @@ public class HUDOverlayScreen extends BaseScreen {
     protected static final String HEART_ICON_PATH = AssetPathUtils.getImagePath("icons/heart/heart_32.png");
     protected static final String DIAMOND_ICON_PATH = AssetPathUtils.getImagePath("icons/diamond/diamond_32.png");
     protected static final String LOGO_PATH = AssetPathUtils.getImagePath("general/icon_transparency_smallest.png");
+    protected static final String ACTIONBAR_BG_PATH = AssetPathUtils.getImagePath("actionbar/actionbar_background.png");
+    protected static final String ACTIONBAR_BLANK_ITEM_PATH = AssetPathUtils.getImagePath("actionbar/blank.png");
+    protected static final String ACTIONBAR_PROJECTIL_PATH = AssetPathUtils.getImagePath("icons/spellset/fire_bolt/lvl1_fire_arrows_64.png");
+    protected static final String ACTIONBAR_ICE_SHARDS_PATH = AssetPathUtils.getImagePath("icons/spellset/ice_shards/ice_shards_64.png");
 
     protected CharacterData characterData = null;
 
@@ -56,15 +61,22 @@ public class HUDOverlayScreen extends BaseScreen {
     //HUD
     protected HUD hud = null;
     protected static final int FONT_SIZE = 18;
+    protected static final int FONT_SIZE_SMALL = 14;
     protected FilledIconBar healthBar = null;
     protected FilledIconBar manaBar = null;
     protected ImageWidget logoImageWidget = null;
+    protected ActionBar actionBar = null;
 
     //assets
     protected BitmapFont font = null;
+    protected BitmapFont smallFont = null;
     protected Texture heartTexture = null;
     protected Texture diamondTexture = null;
     protected Texture logoTexture = null;
+    protected Texture actionBarBGTexture = null;
+    protected Texture actionBarBlankTexture = null;
+    protected Texture actionBarProjectilTexture = null;
+    protected Texture actionBarIceShardsTexture = null;
 
     //lighting environment
     protected LightingEnvironment lightingEnvironment = null;
@@ -79,10 +91,17 @@ public class HUDOverlayScreen extends BaseScreen {
         this.font = BitmapFontFactory
             .createFont(AssetPathUtils.getFontPath("arial/arial.ttf"), FONT_SIZE, Color.WHITE);
 
+        this.smallFont = BitmapFontFactory
+            .createFont(AssetPathUtils.getFontPath("arial/arial.ttf"), FONT_SIZE_SMALL, Color.WHITE);
+
         //load assets
         game.getAssetManager().load(HEART_ICON_PATH, Texture.class);
         game.getAssetManager().load(DIAMOND_ICON_PATH, Texture.class);
         game.getAssetManager().load(LOGO_PATH, Texture.class);
+        game.getAssetManager().load(ACTIONBAR_BLANK_ITEM_PATH, Texture.class);
+        game.getAssetManager().load(ACTIONBAR_BG_PATH, Texture.class);
+        game.getAssetManager().load(ACTIONBAR_PROJECTIL_PATH, Texture.class);
+        game.getAssetManager().load(ACTIONBAR_ICE_SHARDS_PATH, Texture.class);
 
         //wait while all assets was loaded
         game.getAssetManager().finishLoading();
@@ -90,6 +109,10 @@ public class HUDOverlayScreen extends BaseScreen {
         this.heartTexture = game.getAssetManager().get(HEART_ICON_PATH, Texture.class);
         this.diamondTexture = game.getAssetManager().get(DIAMOND_ICON_PATH, Texture.class);
         this.logoTexture = game.getAssetManager().get(LOGO_PATH, Texture.class);
+        this.actionBarBlankTexture = game.getAssetManager().get(ACTIONBAR_BLANK_ITEM_PATH, Texture.class);
+        this.actionBarBGTexture = game.getAssetManager().get(ACTIONBAR_BG_PATH, Texture.class);
+        this.actionBarProjectilTexture = game.getAssetManager().get(ACTIONBAR_PROJECTIL_PATH, Texture.class);
+        this.actionBarIceShardsTexture = game.getAssetManager().get(ACTIONBAR_ICE_SHARDS_PATH, Texture.class);
 
         //create and load ui skin from json file
         this.uiSkin = SkinFactory.createSkin(AssetPathUtils.getUISkinPath("create_character", "uiskin.json"));
@@ -129,6 +152,25 @@ public class HUDOverlayScreen extends BaseScreen {
         this.logoImageWidget = new ImageWidget(this.logoTexture);
         this.logoImageWidget.setPosition(20, game.getViewportHeight() - 70);
         this.hud.addWidget(this.logoImageWidget);
+
+        //add actionbar
+        this.actionBar = new ActionBar(64, 64, 1, 10, this.actionBarBGTexture, actionBarBlankTexture, this.smallFont);
+        this.actionBar.setPosition(40, 50);
+        this.hud.addWidget(this.actionBar);
+
+        //set actionbar items
+        this.actionBar.getItem(0, 0).setTexture(this.actionBarProjectilTexture);
+        this.actionBar.getItem(0, 0).setKeyText("LMB");
+        this.actionBar.getItem(1, 0).setTexture(this.actionBarIceShardsTexture);
+        this.actionBar.getItem(1, 0).setKeyText("RMB");
+        this.actionBar.getItem(2, 0).setKeyText("1");
+        this.actionBar.getItem(3, 0).setKeyText("2");
+        this.actionBar.getItem(4, 0).setKeyText("3");
+        this.actionBar.getItem(5, 0).setKeyText("4");
+        this.actionBar.getItem(6, 0).setKeyText("5");
+        this.actionBar.getItem(7, 0).setKeyText("Q");
+        this.actionBar.getItem(8, 0).setKeyText("E");
+        this.actionBar.getItem(9, 0).setKeyText("R");
 
         //create stage
         this.stage = new Stage();

@@ -30,6 +30,7 @@ assets directory (./data)!
   - some images from pexels.com
   - palm icon by aha-soft
   - sword cursor by Geovanny Gavilanes
+  - textures by texturelib.com
 
 ## Fonts
 

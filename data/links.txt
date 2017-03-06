@@ -92,6 +92,7 @@ Links with some example image idea (license wasnt checked yet, but images also a
  - http://opengameart.org/content/basic-map-32x32-by-silver-iv
  - http://opengameart.org/content/sewer-tileset
  - http://opengameart.org/content/spell-set
+ - http://opengameart.org/content/lpc-modified-base-tiles
 
 user interface:
 http://opengameart.org/content/golden-ui-bigger-than-ever-edition

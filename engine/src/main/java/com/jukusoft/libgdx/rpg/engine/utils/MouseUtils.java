@@ -17,12 +17,12 @@ public class MouseUtils {
     }
 
     public static float getMouseY (float y, CameraWrapper camera) {
-        y = camera.getOriginalCamera().viewportHeight - y;
+        //y = camera.getOriginalCamera().viewportHeight - y;
         return (y + camera.getY()) * 1 / camera.getZoom();
     }
 
     @Deprecated
-    public Vector3 getMousePositionWithCamera (Camera camera) {
+    public static Vector3 getMousePositionWithCamera (Camera camera) {
         tmpVector.set(Gdx.input.getX(), Gdx.input.getY(), 0);
         return camera.unproject(tmpVector);
     }

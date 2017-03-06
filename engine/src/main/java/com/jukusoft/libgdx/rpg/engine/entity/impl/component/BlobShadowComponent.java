@@ -69,7 +69,7 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
     public void init (BaseGame game, Entity entity) {
         super.init(game, entity);
 
-        this.shadowColor.a = 0.3f;
+        this.shadowColor.a = 0.2f;
 
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.textureComponent = entity.getComponent(DrawTextureComponent.class);
@@ -186,6 +186,13 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
 
     public void setPaddingBottom (float paddingBottom) {
         this.paddingBottom = paddingBottom;
+    }
+
+    public void setShadowColor (Color shadowColor) {
+        this.shadowColor = shadowColor;
+
+        //cleanUp old shadow texture and generate an new one
+        this.generateShadow(false);
     }
 
     public void notifyDimensionChanged () {

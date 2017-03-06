@@ -143,6 +143,9 @@ public class GameScreen extends BaseScreen {
         this.ecs.addEntity(this.playerEntity);
         game.getSharedData().put(SharedDataConst.PLAYER_ENTITY, this.playerEntity);
 
+        //save current entity component system to shared data
+        game.getSharedData().put(SharedDataConst.ENTITY_COMPONENT_SYSTEM, this.ecs);
+
         //create an entity for dummy NPC
         Entity npcEntity = NPCFactory.createDummyNPC(this.ecs, this.characterTexture, this.cursorImage, 400, 400);
         this.ecs.addEntity(npcEntity);

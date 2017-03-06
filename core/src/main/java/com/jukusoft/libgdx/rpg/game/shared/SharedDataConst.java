@@ -17,4 +17,7 @@ public class SharedDataConst {
     //player
     public static final String PLAYER_ENTITY = "player_entity";
 
+    //ecs
+    public static final String ENTITY_COMPONENT_SYSTEM = "entity_component_system";
+
 }

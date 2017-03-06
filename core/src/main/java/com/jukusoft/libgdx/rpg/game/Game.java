@@ -54,6 +54,17 @@ public class Game extends ScreenBasedGame {
         inputMapper.addMapping(Input.Keys.LEFT, GameActionsConst.MOVE_LEFT);
         inputMapper.addMapping(Input.Keys.RIGHT, GameActionsConst.MOVE_RIGHT);
 
+        //action keys
+        inputMapper.addMapping(Input.Keys.NUM_1, GameActionsConst.ACTION_3);
+        inputMapper.addMapping(Input.Keys.NUM_2, GameActionsConst.ACTION_4);
+        inputMapper.addMapping(Input.Keys.NUM_3, GameActionsConst.ACTION_5);
+        inputMapper.addMapping(Input.Keys.NUM_4, GameActionsConst.ACTION_6);
+        inputMapper.addMapping(Input.Keys.NUM_5, GameActionsConst.ACTION_7);
+        inputMapper.addMapping(Input.Keys.Q, GameActionsConst.ACTION_8);
+        inputMapper.addMapping(Input.Keys.E, GameActionsConst.ACTION_9);
+        inputMapper.addMapping(Input.Keys.R, GameActionsConst.ACTION_10);
+
+
         //activate camera shake modifications
         this.getCamera().activateMod(Shake1CameraModification.class);
         this.getCamera().activateMod(Shake2CameraModification.class);

@@ -36,6 +36,7 @@ import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
 import com.jukusoft.libgdx.rpg.engine.hud.HUD;
 import com.jukusoft.libgdx.rpg.engine.hud.FilledIconBar;
+import com.jukusoft.libgdx.rpg.game.input.GameActionsConst;
 import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 import com.jukusoft.libgdx.rpg.game.world.GameWorld;
@@ -161,31 +162,8 @@ public class HUDOverlayScreen extends BaseScreen {
         this.actionBar.setPosition(40, 50);
         this.hud.addWidget(this.actionBar);
 
-        //set actionbar items
-        this.actionBar.getItem(0, 0).setTexture(this.actionBarProjectilTexture);
-        this.actionBar.getItem(0, 0).setKeyText("LMB");
-        this.actionBar.getItem(0, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
-            return game.getInputManager().isLeftMouseButtonPressed();
-        });
-        this.actionBar.getItem(0, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
-            return game.getInputManager().isLeftMouseButtonPressed();
-        });
-        this.actionBar.getItem(1, 0).setTexture(this.actionBarIceShardsTexture);
-        this.actionBar.getItem(1, 0).setKeyText("RMB");
-        this.actionBar.getItem(1, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
-            return game.getInputManager().isRightMouseButtonPressed();
-        });
-        this.actionBar.getItem(1, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
-            return game.getInputManager().isRightMouseButtonPressed();
-        });
-        this.actionBar.getItem(2, 0).setKeyText("1");
-        this.actionBar.getItem(3, 0).setKeyText("2");
-        this.actionBar.getItem(4, 0).setKeyText("3");
-        this.actionBar.getItem(5, 0).setKeyText("4");
-        this.actionBar.getItem(6, 0).setKeyText("5");
-        this.actionBar.getItem(7, 0).setKeyText("Q");
-        this.actionBar.getItem(8, 0).setKeyText("E");
-        this.actionBar.getItem(9, 0).setKeyText("R");
+        //initialize actionbar
+        this.initActionBar(actionBar);
 
         //create stage
         this.stage = new Stage();
@@ -586,6 +564,94 @@ public class HUDOverlayScreen extends BaseScreen {
 
     protected void toggleControlsVisible () {
         this.verticalGroup.setVisible(!this.verticalGroup.isVisible());
+    }
+
+    protected void initActionBar (ActionBar actionBar) {
+        //set actionbar items
+
+        //left mouse button
+        this.actionBar.getItem(0, 0).setTexture(this.actionBarProjectilTexture);
+        this.actionBar.getItem(0, 0).setKeyText("LMB");
+        this.actionBar.getItem(0, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isLeftMouseButtonPressed();
+        });
+        this.actionBar.getItem(0, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isLeftMouseButtonPressed();
+        });
+
+        //right mouse button
+        this.actionBar.getItem(1, 0).setTexture(this.actionBarIceShardsTexture);
+        this.actionBar.getItem(1, 0).setKeyText("RMB");
+        this.actionBar.getItem(1, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isRightMouseButtonPressed();
+        });
+        this.actionBar.getItem(1, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isRightMouseButtonPressed();
+        });
+
+        this.actionBar.getItem(2, 0).setKeyText("1");
+        this.actionBar.getItem(2, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_3);
+        });
+        this.actionBar.getItem(2, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_3);
+        });
+
+        this.actionBar.getItem(3, 0).setKeyText("2");
+        this.actionBar.getItem(3, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_4);
+        });
+        this.actionBar.getItem(3, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_4);
+        });
+
+        this.actionBar.getItem(4, 0).setKeyText("3");
+        this.actionBar.getItem(4, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_5);
+        });
+        this.actionBar.getItem(4, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_5);
+        });
+
+        this.actionBar.getItem(5, 0).setKeyText("4");
+        this.actionBar.getItem(5, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_6);
+        });
+        this.actionBar.getItem(5, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_6);
+        });
+
+        this.actionBar.getItem(6, 0).setKeyText("5");
+        this.actionBar.getItem(6, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_7);
+        });
+        this.actionBar.getItem(6, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_7);
+        });
+
+        this.actionBar.getItem(7, 0).setKeyText("Q");
+        this.actionBar.getItem(7, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_8);
+        });
+        this.actionBar.getItem(7, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_8);
+        });
+
+        this.actionBar.getItem(8, 0).setKeyText("E");
+        this.actionBar.getItem(8, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_9);
+        });
+        this.actionBar.getItem(8, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_9);
+        });
+
+        this.actionBar.getItem(9, 0).setKeyText("R");
+        this.actionBar.getItem(9, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_10);
+        });
+        this.actionBar.getItem(9, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
+            return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_10);
+        });
     }
 
 }

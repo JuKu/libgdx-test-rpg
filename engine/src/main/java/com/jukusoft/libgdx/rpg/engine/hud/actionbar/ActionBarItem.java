@@ -24,6 +24,8 @@ public class ActionBarItem extends BaseHUDWidget {
 
     protected boolean hovered = false;
     protected Color hoverColor = new Color(0.7f, 0.7f, 1.0f, 0.8f);
+    protected ActionCommand command = null;
+    protected boolean clicked = false;
 
     public ActionBarItem (Texture texture, BitmapFont font) {
         this.texture = texture;
@@ -47,6 +49,21 @@ public class ActionBarItem extends BaseHUDWidget {
             if (y <= mouseY && mouseY <= y + getHeight()) {
                 hovered = true;
             }
+        }
+
+        if (hovered) {
+            if (game.getInputManager().isMousePressed()) {
+                clicked = true;
+            } else {
+                if (clicked) {
+                    //execute onClick action
+                    this.onClick();
+                }
+
+                clicked = false;
+            }
+        } else {
+            clicked = false;
         }
     }
 
@@ -77,6 +94,16 @@ public class ActionBarItem extends BaseHUDWidget {
         this.key = key;
     }
 
+    public void setActionCommand (ActionCommand command) {
+        this.command = command;
+    }
 
+    public void removeActionCommand () {
+        this.command = null;
+    }
+
+    protected void onClick () {
+        //
+    }
 
 }

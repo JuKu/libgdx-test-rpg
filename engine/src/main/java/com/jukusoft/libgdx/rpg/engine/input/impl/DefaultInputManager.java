@@ -99,6 +99,10 @@ public class DefaultInputManager implements InputManager {
         return Gdx.input.getY();
     }
 
+    @Override public boolean isMousePressed() {
+        return Gdx.input.isTouched();
+    }
+
     @Override public void addCustomInputProcessor(int index, InputProcessor inputProcessor) {
         this.inputMultiplexer.addProcessor(index, inputProcessor);
     }

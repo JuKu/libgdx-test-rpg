@@ -151,7 +151,7 @@ public class GameScreen extends BaseScreen {
         this.ecs.addEntity(npcEntity);
 
         //create an entity for dummy NPC
-        Entity npcEntity1 = NPCFactory.createDummyWithBlobShadowNPC(this.ecs, this.characterTexture2, this.cursorImage, 300, 100);
+        Entity npcEntity1 = NPCFactory.createDummyWithBlobShadowNPC(this.ecs, this.characterTexture2, this.cursorImage, 300, 600);
         this.ecs.addEntity(npcEntity1);
 
         //create campfire

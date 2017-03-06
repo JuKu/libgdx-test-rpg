@@ -23,9 +23,21 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
     protected DrawTextureRegionComponent textureRegionComponent = null;
 
     protected Texture shadowTexture = null;
-    protected Color shadowColor = Color.GRAY;
+    protected Color shadowColor = Color.BLACK;//Color.GRAY;
     protected int shadowWidth = 0;
     protected int shadowHeight = 0;
+
+    protected float paddingBottom = 0;
+
+    /**
+     * default constructor
+     *
+     * @param shadowColor color of blob shadow
+     */
+    public BlobShadowComponent (Color shadowColor, float paddingBottom) {
+        this.shadowColor = shadowColor;
+        this.paddingBottom = paddingBottom;
+    }
 
     /**
     * default constructor
@@ -46,6 +58,8 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
     @Override
     public void init (BaseGame game, Entity entity) {
         super.init(game, entity);
+
+        this.shadowColor.a = 0.3f;
 
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.textureComponent = entity.getComponent(DrawTextureComponent.class);
@@ -79,7 +93,7 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
 
     @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
         if (this.shadowTexture != null) {
-            batch.draw(this.shadowTexture, this.positionComponent.getX(), this.positionComponent.getY() - (this.shadowHeight / 2), this.shadowWidth, this.shadowHeight);
+            batch.draw(this.shadowTexture, this.positionComponent.getX(), this.positionComponent.getY() - (this.shadowHeight / 2) + this.paddingBottom, this.shadowWidth, this.shadowHeight);
         } else {
             throw new IllegalStateException("No shadow texture generated yet.");
         }
@@ -149,7 +163,9 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
             throw new IllegalStateException("No texture component or texture region component is set to entity.");
         }
 
-        this.shadowHeight = shadowHeight / 4;
+        //2/3 shadow height
+        this.shadowHeight = this.shadowWidth * 2/3;
+        //shadowHeight / 3 * 2;
 
         return this.shadowWidth != oldWidth || this.shadowHeight != oldHeight;
     }

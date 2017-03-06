@@ -589,6 +589,7 @@ public class HUDOverlayScreen extends BaseScreen {
             return game.getInputManager().isRightMouseButtonPressed();
         });
 
+        //actions
         this.actionBar.getItem(2, 0).setKeyText("1");
         this.actionBar.getItem(2, 0).setCustomHoverAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
             return game.getInputManager().isActionKeyPressed(GameActionsConst.ACTION_3);

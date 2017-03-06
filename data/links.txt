@@ -93,9 +93,14 @@ Links with some example image idea (license wasnt checked yet, but images also a
  - http://opengameart.org/content/sewer-tileset
  - http://opengameart.org/content/spell-set
  - http://opengameart.org/content/lpc-modified-base-tiles
+ - http://opengameart.org/content/painterly-spell-icons-part-4
+ - http://opengameart.org/content/fantasy-icon-pack-by-ravenmore-0
+ - http://opengameart.org/content/lightning-shock-spell
 
 user interface:
 http://opengameart.org/content/golden-ui-bigger-than-ever-edition
+http://opengameart.org/content/painterly-spell-icons-part-4
+http://opengameart.org/content/fantasy-icon-pack-by-ravenmore-0
 
 sound:
 http://opengameart.org/content/oves-essential-game-audio-pack-collection-160-files-updated

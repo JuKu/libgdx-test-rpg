@@ -31,6 +31,9 @@ public class PlayerFactory {
         //add texture component to draw player
         playerEntity.addComponent(new DrawTextureComponent(texture), DrawTextureComponent.class);
 
+        //add attachment points component so projectiles can be spawn at entity
+        playerEntity.addComponent(new AttachmentPointsComponent(), AttachmentPointsComponent.class);
+
         //add hover component
         playerEntity.addComponent(new HoverComponent(Color.BLUE), HoverComponent.class);
 

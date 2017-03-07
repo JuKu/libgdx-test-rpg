@@ -34,6 +34,8 @@ public class GameTimer {
         //set start time
         this.startTime = time.getTime();
 
+        this.elapsed = 0;
+
         //set running flag
         this.isRunning = true;
 

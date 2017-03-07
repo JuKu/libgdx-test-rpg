@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.hud.BaseHUDWidget;
+import com.jukusoft.libgdx.rpg.engine.time.CooldownTimer;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.utils.MouseUtils;
 
@@ -40,11 +41,18 @@ public class ActionBarItem extends BaseHUDWidget {
         }
     };
 
+    //cooldown timer
+    protected CooldownTimer cooldownTimer = null;
+    protected boolean useCooldown = false;
+
     public ActionBarItem (Texture texture, BitmapFont font) {
         this.texture = texture;
         this.font = font;
 
         this.setDimension(texture.getWidth(), texture.getHeight());
+
+        //create new cooldown timer
+        this.cooldownTimer = new CooldownTimer(0);
     }
 
     public boolean isInner (float mouseX, float mouseY) {
@@ -61,6 +69,9 @@ public class ActionBarItem extends BaseHUDWidget {
     }
 
     @Override public void update(BaseGame game, GameTime time) {
+        //update cooldown timer
+        this.cooldownTimer.update(time);
+
         //check, if hovered
         hovered = false;
 
@@ -148,8 +159,20 @@ public class ActionBarItem extends BaseHUDWidget {
     }
 
     public void onClick () {
+        //check, if cooldown timer is running
+        if (useCooldown && this.cooldownTimer.isRunning()) {
+            //we cannot execute action, because cooldown timer is running
+            return;
+        }
+
         if (this.clickable && this.command != null) {
             this.command.execute();
+
+            //check, if action requires an cooldown timer
+            if (useCooldown) {
+                //start cooldown timer
+                this.cooldownTimer.start();
+            }
         }
 
         System.out.println("click.");
@@ -181,6 +204,19 @@ public class ActionBarItem extends BaseHUDWidget {
 
     public void removeCustomClickAdapter () {
         this.customClickAdapter = null;
+    }
+
+    /**
+    * set cooldown timer interval in milliseconds
+     *
+     * @param interval interval in milliseconds
+    */
+    public void setCooldownTimerInterval (long interval) {
+        if (interval <= 0) {
+            this.useCooldown = false;
+        }
+
+        this.cooldownTimer.setInterval(interval);
     }
 
 }

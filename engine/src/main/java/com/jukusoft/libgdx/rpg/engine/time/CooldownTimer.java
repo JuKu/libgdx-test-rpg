@@ -16,6 +16,8 @@ public class CooldownTimer extends GameTimer {
     //list with listeners
     protected List<CooldownTimerFinishedListener> timerFinishedListenerList = new ArrayList<>();
 
+    protected boolean hasFinished = false;
+
     public CooldownTimer (long interval) {
         this.interval = interval;
     }
@@ -36,6 +38,8 @@ public class CooldownTimer extends GameTimer {
         if (time.getTime() > this.endTime) {
             //stop timer
             this.stop(time);
+
+            this.hasFinished = true;
 
             //call listeners
             onEndTimeReached(time);
@@ -62,6 +66,16 @@ public class CooldownTimer extends GameTimer {
 
     public void setInterval (long interval) {
         this.interval = interval;
+    }
+
+    public void reset (GameTime time) {
+        this.startTime = time.getTime();
+        this.elapsed = 0;
+        this.hasFinished = false;
+    }
+
+    public void reset () {
+        this.reset(GameTime.getInstance());
     }
 
     protected void onEndTimeReached (GameTime time) {

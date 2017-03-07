@@ -46,6 +46,16 @@ public class CooldownTimer extends GameTimer {
         return this.startTime + interval;
     }
 
+    public long getRemainingTime () {
+        long remainingTime = this.interval - this.elapsed;
+
+        if (remainingTime < 0) {
+            return 0;
+        }
+
+        return remainingTime;
+    }
+
     public void setInterval (long interval) {
         this.interval = interval;
     }

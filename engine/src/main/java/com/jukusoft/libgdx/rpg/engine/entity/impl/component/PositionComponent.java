@@ -285,7 +285,7 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
     @Override
     public boolean equals (Object obj) {
         if (!(obj instanceof PositionComponent)) {
-            throw new IllegalArgumentException("object has to be an instance of PositionComponent to check, if equals.");
+            throw new IllegalArgumentException("object has to be an instance of PositionComponent to check, if equals, class of object: " + obj.getClass().getName());
         }
 
         PositionComponent comp = (PositionComponent) obj;

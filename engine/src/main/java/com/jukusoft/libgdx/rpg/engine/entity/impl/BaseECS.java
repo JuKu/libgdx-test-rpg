@@ -40,6 +40,11 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
     */
     protected Map<Long,Entity> entityMap = new ConcurrentHashMap<>();
 
+    /**
+    * entities with unique name
+    */
+    protected Map<String,Entity> namedEntitiesMap = new ConcurrentHashMap<>();
+
     protected BaseGame game = null;
 
     public BaseECS (BaseGame game) {
@@ -100,6 +105,46 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
         });
     }
 
+    public void addEntity (final String uniqueName, final Entity entity) {
+        if (entity == null) {
+            throw new NullPointerException("entity cannot be null.");
+        }
+
+        //check, if unique name is already in use
+        if (this.namedEntitiesMap.get(uniqueName) != null) {
+            throw new IllegalStateException("entity name '" + uniqueName + "' is already in use.");
+        }
+
+        //initialize entity
+        entity.init(this.game, this);
+
+        synchronized (this.entityUpdateList) {
+            this.entityUpdateList.add(entity);
+        }
+
+        synchronized (this.entityDrawList) {
+            this.entityDrawList.add(entity);
+        }
+
+        synchronized (this.entityUILayerDrawList) {
+            this.entityUILayerDrawList.add(entity);
+        }
+
+        //get entityID
+        final long entityID = entity.getEntityID();
+
+        //add entity to maps
+        this.entityMap.put(entityID, entity);
+        this.namedEntitiesMap.put(uniqueName, entity);
+
+        //call listeners to sort lists
+        this.onEntityUpdateOrderChanged();
+        this.onEntityDrawOrderChanged();
+
+        //call listeners
+        this.onEntityAdded(entity);
+    }
+
     public void addEntity (Entity entity) {
         if (entity == null) {
             throw new NullPointerException("entity cannot be null.");
@@ -119,6 +164,12 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
         synchronized (this.entityUILayerDrawList) {
             this.entityUILayerDrawList.add(entity);
         }
+
+        //get entityID
+        final long entityID = entity.getEntityID();
+
+        //add entity to map
+        this.entityMap.put(entityID, entity);
 
         //call listeners to sort lists
         this.onEntityUpdateOrderChanged();
@@ -163,6 +214,15 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
     @Override public void removeEntity(long entityID) {
         //get entity by entityID
         Entity entity = this.entityMap.get(entityID);
+
+        if (entity != null) {
+            this.removeEntity(entity);
+        }
+    }
+
+    @Override public void removeEntity(final String uniqueName) {
+        //get entity by unique name
+        Entity entity = this.namedEntitiesMap.get(uniqueName);
 
         if (entity != null) {
             this.removeEntity(entity);

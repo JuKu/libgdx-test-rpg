@@ -11,11 +11,15 @@ import com.jukusoft.libgdx.rpg.engine.time.GameTime;
  */
 public interface EntityManager {
 
+    public void addEntity (final String uniqueName, final Entity entity);
+
     public void addEntity (Entity entity);
 
     public void removeEntity (Entity entity);
 
     public void removeEntity (final long entityID);
+
+    public void removeEntity (final String uniqueName);
 
     public void removeAllEntities ();
 

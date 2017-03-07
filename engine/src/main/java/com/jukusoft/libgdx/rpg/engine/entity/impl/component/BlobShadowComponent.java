@@ -69,7 +69,7 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
     public void init (BaseGame game, Entity entity) {
         super.init(game, entity);
 
-        this.shadowColor.a = 0.2f;
+        this.shadowColor.a = 0.15f;
 
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.textureComponent = entity.getComponent(DrawTextureComponent.class);

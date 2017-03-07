@@ -1,9 +1,9 @@
-package com.jukusoft.libgdx.rpg.engine.pivot;
+package com.jukusoft.libgdx.rpg.engine.points;
 
 /**
- * Created by Justin on 06.03.2017.
+ * Created by Justin on 07.03.2017.
  */
-public class PivotPoint {
+public class AttachmentPoint {
 
     //relative position of pivot point to entity (0, 0) is left bottom
     protected float x = 0;
@@ -12,7 +12,7 @@ public class PivotPoint {
     protected float offsetX = 0;
     protected float offsetY = 0;
 
-    public PivotPoint (float x, float y) {
+    public AttachmentPoint (float x, float y) {
         this.x = x;
         this.y = y;
     }

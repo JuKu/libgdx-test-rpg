@@ -188,6 +188,10 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
         this.paddingBottom = paddingBottom;
     }
 
+    public Color getShadowColor () {
+        return this.shadowColor;
+    }
+
     public void setShadowColor (Color shadowColor) {
         this.shadowColor = shadowColor;
 

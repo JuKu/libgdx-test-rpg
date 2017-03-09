@@ -13,6 +13,8 @@ See also LICENSE and CONTRIBUTORS.md file!
 
 ![Test In-Game Screen](https://raw.githubusercontent.com/JuKu/libgdx-test-rpg/master/doku/images/lightmaps.png)
 
+![Test In-Game Screen](https://raw.githubusercontent.com/JuKu/libgdx-test-rpg/master/doku/images/game.PNG)
+
 Lighting:
 ![Lighting Example](https://raw.githubusercontent.com/JuKu/libgdx-test-rpg/master/doku/images/map_lighting.PNG)
 

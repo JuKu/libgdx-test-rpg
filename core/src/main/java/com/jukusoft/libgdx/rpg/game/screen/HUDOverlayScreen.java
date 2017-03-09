@@ -19,6 +19,7 @@ import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.ShadowComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.SmoothFollowCameraComponent;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
@@ -554,6 +555,22 @@ public class HUDOverlayScreen extends BaseScreen {
             return true;
         });
         verticalGroup.addActor(shadowAngleSlider);*/
+
+        Label lerpLabel = new Label("Smooth Camera Factor: 1.0", this.uiSkin);
+        verticalGroup.addActor(lerpLabel);
+
+        Slider lerpSlider = new Slider(0, 1, 0.01f, false, this.uiSkin);
+        lerpSlider.setValue(1);
+        lerpSlider.addCaptureListener(event -> {
+            lerpLabel.setText("Smooth Camera Factor: " + lerpSlider.getValue());
+
+            Entity playerEntity = game.getSharedData().get(SharedDataConst.PLAYER_ENTITY, Entity.class);
+            SmoothFollowCameraComponent followCameraComponent = playerEntity.getComponent(SmoothFollowCameraComponent.class);
+            followCameraComponent.setLerp(lerpSlider.getValue());
+
+            return true;
+        });
+        verticalGroup.addActor(lerpSlider);
 
         stage.addActor(verticalGroup);
     }

@@ -35,6 +35,9 @@ public class PlayerFactory {
         //add animation component
         playerEntity.addComponent(new AtlasAnimationComponent(atlasPath, startAnimationName, 1f), AtlasAnimationComponent.class);
 
+        //add component to control movement animations
+        playerEntity.addComponent(new BasicMovementAnimationControlComponent(), BasicMovementAnimationControlComponent.class);
+
         //add attachment points component so projectiles can be spawn at entity
         playerEntity.addComponent(new AttachmentPointsComponent(), AttachmentPointsComponent.class);
 

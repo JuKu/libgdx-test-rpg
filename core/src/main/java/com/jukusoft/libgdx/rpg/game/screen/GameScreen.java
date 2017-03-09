@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake2CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
@@ -57,6 +58,8 @@ public class GameScreen extends BaseScreen {
     protected Texture campfireTexture = null;
     protected String blackTexturePath = AssetPathUtils.getLightMapPath("blackmap/blackmap.png");
     protected Texture blackTexture = null;
+    protected String character2AtlasFile = AssetPathUtils.getSpritesheetPath("reinertilesets/T_grey_caveman/output/T_grey_caveman.atlas");
+    protected TextureAtlas character2Atlas = null;
 
     //lighting system
     LightingSystem lightingSystem = null;

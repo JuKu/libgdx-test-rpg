@@ -35,6 +35,8 @@ public class AtlasUtils {
 
         //iterate through all lines
         for (String line : lines) {
+            lineCounter++;
+
             if (lineCounter < 5) {
                 //skip line, because it belongs to header
                 continue;
@@ -55,9 +57,9 @@ public class AtlasUtils {
                     map.put(line, lastCounter);
                 }
             }
-
-            lineCounter++;
         }
+
+        System.out.println("readed lines: " + lineCounter);
 
         return map;
     }

@@ -65,29 +65,6 @@ public class AttachmentPointsComponent extends BaseComponent {
         updateDimension();
 
         //create attachment points
-        updateAttachmentPoints();
-    }
-
-    protected void updateDimension () {
-        if (this.textureRegionComponent != null) {
-            this.textureRegionComponent.addTextureRegionChangedListener((TextureRegion oldTextureRegion,
-                TextureRegion newTextureRegion) -> {
-                //update width and height of texture
-                this.textureWidth = newTextureRegion.getRegionWidth();
-                this.textureHeight = newTextureRegion.getRegionHeight();
-            });
-        } else if (this.textureComponent != null) {
-            this.textureComponent.addTextureChangedListener((Texture oldTexture, Texture newTexture) -> {
-                //update width and height of texture
-                this.textureWidth = newTexture.getWidth();
-                this.textureHeight = newTexture.getHeight();
-            });
-        } else {
-            throw new IllegalStateException("You have to set an TextureComponent or an TextureRegionComponent to entity to use AttachmentPointsComponent.");
-        }
-    }
-
-    public void updateAttachmentPoints () {
         float width = this.textureWidth;
         float height = this.textureHeight;
 
@@ -101,6 +78,46 @@ public class AttachmentPointsComponent extends BaseComponent {
         attachmentPoints[Direction.UP_RIGHT.ordinal()] = new AttachmentPoint(width, height);
         attachmentPoints[Direction.DOWN_LEFT.ordinal()] = new AttachmentPoint(0, 0);
         attachmentPoints[Direction.DOWN_RIGHT.ordinal()] = new AttachmentPoint(width, 0);
+    }
+
+    protected void updateDimension () {
+        if (this.textureRegionComponent != null) {
+            if (this.textureRegionComponent.getTextureRegion() == null) {
+                //we dont need to update dimension, if no texture region is set
+                return;
+            }
+
+            //update width and height of texture
+            this.textureWidth = this.textureRegionComponent.getTextureRegion().getRegionWidth();
+            this.textureHeight = this.textureRegionComponent.getTextureRegion().getRegionHeight();
+        } else if (this.textureComponent != null) {
+            if (this.textureComponent.getTexture() == null) {
+                //we dont need to update dimension, if no texture is set
+                return;
+            }
+
+            //update width and height of texture
+            this.textureWidth = this.textureComponent.getTexture().getWidth();
+            this.textureHeight = this.textureComponent.getTexture().getHeight();
+        } else {
+            throw new IllegalStateException("You have to set an TextureComponent or an TextureRegionComponent to entity to use AttachmentPointsComponent.");
+        }
+    }
+
+    public void updateAttachmentPoints () {
+        float width = this.textureWidth;
+        float height = this.textureHeight;
+
+        //create new attachment points
+        attachmentPoints[Direction.DOWN.ordinal()].setPos(0 + (width / 2), 0);
+        attachmentPoints[Direction.UP.ordinal()].setPos(0 + (width / 2), height);
+        attachmentPoints[Direction.LEFT.ordinal()].setPos(0, height / 2);
+        attachmentPoints[Direction.RIGHT.ordinal()].setPos(width, height / 2);
+
+        attachmentPoints[Direction.UP_LEFT.ordinal()].setPos(0, height);
+        attachmentPoints[Direction.UP_RIGHT.ordinal()].setPos(width, height);
+        attachmentPoints[Direction.DOWN_LEFT.ordinal()].setPos(0, 0);
+        attachmentPoints[Direction.DOWN_RIGHT.ordinal()].setPos(width, 0);
     }
 
     public AttachmentPoint getAttachmentPoint (Direction direction) {

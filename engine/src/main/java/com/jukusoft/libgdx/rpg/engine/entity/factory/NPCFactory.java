@@ -32,7 +32,7 @@ public class NPCFactory {
         npcEntity.addComponent(new CursorComponent(cursor), CursorComponent.class);
 
         //add shadow component
-        npcEntity.addComponent(new ShadowComponent(), ShadowComponent.class);
+        //npcEntity.addComponent(new ShadowComponent(), ShadowComponent.class);
 
         return npcEntity;
     }

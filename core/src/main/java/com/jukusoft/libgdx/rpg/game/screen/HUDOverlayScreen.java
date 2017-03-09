@@ -539,7 +539,7 @@ public class HUDOverlayScreen extends BaseScreen {
         });
         verticalGroup.addActor(shake2CameraButton);
 
-        Label shadowLabel = new Label("Shadow Angle: " + 315 + " degree", this.uiSkin);
+        /*Label shadowLabel = new Label("Shadow Angle: " + 315 + " degree", this.uiSkin);
         verticalGroup.addActor(shadowLabel);
 
         Slider shadowAngleSlider = new Slider(0, 360, 1f, false, this.uiSkin);
@@ -553,7 +553,7 @@ public class HUDOverlayScreen extends BaseScreen {
 
             return true;
         });
-        verticalGroup.addActor(shadowAngleSlider);
+        verticalGroup.addActor(shadowAngleSlider);*/
 
         stage.addActor(verticalGroup);
     }

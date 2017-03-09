@@ -164,6 +164,11 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
         int oldHeight = this.shadowHeight;
 
         if (this.textureRegionComponent != null) {
+            //check, if region was set
+            if (this.textureRegionComponent.getTextureRegion() == null) {
+                return false;
+            }
+
             this.shadowWidth = this.textureRegionComponent.getTextureRegion().getRegionWidth();
             this.shadowHeight = this.textureRegionComponent.getTextureRegion().getRegionHeight();
         } else if (this.textureComponent != null) {

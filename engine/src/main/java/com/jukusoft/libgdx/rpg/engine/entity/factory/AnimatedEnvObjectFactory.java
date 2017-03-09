@@ -19,7 +19,7 @@ public class AnimatedEnvObjectFactory {
         Entity entity = new Entity(ecs);
 
         //add new position component, because every entity has an position
-         entity.addComponent(new PositionComponent(x, y), PositionComponent.class);
+        entity.addComponent(new PositionComponent(x, y), PositionComponent.class);
 
         //add texture region component
         entity.addComponent(new DrawTextureRegionComponent(), DrawTextureRegionComponent.class);
@@ -28,7 +28,7 @@ public class AnimatedEnvObjectFactory {
         entity.addComponent(new BasicAnimationComponent(texture, duration, rows, cols), BasicAnimationComponent.class);
 
         //add shadow component
-         entity.addComponent(new ShadowComponent(), ShadowComponent.class);
+        //entity.addComponent(new ShadowComponent(), ShadowComponent.class);
 
         return  entity;
     }
@@ -54,7 +54,7 @@ public class AnimatedEnvObjectFactory {
         entity.addComponent(new LightMapComponent(lightMap, 20, 20), LightMapComponent.class);
 
         //add shadow component
-        entity.addComponent(new ShadowComponent(), ShadowComponent.class);
+        //entity.addComponent(new ShadowComponent(), ShadowComponent.class);
 
         return  entity;
     }

@@ -32,6 +32,15 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
     //list with direction changed listener for example for animation system
     protected List<DirectionChangedListener> directionChangedListenerList = new ArrayList<>();
 
+    public MoveComponent (float speedX, float speedY) {
+        this.speedX = speedX;
+        this.speedY = speedY;
+    }
+
+    public MoveComponent () {
+        //
+    }
+
     public void init (BaseGame game, Entity entity) {
         super.init(game, entity);
 

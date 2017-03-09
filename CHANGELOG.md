@@ -1,5 +1,27 @@
 # Changelog
 
+## Version v1.2.0 pre-alpha
+
+### Features
+Short overview:
+
+  - added full lightmap support
+  - added support for blob shadows
+  - added support for movement animations
+  - added support for texture atlases / atlas animations
+  - added support for more than one animation state
+  - fixed some problems with lighting system
+  - added hover component (experimental!)
+  - added component to set other mouse cursor, if entity is hovered (for example for attacks)
+  - added full support for drawing texture regions
+  - some performance improvements
+  - added component for attachment points
+  - added actionbar
+  - added cooldown timer
+  - added support for first action buttons
+  - added support for developer mode
+  - and some other features
+
 ## Version v1.1.0 pre-alpha
 
 ### Features

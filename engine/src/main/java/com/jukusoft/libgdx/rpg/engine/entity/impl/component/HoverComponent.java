@@ -149,6 +149,10 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
             //get texture region of entity
             TextureRegion textureRegion = this.textureRegionComponent.getTextureRegion();
 
+            if (textureRegion == null) {
+                return;
+            }
+
             //calculate width and height of shadow texture
             texWidth = textureRegion.getRegionWidth();
             texHeight = textureRegion.getRegionHeight();

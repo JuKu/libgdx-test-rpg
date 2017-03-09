@@ -152,6 +152,11 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
             //get texture region of entity
             TextureRegion texture = this.textureRegionComponent.getTextureRegion();
 
+            if (texture == null) {
+                //we cannot generate an shadow, if no region is set
+                return;
+            }
+
             //calculate shadow width and height
             this.shadowWidth = texture.getRegionWidth() * 2;
             this.shadowHeight = texture.getRegionHeight() / 2;

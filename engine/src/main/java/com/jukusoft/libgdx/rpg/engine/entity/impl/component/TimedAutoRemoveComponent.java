@@ -8,6 +8,8 @@ import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.utils.DevMode;
 
 /**
+ * Auto remove entity after an given TTL time.
+ *
  * Created by Justin on 09.03.2017.
  */
 public class TimedAutoRemoveComponent extends BaseComponent implements IUpdateComponent {

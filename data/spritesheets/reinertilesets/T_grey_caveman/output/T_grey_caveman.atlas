@@ -17,7 +17,7 @@ standDownRight
   orig: 96, 96
   offset: 0, 0
   index: -1
-standing
+standDown
   rotate: false
   xy: 99, 883
   size: 96, 96

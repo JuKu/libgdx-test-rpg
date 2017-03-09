@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.jukusoft.libgdx.rpg.engine.ProjectileSpawner;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
@@ -58,6 +59,9 @@ public class HUDOverlayScreen extends BaseScreen {
     protected static final String ACTIONBAR_BLANK_ITEM_PATH = AssetPathUtils.getImagePath("actionbar/blank.png");
     protected static final String ACTIONBAR_PROJECTIL_PATH = AssetPathUtils.getImagePath("icons/spellset/fire_bolt/lvl1_fire_arrows_64.png");
     protected static final String ACTIONBAR_ICE_SHARDS_PATH = AssetPathUtils.getImagePath("icons/spellset/ice_shards/ice_shards_64.png");
+    protected static final String SPEAR_ATLAS_FILE = AssetPathUtils.getSpritesheetPath("reinertilesets/T_grey_caveman/spear bitmaps/output/spear.atlas");
+
+    protected static final float PROJECTILE_SPEED = 1f;
 
     protected CharacterData characterData = null;
 
@@ -594,6 +598,16 @@ public class HUDOverlayScreen extends BaseScreen {
         });
         this.actionBar.getItem(0, 0).setCustomClickAdapter((BaseGame game, ActionBarItem item, GameTime time) -> {
             return game.getInputManager().isLeftMouseButtonPressed();
+        });
+        this.actionBar.getItem(0, 0).setActionCommand(() -> {
+            //get player entity
+            Entity playerEntity = game.getSharedData().get(SharedDataConst.PLAYER_ENTITY, Entity.class);
+
+            //get spawner
+            ProjectileSpawner projectileSpawner = game.getSharedData().get(SharedDataConst.PROJECTILE_SPAWNER, ProjectileSpawner.class);
+
+            //spawn projectile
+            projectileSpawner.spawn(playerEntity, SPEAR_ATLAS_FILE, PROJECTILE_SPEED);
         });
 
         //right mouse button

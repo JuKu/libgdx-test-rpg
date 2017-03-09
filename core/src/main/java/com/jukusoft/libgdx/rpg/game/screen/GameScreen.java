@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.jukusoft.libgdx.rpg.engine.ProjectileSpawner;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake2CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
@@ -59,6 +60,7 @@ public class GameScreen extends BaseScreen {
     protected Texture campfireTexture = null;
     protected String blackTexturePath = AssetPathUtils.getLightMapPath("blackmap/blackmap.png");
     protected Texture blackTexture = null;
+    //protected String character2AtlasFile = AssetPathUtils.getSpritesheetPath("pentaquin/player_walk.atlas");
     protected String character2AtlasFile = AssetPathUtils.getSpritesheetPath("reinertilesets/T_grey_caveman/output/T_grey_caveman.atlas");
     protected TextureAtlas character2Atlas = null;
 
@@ -72,6 +74,7 @@ public class GameScreen extends BaseScreen {
 
     protected EntityManager ecs = null;
     protected Entity playerEntity = null;
+    protected ProjectileSpawner projectileSpawner = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         game.getAssetManager().load(testTexturePath, Texture.class);
@@ -166,6 +169,10 @@ public class GameScreen extends BaseScreen {
         //create campfire with lighting
         Entity campfireEntity1 = AnimatedEnvObjectFactory.createBasicAnimatedLightingEntity(this.ecs, this.campfireTexture, this.lightMap, 200, 600, 150, 1, 5);
         this.ecs.addEntity(campfireEntity1);
+
+        //create projectile spawner and add to shared data
+        this.projectileSpawner = new ProjectileSpawner(this.ecs);
+        game.getSharedData().put(SharedDataConst.PROJECTILE_SPAWNER, this.projectileSpawner);
     }
 
     @Override

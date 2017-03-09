@@ -20,4 +20,7 @@ public class SharedDataConst {
     //ecs
     public static final String ENTITY_COMPONENT_SYSTEM = "entity_component_system";
 
+    //projectile spawner
+    public static final String PROJECTILE_SPAWNER = "projectile_spawner";
+
 }

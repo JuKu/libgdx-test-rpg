@@ -96,6 +96,7 @@ Links with some example image idea (license wasnt checked yet, but images also a
  - http://opengameart.org/content/painterly-spell-icons-part-4
  - http://opengameart.org/content/fantasy-icon-pack-by-ravenmore-0
  - http://opengameart.org/content/lightning-shock-spell
+ - http://lpc.opengameart.org/static/lpc-style-guide/assets.html#characters-and-base
 
 user interface:
 http://opengameart.org/content/golden-ui-bigger-than-ever-edition

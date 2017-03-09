@@ -23,6 +23,7 @@ Third Party Graphics (free to use for this project - specific LICENSE file in sp
   - pixelart heart by By Vicent Pla (https://www.iconfinder.com/icons/204607/heart_icon#size=96)
   - heart icon (https://www.iconfinder.com/icons/6604/favourite_heart_love_package_icon#size=128, GPL license)
   - sword cursor by sword cursor by Geovanny Gavilanes (Creative Commons (Attribution 3.0 Unported)
+  - some tilesets / spritesheets by Daniel Eddeland (http://opengameart.org/content/lpc-farming-tilesets-magic-animations-and-ui-elements, CC-BY-SA 3.0)
 
 ## Fonts
   - SparTakus (SIL Open Font License by Peter Wiegel, http://www.peter-wiegel.de/

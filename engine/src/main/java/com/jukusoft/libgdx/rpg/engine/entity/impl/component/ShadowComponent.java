@@ -130,7 +130,7 @@ public class ShadowComponent extends BaseComponent implements IDrawComponent {
 
             //batch.draw(this.shadowTexture, positionComponent.getX(), positionComponent.getY(), shadowWidth, shadowHeight);
         } else {
-            throw new IllegalStateException("no shadow texture is set.");
+            //throw new IllegalStateException("no shadow texture is set.");
         }
     }
 

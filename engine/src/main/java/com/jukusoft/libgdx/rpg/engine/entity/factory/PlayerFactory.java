@@ -26,7 +26,7 @@ public class PlayerFactory {
         playerEntity.addComponent(new MoveInputComponent(), MoveInputComponent.class);
 
         //add follow camera component, so camera is following player
-        playerEntity.addComponent(new FollowCameraComponent(), FollowCameraComponent.class);
+        playerEntity.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);
 
         //add texture component to draw player
         //playerEntity.addComponent(new DrawTextureComponent(texture), DrawTextureComponent.class);
@@ -46,7 +46,7 @@ public class PlayerFactory {
 
         //add shadow component
         //playerEntity.addComponent(new ShadowComponent(), ShadowComponent.class);
-        playerEntity.addComponent(new BlobShadowComponent(10, 32), BlobShadowComponent.class);
+        playerEntity.addComponent(new BlobShadowComponent(10 + 32 + 10, 32), BlobShadowComponent.class);
 
         return playerEntity;
     }

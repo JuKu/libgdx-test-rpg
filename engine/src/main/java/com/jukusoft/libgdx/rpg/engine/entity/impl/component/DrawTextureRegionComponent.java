@@ -10,6 +10,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.listener.TextureRegionChangedListen
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.utils.DevMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +84,12 @@ public class DrawTextureRegionComponent extends BaseComponent implements IDrawCo
         }
 
         this.textureRegionChangedListenerList.stream().forEach(listener -> {
-            System.out.println("call listener: " + listener.getClass().getName());
+            //check, if dev mode is enabled
+            if (DevMode.isEnabled()) {
+                //log listener
+                System.out.println("DrawTextureRegionComponent call listener: " + listener.getClass().getName());
+            }
+
             listener.onTextureRegionChanged(oldTextureRegion, this.textureRegion);
         });
     }

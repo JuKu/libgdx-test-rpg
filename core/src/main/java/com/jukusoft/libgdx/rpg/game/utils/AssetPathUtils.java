@@ -65,6 +65,10 @@ public class AssetPathUtils {
         return "./data/spritesheets/" + spritesheetPath;
     }
 
+    public static String getParticleEffectPath (String particleEffectPath) {
+        return "./data/particles/" + particleEffectPath;
+    }
+
     public static String getLightMapPath (String lightMapPath) {
         return "./data/lightmap/" + lightMapPath;
     }

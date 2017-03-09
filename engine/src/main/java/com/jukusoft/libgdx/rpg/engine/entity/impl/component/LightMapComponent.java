@@ -51,7 +51,7 @@ public class LightMapComponent extends BaseComponent {
             }
         });
 
-        if (this.textureRegionComponent != null) {
+        /*if (this.textureRegionComponent != null) {
             this.textureRegionComponent.addTextureRegionChangedListener(new TextureRegionChangedListener() {
                 @Override public void onTextureRegionChanged(TextureRegion oldTextureRegion,
                     TextureRegion newTextureRegion) {
@@ -61,7 +61,7 @@ public class LightMapComponent extends BaseComponent {
                     textureLighting.setPosition(newX + offsetX, newY + offsetY);
                 }
             });
-        }
+        }*/
     }
 
     public Lighting getLighting () {

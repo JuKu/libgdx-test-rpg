@@ -12,7 +12,7 @@ import com.jukusoft.libgdx.rpg.engine.world.ShadowEnv;
  */
 public class PlayerFactory {
 
-    public static Entity createPlayer (EntityManager ecs, Texture texture, float x, float y) {
+    public static Entity createPlayer (EntityManager ecs, String atlasPath, String startAnimationName, float x, float y) {
         //create new entity
         Entity playerEntity = new Entity(ecs);
 
@@ -29,7 +29,11 @@ public class PlayerFactory {
         playerEntity.addComponent(new FollowCameraComponent(), FollowCameraComponent.class);
 
         //add texture component to draw player
-        playerEntity.addComponent(new DrawTextureComponent(texture), DrawTextureComponent.class);
+        //playerEntity.addComponent(new DrawTextureComponent(texture), DrawTextureComponent.class);
+        playerEntity.addComponent(new DrawTextureRegionComponent(), DrawTextureRegionComponent.class);
+
+        //add animation component
+        playerEntity.addComponent(new AtlasAnimationComponent(atlasPath, startAnimationName, 1f), AtlasAnimationComponent.class);
 
         //add attachment points component so projectiles can be spawn at entity
         playerEntity.addComponent(new AttachmentPointsComponent(), AttachmentPointsComponent.class);
@@ -38,7 +42,8 @@ public class PlayerFactory {
         playerEntity.addComponent(new HoverComponent(Color.BLUE), HoverComponent.class);
 
         //add shadow component
-        playerEntity.addComponent(new ShadowComponent(), ShadowComponent.class);
+        //playerEntity.addComponent(new ShadowComponent(), ShadowComponent.class);
+        playerEntity.addComponent(new BlobShadowComponent(), BlobShadowComponent.class);
 
         return playerEntity;
     }

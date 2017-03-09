@@ -45,6 +45,13 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
     public void init (BaseGame game, Entity entity) {
         super.init(game, entity);
 
+        //get required components
+        this.textureRegionComponent = entity.getComponent(DrawTextureRegionComponent.class);
+
+        if (textureRegionComponent == null) {
+            throw new IllegalStateException("You have to set an TextureRegionComponent to entity to use AtlasAnimationComponent.");
+        }
+
         //load texture atlas
         game.getAssetManager().load(this.textureAtlasPath, TextureAtlas.class);
         game.getAssetManager().finishLoadingAsset(this.textureAtlasPath);
@@ -63,8 +70,12 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
         //create all animations in cache
         this.createCachedAnimations(map);
 
+        //little quick & dirty fix
+        String animationName = this.currentAnimationName;
+        this.currentAnimationName = "";
+
         //set first animation
-        this.setCurrentAnimationName(this.currentAnimationName);
+        this.setCurrentAnimationName(animationName);
     }
 
     protected void createCachedAnimations (Map<String,Integer> map) {
@@ -88,8 +99,6 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
 
             i++;
         }
-
-        Logger.getRootLogger().debug("animations loaded from atlas file: " + i);
     }
 
     public Animation<TextureRegion> getAnimationByName (String animationName) {
@@ -116,6 +125,11 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
     }
 
     public void setCurrentAnimationName (String animationName) {
+        //check, if animation name was changed
+        if (this.currentAnimationName.equals(animationName)) {
+            return;
+        }
+
         String oldAnimationName = this.currentAnimationName;
         this.currentAnimationName = animationName;
 
@@ -129,8 +143,18 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
         //calculate elapsed time
         this.elapsed += time.getDeltaTime();
 
+        if (this.currentAnimation == null) {
+            throw new IllegalStateException("current animation is null.");
+        }
+
+        TextureRegion currentTextureRegion = this.currentAnimation.getKeyFrame(this.elapsed);
+
+        if (currentTextureRegion == null) {
+            throw new NullPointerException("current texture region is null.");
+        }
+
         //set current frame
-        this.textureRegionComponent.setTextureRegion(this.currentAnimation.getKeyFrame(this.elapsed), true);
+        this.textureRegionComponent.setTextureRegion(currentTextureRegion, true);
     }
 
     @Override public ECSPriority getUpdateOrder() {

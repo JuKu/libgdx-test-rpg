@@ -50,7 +50,7 @@ public class DrawTextureRegionComponent extends BaseComponent implements IDrawCo
 
     @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
         if (this.textureRegion == null) {
-            System.err.println("texture region of DrawTextureRegionComponent is null.");
+            //System.err.println("texture region of DrawTextureRegionComponent is null.");
 
             return;
         }
@@ -72,12 +72,18 @@ public class DrawTextureRegionComponent extends BaseComponent implements IDrawCo
         TextureRegion oldTextureRegion = this.textureRegion;
         this.textureRegion = textureRegion;
 
+        if (oldTextureRegion == this.textureRegion) {
+            //we dont need to notify listeners
+            return;
+        }
+
         if (setNewDimension) {
             //set new width and height
             this.positionComponent.setDimension(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
         }
 
         this.textureRegionChangedListenerList.stream().forEach(listener -> {
+            System.out.println("call listener: " + listener.getClass().getName());
             listener.onTextureRegionChanged(oldTextureRegion, this.textureRegion);
         });
     }

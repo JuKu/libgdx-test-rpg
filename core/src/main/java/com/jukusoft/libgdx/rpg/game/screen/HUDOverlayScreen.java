@@ -62,6 +62,7 @@ public class HUDOverlayScreen extends BaseScreen {
     protected static final String SPEAR_ATLAS_FILE = AssetPathUtils.getSpritesheetPath("reinertilesets/T_grey_caveman/spear bitmaps/output/spear.atlas");
 
     protected static final float PROJECTILE_SPEED = 1f;
+    protected static final long PROJECTILE_TTL = 3000l;
 
     protected CharacterData characterData = null;
 
@@ -607,7 +608,7 @@ public class HUDOverlayScreen extends BaseScreen {
             ProjectileSpawner projectileSpawner = game.getSharedData().get(SharedDataConst.PROJECTILE_SPAWNER, ProjectileSpawner.class);
 
             //spawn projectile
-            projectileSpawner.spawn(playerEntity, SPEAR_ATLAS_FILE, PROJECTILE_SPEED);
+            projectileSpawner.spawn(playerEntity, SPEAR_ATLAS_FILE, PROJECTILE_SPEED, PROJECTILE_TTL);
         });
 
         //right mouse button

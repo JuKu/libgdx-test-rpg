@@ -6,6 +6,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.factory.ProjectileFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.AttachmentPointsComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.MoveComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.TimedAutoRemoveComponent;
 import com.jukusoft.libgdx.rpg.engine.points.AttachmentPoint;
 import com.jukusoft.libgdx.rpg.engine.utils.Direction;
 import com.jukusoft.libgdx.rpg.engine.utils.SpeedUtils;
@@ -21,7 +22,7 @@ public class ProjectileSpawner {
         this.ecs = ecs;
     }
 
-    public void spawn (Entity ownerEntity, String atlasFile, float speed) {
+    public void spawn (Entity ownerEntity, String atlasFile, float speed, long ttl) {
         //get x and y position
         PositionComponent positionComponent = ownerEntity.getComponent(PositionComponent.class);
         AttachmentPointsComponent attachmentPointsComponent = ownerEntity.getComponent(AttachmentPointsComponent.class);
@@ -54,6 +55,9 @@ public class ProjectileSpawner {
 
         //create projectile entity
         Entity projectileEntity = ProjectileFactory.createBasicProjectile(this.ecs, atlasFile, direction, x, y, speedX, speedY);
+
+        //add auto remove component
+        projectileEntity.addComponent(new TimedAutoRemoveComponent(ttl), TimedAutoRemoveComponent.class);
 
         //add entity
         this.ecs.addEntity(projectileEntity);

@@ -263,6 +263,10 @@ public class Entity {
         this.ecs.onComponentRemoved(entity, component, cls);
     }
 
+    public EntityManager getEntityComponentSystem () {
+        return this.ecs;
+    }
+
     public void dispose () {
         List<Class> componentsToRemoveList = new ArrayList<>();
 

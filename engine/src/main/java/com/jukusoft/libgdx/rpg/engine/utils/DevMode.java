@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class DevMode {
 
-    protected static AtomicBoolean isDevModeEnabled = new AtomicBoolean(true);
+    protected static AtomicBoolean isDevModeEnabled = new AtomicBoolean(false);
 
     public static boolean isEnabled () {
         return isDevModeEnabled.get();

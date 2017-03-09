@@ -43,7 +43,7 @@ public class PlayerFactory {
 
         //add shadow component
         //playerEntity.addComponent(new ShadowComponent(), ShadowComponent.class);
-        playerEntity.addComponent(new BlobShadowComponent(), BlobShadowComponent.class);
+        playerEntity.addComponent(new BlobShadowComponent(10 + 32, 32), BlobShadowComponent.class);
 
         return playerEntity;
     }

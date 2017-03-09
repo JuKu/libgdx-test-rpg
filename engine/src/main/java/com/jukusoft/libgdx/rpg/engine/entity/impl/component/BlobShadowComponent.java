@@ -28,6 +28,7 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
     protected int shadowHeight = 0;
 
     protected float paddingBottom = 0;
+    protected int fixedShadowWidth = 0;
 
     /**
      * default constructor
@@ -47,6 +48,16 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
     */
     public BlobShadowComponent (Color shadowColor) {
         this.shadowColor = shadowColor;
+    }
+
+    /**
+     * default constructor
+     *
+     * @param paddingBottom padding bottom
+     */
+    public BlobShadowComponent (float paddingBottom, int fixedShadowWidth) {
+        this.paddingBottom = paddingBottom;
+        this.fixedShadowWidth = fixedShadowWidth;
     }
 
     /**
@@ -102,8 +113,21 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
     }
 
     @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        float entityWidth = positionComponent.getWidth();
+        float entityHeight = positionComponent.getHeight();
+        float x = positionComponent.getX();
+        float y = positionComponent.getY();
+
+        if (this.fixedShadowWidth != 0) {
+            float a = entityWidth - this.fixedShadowWidth;
+
+            if (a > 0) {
+                x += a / 2;
+            }
+        }
+
         if (this.shadowTexture != null) {
-            batch.draw(this.shadowTexture, this.positionComponent.getX(), this.positionComponent.getY() - (this.shadowHeight / 2) + this.paddingBottom, this.shadowWidth, this.shadowHeight);
+            batch.draw(this.shadowTexture, x, y - (this.shadowHeight / 2) + this.paddingBottom, this.shadowWidth, this.shadowHeight);
         } else {
             throw new IllegalStateException("No shadow texture generated yet.");
         }
@@ -120,6 +144,10 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
         if (checkDimension && !dimensionChanged && this.shadowTexture != null) {
             //we can use old texture and dont need to generate an new shadow texture
             return;
+        }
+
+        if (this.fixedShadowWidth != 0) {
+            this.shadowWidth = this.fixedShadowWidth;
         }
 
         //generate new shadow texture
@@ -178,6 +206,10 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
             throw new IllegalStateException("No texture component or texture region component is set to entity.");
         }
 
+        if (this.fixedShadowWidth != 0) {
+            this.shadowWidth = this.fixedShadowWidth;
+        }
+
         //2/3 shadow height
         this.shadowHeight = this.shadowWidth * 2/3;
         //shadowHeight / 3 * 2;
@@ -202,6 +234,10 @@ public class BlobShadowComponent extends BaseComponent implements IDrawComponent
 
         //cleanUp old shadow texture and generate an new one
         this.generateShadow(false);
+    }
+
+    public void setFixedShadowWidth (int fixedShadowWidth) {
+        this.fixedShadowWidth = fixedShadowWidth;
     }
 
     public void notifyDimensionChanged () {

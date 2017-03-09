@@ -16,6 +16,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.factory.AnimatedEnvObjectFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.factory.NPCFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.factory.PlayerFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.ECS;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.LightMapComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.input.impl.CameraZoomListener;
@@ -143,6 +144,7 @@ public class GameScreen extends BaseScreen {
 
         //create an entity for player
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, this.character2AtlasFile, "standDown", 200, 200);
+        this.playerEntity.addComponent(new LightMapComponent(this.lightMap, 40, 40), LightMapComponent.class);
         this.ecs.addEntity(this.playerEntity);
         game.getSharedData().put(SharedDataConst.PLAYER_ENTITY, this.playerEntity);
 

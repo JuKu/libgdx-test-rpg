@@ -33,6 +33,8 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
     protected int height = 0;
     //protected Vector3 cachedVector = new Vector3(0, 0, 0);
 
+    protected boolean invailde = true;
+
     public HoverComponent (Color hoverColor) {
         this.hoverColor = hoverColor;
     }
@@ -56,14 +58,18 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
         if (this.textureComponent != null) {
             this.textureComponent.addTextureChangedListener((Texture oldTexture, Texture newTexture) -> {
                 //update hover texture
-                updateHoverTexture();
+                //updateHoverTexture();
+
+                invailde = true;
             });
         }
 
         if (this.textureRegionComponent != null) {
             this.textureRegionComponent.addTextureRegionChangedListener((TextureRegion oldTextureRegion, TextureRegion textureRegion) -> {
                 //update hover texture
-                updateHoverTexture();
+                //updateHoverTexture();
+
+                invailde = true;
             });
         }
 
@@ -90,6 +96,11 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
             if (mouseY >= entityY && mouseY <= (entityY + entityHeight)) {
                 this.hovered = true;
             }
+        }
+
+        if (this.hovered && this.invailde) {
+            //update hover texture
+            updateHoverTexture();
         }
     }
 
@@ -238,6 +249,8 @@ public class HoverComponent extends BaseComponent implements IUpdateComponent, I
         originalPixmap.dispose();
         tmpPixmap.dispose();
         hoverPixmap.dispose();
+
+        this.invailde = false;
     }
 
     public boolean isHovered () {

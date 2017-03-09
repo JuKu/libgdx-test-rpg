@@ -100,6 +100,7 @@ Links with some example image idea (license wasnt checked yet, but images also a
  - http://opengameart.org/content/lpc-medieval-fantasy-character-sprites
  - http://lpc.opengameart.org/static/lpc-style-guide/assets.html#characters-and-base
  - http://opengameart.org/content/rpg-itemterraincharacter-sprites-ice-insignia
+ - http://opengameart.org/content/lpc-collection
 
 user interface:
 http://opengameart.org/content/golden-ui-bigger-than-ever-edition

@@ -287,7 +287,7 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         if (!(obj instanceof PositionComponent)) {
             //another object
             return false;
-            
+
             //throw new IllegalArgumentException("object has to be an instance of PositionComponent to check, if equals, class of object: " + obj.getClass().getName());
         }
 

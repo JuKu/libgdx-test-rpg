@@ -62,7 +62,7 @@ public class HUDOverlayScreen extends BaseScreen {
     protected static final String SPEAR_ATLAS_FILE = AssetPathUtils.getSpritesheetPath("reinertilesets/T_grey_caveman/spear bitmaps/output/spear.atlas");
 
     protected static final float PROJECTILE_SPEED = 1f;
-    protected static final long PROJECTILE_TTL = 3000l;
+    protected static final long PROJECTILE_TTL = 5000l;
 
     protected CharacterData characterData = null;
 

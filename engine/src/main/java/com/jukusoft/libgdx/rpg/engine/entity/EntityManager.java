@@ -39,6 +39,8 @@ public interface EntityManager {
 
     public <T extends IComponent> void onComponentRemoved (Entity entity, T component, Class<T> cls);
 
+    public BaseGame getGame ();
+
     public void dispose ();
 
 }

@@ -245,6 +245,11 @@ public abstract class BaseECS implements EntityManager, EntityUpdateOrderChanged
     protected abstract void onEntityRemoved (Entity entity);
 
     @Override
+    public BaseGame getGame () {
+        return this.game;
+    }
+
+    @Override
     public void dispose () {
         //
     }

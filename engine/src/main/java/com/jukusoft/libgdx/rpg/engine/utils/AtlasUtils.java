@@ -59,8 +59,6 @@ public class AtlasUtils {
             }
         }
 
-        System.out.println("readed lines: " + lineCounter);
-
         return map;
     }
 

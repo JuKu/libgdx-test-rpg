@@ -49,6 +49,7 @@ public class Entity {
     protected ECSPriority drawUILayerOrder = ECSPriority.NORMAL;
 
     public Entity (EntityManager ecs) {
+        this.game = ecs.getGame();
         this.ecs = ecs;
     }
 
@@ -101,6 +102,10 @@ public class Entity {
     }
 
     public <T extends IComponent> void addComponent (T component, Class<T> cls) {
+        if (this.game == null) {
+            throw new IllegalStateException("Please call init() before adding components.");
+        }
+
         //initialize component
         component.init(this.game, this);
 

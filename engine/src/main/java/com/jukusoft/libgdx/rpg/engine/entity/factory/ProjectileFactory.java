@@ -19,7 +19,7 @@ public class ProjectileFactory {
         entity.addComponent(new PositionComponent(x, y), PositionComponent.class);
 
         //add an movement component, so projectile can be moved by update() method
-        entity.addComponent(new MoveComponent(), MoveComponent.class);
+        entity.addComponent(new MoveComponent(speedX, speedY), MoveComponent.class);
 
         //set direction
         entity.getComponent(MoveComponent.class).setDirection(direction);

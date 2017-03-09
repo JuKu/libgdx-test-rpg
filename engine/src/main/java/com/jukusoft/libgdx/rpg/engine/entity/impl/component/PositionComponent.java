@@ -156,7 +156,9 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         this.width = width;
         this.height = height;
 
-        notifyDimensionChangedListener(oldWidth, oldHeight, width, height);
+        if (oldWidth != this.width || oldHeight != this.height) {
+            notifyDimensionChangedListener(oldWidth, oldHeight, width, height);
+        }
     }
 
     public float getScale () {

@@ -47,7 +47,10 @@ public class BasicMovementAnimationControlComponent extends BaseComponent implem
         Direction direction = this.moveComponent.getDirection();
 
         if (direction == null) {
-            throw new NullPointerException("direction from MoveComponent is null.");
+            //we cannot update, if now direction is set
+            return;
+
+            //throw new NullPointerException("direction from MoveComponent is null.");
         }
 
         //get flag, if character is moving

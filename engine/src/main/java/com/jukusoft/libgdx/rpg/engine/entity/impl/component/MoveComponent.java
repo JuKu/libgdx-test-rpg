@@ -185,6 +185,10 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         return this.direction;
     }
 
+    public void setDirection (Direction direction) {
+        this.direction = direction;
+    }
+
     protected void notifyDirectionChanged (Direction oldDirection, Direction newDirection) {
         this.directionChangedListenerList.stream().forEach(listener -> {
             listener.onDirectionChanged(oldDirection, newDirection);

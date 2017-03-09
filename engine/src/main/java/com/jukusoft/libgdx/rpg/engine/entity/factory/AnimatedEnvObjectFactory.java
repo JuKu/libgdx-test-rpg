@@ -59,6 +59,22 @@ public class AnimatedEnvObjectFactory {
         return  entity;
     }
 
+    public static Entity createParticlesEntity (EntityManager ecs, String particleFile, Texture lightMap, float x, float y) {
+        //create new entity
+        Entity entity = new Entity(ecs);
+
+        //add new position component, because every entity has an position
+        entity.addComponent(new PositionComponent(x, y), PositionComponent.class);
+
+        //add particles component
+        entity.addComponent(new DrawParticlesComponent(particleFile, true, true), DrawParticlesComponent.class);
+
+        //add lighting component
+        entity.addComponent(new LightMapComponent(lightMap, 20, 20), LightMapComponent.class);
+
+        return entity;
+    }
+
     public static Entity createParticlesEntity (EntityManager ecs, String particleFile, float x, float y) {
         //create new entity
         Entity entity = new Entity(ecs);

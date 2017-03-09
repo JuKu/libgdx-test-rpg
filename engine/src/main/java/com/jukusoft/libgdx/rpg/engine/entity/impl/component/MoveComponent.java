@@ -49,6 +49,8 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         if (this.positionComponent == null) {
             throw new IllegalStateException("entity doesnt have an PositionComponent.");
         }
+
+        this.direction = Direction.DOWN;
     }
 
     @Override public void update(BaseGame game, GameTime time) {

@@ -1,5 +1,7 @@
 package com.jukusoft.libgdx.rpg.engine.points;
 
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
+
 /**
  * Created by Justin on 07.03.2017.
  */
@@ -22,6 +24,10 @@ public class AttachmentPoint {
         return new float[] { this.x, this.y };
     }
 
+    public float getX (PositionComponent positionComponent) {
+        return getX(positionComponent.getX());
+    }
+
     public float getX (float offsetX) {
         this.offsetX = offsetX;
         return this.x + this.offsetX;
@@ -34,6 +40,10 @@ public class AttachmentPoint {
 
     public void setX (float x) {
         this.x = x;
+    }
+
+    public float getY (PositionComponent positionComponent) {
+        return getY(positionComponent.getY());
     }
 
     public float getY (float offsetY) {

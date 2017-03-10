@@ -33,6 +33,9 @@ public class ProjectileFactory {
         //add component to control movement animations
         entity.addComponent(new BasicMovementAnimationControlComponent(), BasicMovementAnimationControlComponent.class);
 
+        //add hitbox component
+        entity.addComponent(new HitBoxesComponent(true), HitBoxesComponent.class);
+
         //add shadow component
         entity.addComponent(new BlobShadowComponent(10, 32), BlobShadowComponent.class);
 

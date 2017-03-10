@@ -19,6 +19,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.factory.PlayerFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.ECS;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.LightMapComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.SetMousePositionComponent;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.input.impl.CameraZoomListener;
 import com.jukusoft.libgdx.rpg.engine.lighting.Lighting;
@@ -164,7 +165,7 @@ public class GameScreen extends BaseScreen {
         this.ecs.addEntity(npcEntity1);
 
         //create campfire
-        Entity campfireEntity = AnimatedEnvObjectFactory.createBasicAnimatedEntity(this.ecs, this.campfireTexture, 300, 300, 150, 1, 5);
+        Entity campfireEntity = AnimatedEnvObjectFactory.createBasicAnimatedLightingEntity(this.ecs, this.campfireTexture, this.lightMap, 300, 300, 150, 1, 5);
         this.ecs.addEntity(campfireEntity);
 
         //create campfire with lighting

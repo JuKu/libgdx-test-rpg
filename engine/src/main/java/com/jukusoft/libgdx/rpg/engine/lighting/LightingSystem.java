@@ -148,6 +148,10 @@ public class LightingSystem implements LightingEnvironment {
 
         //draw lights to framebuffer
         fbo.begin();
+
+        //clear framebuffer
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         batch.setProjectionMatrix(camera.getCombined());
         batch.setShader(defaultShader);
 

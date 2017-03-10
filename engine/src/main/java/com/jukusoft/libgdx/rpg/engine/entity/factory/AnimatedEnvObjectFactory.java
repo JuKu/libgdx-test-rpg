@@ -70,7 +70,7 @@ public class AnimatedEnvObjectFactory {
         entity.addComponent(new DrawParticlesComponent(particleFile, true, true), DrawParticlesComponent.class);
 
         //add lighting component
-        entity.addComponent(new LightMapComponent(lightMap, 0, 0), LightMapComponent.class);
+        entity.addComponent(new LightMapComponent(lightMap, 0, 0, false), LightMapComponent.class);
 
         return entity;
     }

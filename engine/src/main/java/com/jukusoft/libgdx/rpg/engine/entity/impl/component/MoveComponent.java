@@ -1,7 +1,10 @@
 package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
+import com.jukusoft.libgdx.rpg.engine.entity.IDrawComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.IUpdateComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.DirectionChangedListener;
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
@@ -15,7 +18,7 @@ import java.util.List;
 /**
  * Created by Justin on 10.02.2017.
  */
-public class MoveComponent extends BaseComponent implements IUpdateComponent {
+public class MoveComponent extends BaseComponent implements IUpdateComponent, IDrawComponent {
 
     protected PositionComponent positionComponent = null;
 
@@ -28,6 +31,9 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
     //calculated direction
     protected Direction direction = null;
+
+    protected boolean forceDirection = false;
+    protected boolean forceDirectionForNextCycle = false;
 
     //list with direction changed listener for example for animation system
     protected List<DirectionChangedListener> directionChangedListenerList = new ArrayList<>();
@@ -74,8 +80,10 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         //set new position
         positionComponent.setPosition(newX, newY);
 
-        //update player direction
-        this.updateDirection();
+        if (!forceDirection && !forceDirectionForNextCycle) {
+            //update player direction
+            this.updateDirection();
+        }
     }
 
     @Override public ECSPriority getUpdateOrder() {
@@ -189,6 +197,13 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
 
     public void setDirection (Direction direction) {
         this.direction = direction;
+
+        //use this direction for next gameloop cycle
+        this.forceDirectionForNextCycle = true;
+    }
+
+    public void setForceDirection (boolean forceDirection) {
+        this.forceDirection = forceDirection;
     }
 
     protected void notifyDirectionChanged (Direction oldDirection, Direction newDirection) {
@@ -205,4 +220,12 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent {
         this.directionChangedListenerList.remove(listener);
     }
 
+    @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        //only reset force direction flag
+        this.forceDirectionForNextCycle = false;
+    }
+
+    @Override public ECSPriority getDrawOrder() {
+        return ECSPriority.VERY_LOW;
+    }
 }

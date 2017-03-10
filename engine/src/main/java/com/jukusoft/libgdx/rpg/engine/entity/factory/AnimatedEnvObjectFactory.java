@@ -27,6 +27,9 @@ public class AnimatedEnvObjectFactory {
         //add basic animation component
         entity.addComponent(new BasicAnimationComponent(texture, duration, rows, cols), BasicAnimationComponent.class);
 
+        //add hitbox component
+        entity.addComponent(new HitBoxesComponent(true), HitBoxesComponent.class);
+
         //add shadow component
         //entity.addComponent(new ShadowComponent(), ShadowComponent.class);
 
@@ -49,6 +52,9 @@ public class AnimatedEnvObjectFactory {
 
         //add basic animation component
         entity.addComponent(new BasicAnimationComponent(texture, duration, rows, cols), BasicAnimationComponent.class);
+
+        //add hitbox component
+        entity.addComponent(new HitBoxesComponent(true), HitBoxesComponent.class);
 
         //add lighting component
         entity.addComponent(new LightMapComponent(lightMap, 0, 0), LightMapComponent.class);

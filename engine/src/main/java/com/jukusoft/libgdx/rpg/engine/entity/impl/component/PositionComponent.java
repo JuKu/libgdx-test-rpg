@@ -114,6 +114,13 @@ public class PositionComponent extends BaseComponent implements JSONSerializable
         this.notifyPositionChangedListener(oldX, oldY, x, y);
     }
 
+    public void setMiddlePosition (float middleX, float middleY) {
+        float x = middleX - (width / 2);
+        float y = middleY - (height / 2);
+
+        this.setPosition(x, y);
+    }
+
     public float getMiddleX () {
         return this.x + (this.getWidth() / 2);
     }

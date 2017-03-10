@@ -82,7 +82,7 @@ public class BasicMovementAnimationControlComponent extends BaseComponent implem
         }
 
         String currentAnimation = sb.toString();
-        System.out.println("current animation: " + currentAnimation);
+        //System.out.println("current animation: " + currentAnimation);
 
         this.atlasAnimationComponent.setCurrentAnimationName(currentAnimation);
 

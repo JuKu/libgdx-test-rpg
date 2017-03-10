@@ -110,8 +110,6 @@ public class HitBoxesComponent extends BaseComponent implements IUpdateComponent
                 height = hitboxHeight;
             }
 
-            System.out.println("originalX: " + positionComponent.getX() + ", X: " + x);
-
             mainHitbox.setPosition(x, y);
             mainHitbox.setWidth(width);
             mainHitbox.setHeight(height);
@@ -156,6 +154,19 @@ public class HitBoxesComponent extends BaseComponent implements IUpdateComponent
 
     public void setDrawHitBoxes (boolean drawHitBoxes) {
         this.drawHitBoxes = drawHitBoxes;
+    }
+
+    public float getCustomHitboxWidth () {
+        return this.hitboxWidth;
+    }
+
+    public float getCustomHitboxHeight () {
+        return this.hitboxHeight;
+    }
+
+    public void setCustomDimension (float width, float height) {
+        this.hitboxWidth = width;
+        this.hitboxHeight = height;
     }
 
     @Override

@@ -62,7 +62,8 @@ public class GameScreen extends BaseScreen {
     protected Texture blackTexture = null;
     //protected String character2AtlasFile = AssetPathUtils.getSpritesheetPath("pentaquin/player_walk.atlas");
     protected String character2AtlasFile = AssetPathUtils.getSpritesheetPath("reinertilesets/T_grey_caveman/output/T_grey_caveman.atlas");
-    protected TextureAtlas character2Atlas = null;
+
+    protected String fireParticleEffectFile = AssetPathUtils.getParticleEffectPath("fire1.p");
 
     //lighting system
     LightingSystem lightingSystem = null;
@@ -104,8 +105,8 @@ public class GameScreen extends BaseScreen {
         this.lightingSystem = new LightingSystem(game, blackTexture, game.getViewportWidth(), game.getViewportHeight());
 
         //create new test lighting
-        this.testLighting = new TextureLighting(this.lightMap, 200, 200);
-        this.lightingSystem.addLighting(this.testLighting);
+        //this.testLighting = new TextureLighting(this.lightMap, 200, 200);
+        //this.lightingSystem.addLighting(this.testLighting);
 
         //save lighting environment to shared data, so HUD can change ambient color & intensity
         game.getSharedData().put(SharedDataConst.LIGHTING_ENV, this.lightingSystem);
@@ -147,7 +148,7 @@ public class GameScreen extends BaseScreen {
 
         //create an entity for player
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, this.character2AtlasFile, "standDown", 200, 200);
-        this.playerEntity.addComponent(new LightMapComponent(this.lightMap, 40, 40), LightMapComponent.class);
+        this.playerEntity.addComponent(new LightMapComponent(this.lightMap, 0, 0, false), LightMapComponent.class);
         this.ecs.addEntity(this.playerEntity);
         game.getSharedData().put(SharedDataConst.PLAYER_ENTITY, this.playerEntity);
 
@@ -155,7 +156,7 @@ public class GameScreen extends BaseScreen {
         game.getSharedData().put(SharedDataConst.ENTITY_COMPONENT_SYSTEM, this.ecs);
 
         //create an entity for dummy NPC
-        Entity npcEntity = NPCFactory.createDummyNPC(this.ecs, this.characterTexture, this.cursorImage, 400, 400);
+        /*Entity npcEntity = NPCFactory.createDummyNPC(this.ecs, this.characterTexture, this.cursorImage, 400, 400);
         this.ecs.addEntity(npcEntity);
 
         //create an entity for dummy NPC
@@ -169,6 +170,10 @@ public class GameScreen extends BaseScreen {
         //create campfire with lighting
         Entity campfireEntity1 = AnimatedEnvObjectFactory.createBasicAnimatedLightingEntity(this.ecs, this.campfireTexture, this.lightMap, 200, 600, 150, 1, 5);
         this.ecs.addEntity(campfireEntity1);
+
+        //create particle effect
+        Entity fireParticleEffectEntity = AnimatedEnvObjectFactory.createParticlesEntity(this.ecs, this.fireParticleEffectFile, this.lightMap, 100, 100);
+        this.ecs.addEntity(fireParticleEffectEntity);*/
 
         //create projectile spawner and add to shared data
         this.projectileSpawner = new ProjectileSpawner(this.ecs);

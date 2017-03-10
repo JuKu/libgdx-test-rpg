@@ -7,23 +7,25 @@ public enum ECSPriority {
 
     BACKGROUND(1),
 
-    DRAW_PARTICLES(2),
+    DRAW_HUD(2),
 
-    VERY_LOW(3),
+    DRAW_PARTICLES(3),
 
-    LOW(4),
+    VERY_LOW(4),
 
-    DRAW_SHADOW(5),
+    LOW(5),
 
-    DRAW_HOVER_EFFECT(6),
+    DRAW_SHADOW(6),
 
-    NORMAL(7),
+    DRAW_HOVER_EFFECT(7),
 
-    HIGH(8),
+    NORMAL(8),
 
-    VERY_HIGHT(9),
+    HIGH(9),
 
-    HUD(10);
+    VERY_HIGH(10),
+
+    HUD(11);
 
     private final int id;
 

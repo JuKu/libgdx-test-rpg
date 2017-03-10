@@ -87,7 +87,7 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent, ID
     }
 
     @Override public ECSPriority getUpdateOrder() {
-        return ECSPriority.NORMAL;
+        return ECSPriority.HIGH;
     }
 
     public boolean isMoving () {

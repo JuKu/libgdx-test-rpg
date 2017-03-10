@@ -54,7 +54,7 @@ public class MoveInputComponent extends BaseComponent implements IUpdateComponen
     }
 
     @Override public ECSPriority getUpdateOrder() {
-        return ECSPriority.HIGH;
+        return ECSPriority.VERY_HIGH;
     }
 
     public float getBaseSpeedX () {

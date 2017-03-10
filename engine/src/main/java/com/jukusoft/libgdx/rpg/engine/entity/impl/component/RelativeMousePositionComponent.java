@@ -67,7 +67,7 @@ public class RelativeMousePositionComponent extends BaseComponent implements IUp
     }
 
     @Override public ECSPriority getUpdateOrder() {
-        return ECSPriority.VERY_HIGHT;
+        return ECSPriority.VERY_HIGH;
     }
 
     public float getRelativeMouseX () {

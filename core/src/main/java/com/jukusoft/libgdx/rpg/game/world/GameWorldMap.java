@@ -1,19 +1,21 @@
 package com.jukusoft.libgdx.rpg.game.world;
 
 import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.utils.Pool;
 import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.exception.MapNotFoundException;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.utils.RectanglePoolPrototypeFactory;
 import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
@@ -39,6 +41,9 @@ public class GameWorldMap extends BaseMap {
     //map renderer
     OrthogonalTiledMapRenderer mapRenderer = null;
 
+    //rectangle pool
+    protected Pool<Rectangle> rectPool = null;
+
     public GameWorldMap (BaseGame game, SectorCoord coord) {
         this.game = game;
         this.coord = coord;
@@ -50,6 +55,9 @@ public class GameWorldMap extends BaseMap {
         if (mapLoader == null) {
             mapLoader = new TmxMapLoader();
         }
+
+        //create new rectangle pool
+        this.rectPool = RectanglePoolPrototypeFactory.createRectanglePool();
 
         //load map information (water, collision, NPCs and so on)
     }
@@ -97,6 +105,8 @@ public class GameWorldMap extends BaseMap {
         //create map renderer (every map needs its own renderer)
         float unitScale = 1f;//1 / 32f;
         this.mapRenderer = new OrthogonalTiledMapRenderer(this.tiledMap, unitScale);
+
+        //load collision layers
     }
 
     public void load () throws MapNotFoundException {

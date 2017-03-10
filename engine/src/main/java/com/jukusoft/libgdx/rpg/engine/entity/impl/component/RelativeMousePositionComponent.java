@@ -78,4 +78,8 @@ public class RelativeMousePositionComponent extends BaseComponent implements IUp
         return this.relY;
     }
 
+    public float getRelativeMouseAngle () {
+        return this.angle;
+    }
+
 }

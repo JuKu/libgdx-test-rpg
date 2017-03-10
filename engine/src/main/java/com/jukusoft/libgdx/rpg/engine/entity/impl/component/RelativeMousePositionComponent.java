@@ -16,8 +16,12 @@ public class RelativeMousePositionComponent extends BaseComponent implements IUp
 
     PositionComponent positionComponent = null;
 
+    //relative mouse position to entity
     protected float relX = 0;
     protected float relY = 0;
+
+    //angle in degree
+    protected float angle = 0;
 
     public RelativeMousePositionComponent() {
         //
@@ -48,6 +52,18 @@ public class RelativeMousePositionComponent extends BaseComponent implements IUp
         //calculate mouse position relative to entity
         this.relX = mousePos.x - entityX;
         this.relY = mousePos.y - entityY;
+
+        //calculate mouse angle relative to entity
+        double angleRadians = (float) Math.atan2(relY, relX);
+        this.angle = (float) Math.toDegrees(angleRadians);
+
+        while (this.angle > 360) {
+            this.angle -= 360;
+        }
+
+        while (this.angle < 0) {
+            this.angle += 360;
+        }
     }
 
     @Override public ECSPriority getUpdateOrder() {

@@ -40,7 +40,7 @@ public class PlayerFactory {
         playerEntity.addComponent(new BasicMovementAnimationControlComponent(), BasicMovementAnimationControlComponent.class);
 
         //add hitbox component
-        playerEntity.addComponent(new HitBoxesComponent(true), HitBoxesComponent.class);
+        playerEntity.addComponent(new HitBoxesComponent(true, 32, 64), HitBoxesComponent.class);
 
         //add attachment points component so projectiles can be spawn at entity
         playerEntity.addComponent(new AttachmentPointsComponent(), AttachmentPointsComponent.class);

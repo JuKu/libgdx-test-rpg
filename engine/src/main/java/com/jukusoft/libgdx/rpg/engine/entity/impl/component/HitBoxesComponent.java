@@ -39,11 +39,16 @@ public class HitBoxesComponent extends BaseComponent implements IUpdateComponent
     protected Color hitboxColor = Color.RED;
     protected float thickness = 1;
 
-    public HitBoxesComponent(boolean autoUpdateHixbox) {
+    protected float hitboxWidth = 0;
+    protected float hitboxHeight = 0;
+
+    public HitBoxesComponent(boolean autoUpdateHixbox, float width, float height) {
         //create new rectangle pool
         this.rectPool = RectanglePoolPrototypeFactory.createRectanglePool();
 
         this.autoUpdateHixbox = autoUpdateHixbox;
+        this.hitboxWidth = width;
+        this.hitboxHeight = height;
 
         if (this.autoUpdateHixbox) {
             this.mainHitbox = this.rectPool.obtain();
@@ -51,6 +56,10 @@ public class HitBoxesComponent extends BaseComponent implements IUpdateComponent
             //add main hitbox to list
             this.hitboxes.add(this.mainHitbox);
         }
+    }
+
+    public HitBoxesComponent(boolean autoUpdateHixbox) {
+        this(autoUpdateHixbox, 0, 0);
     }
 
     @Override
@@ -68,9 +77,44 @@ public class HitBoxesComponent extends BaseComponent implements IUpdateComponent
     public void update(BaseGame game, GameTime time) {
         //update hitbox
         if (autoUpdateHixbox) {
-            mainHitbox.setPosition(positionComponent.getX(), positionComponent.getY());
-            mainHitbox.setWidth(positionComponent.getWidth());
-            mainHitbox.setHeight(positionComponent.getHeight());
+            float x = positionComponent.getX();
+            float y = positionComponent.getY();
+            float width = positionComponent.getWidth();
+            float height = positionComponent.getHeight();
+
+            if (this.hitboxWidth > 0) {
+                float deltaWidth = Math.abs(width - this.hitboxWidth);
+
+                //centralize hitbox
+                if (this.hitboxWidth > width) {
+                    x -= (deltaWidth / 2);
+                } else if (this.hitboxWidth < width) {
+                    x += (deltaWidth / 2);
+                }
+
+                //set new width of hitbox
+                width = hitboxWidth;
+            }
+
+            if (this.hitboxHeight > 0) {
+                float deltaHeight = Math.abs(height - this.hitboxHeight);
+
+                //centralize hitbox
+                if (this.hitboxHeight > height) {
+                    y -= (deltaHeight / 2);
+                } else if (this.hitboxHeight < height) {
+                    y += (deltaHeight / 2);
+                }
+
+                //set new height of hitbox
+                height = hitboxHeight;
+            }
+
+            System.out.println("originalX: " + positionComponent.getX() + ", X: " + x);
+
+            mainHitbox.setPosition(x, y);
+            mainHitbox.setWidth(width);
+            mainHitbox.setHeight(height);
         }
     }
 

@@ -76,6 +76,9 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
 
         //set first animation
         this.setCurrentAnimationName(animationName);
+
+        //update texture region component
+        updateTextureRegionComponent();
     }
 
     protected void createCachedAnimations (Map<String,Integer> map) {
@@ -147,6 +150,11 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
             throw new IllegalStateException("current animation is null.");
         }
 
+        //update texture region component
+        updateTextureRegionComponent();
+    }
+
+    protected void updateTextureRegionComponent () {
         TextureRegion currentTextureRegion = this.currentAnimation.getKeyFrame(this.elapsed);
 
         if (currentTextureRegion == null) {

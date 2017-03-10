@@ -51,7 +51,7 @@ public class AnimatedEnvObjectFactory {
         entity.addComponent(new BasicAnimationComponent(texture, duration, rows, cols), BasicAnimationComponent.class);
 
         //add lighting component
-        entity.addComponent(new LightMapComponent(lightMap, 20, 20), LightMapComponent.class);
+        entity.addComponent(new LightMapComponent(lightMap, 0, 0), LightMapComponent.class);
 
         //add shadow component
         //entity.addComponent(new ShadowComponent(), ShadowComponent.class);
@@ -70,7 +70,7 @@ public class AnimatedEnvObjectFactory {
         entity.addComponent(new DrawParticlesComponent(particleFile, true, true), DrawParticlesComponent.class);
 
         //add lighting component
-        entity.addComponent(new LightMapComponent(lightMap, 20, 20), LightMapComponent.class);
+        entity.addComponent(new LightMapComponent(lightMap, 0, 0), LightMapComponent.class);
 
         return entity;
     }

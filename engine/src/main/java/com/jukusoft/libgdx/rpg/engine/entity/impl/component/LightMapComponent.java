@@ -51,23 +51,6 @@ public class LightMapComponent extends BaseComponent {
             }
         });
 
-        if (this.textureRegionComponent != null) {
-            /*this.textureRegionComponent.addTextureRegionChangedListener(new TextureRegionChangedListener() {
-                @Override public void onTextureRegionChanged(TextureRegion oldTextureRegion,
-                    TextureRegion newTextureRegion) {
-                    float newX = positionComponent.getX();
-                    float newY = positionComponent.getY();
-
-                    textureLighting.setPosition(newX + offsetX, newY + offsetY);
-                }
-            });*/
-
-            /*float newX = positionComponent.getX();
-            float newY = positionComponent.getY();
-
-            textureLighting.setPosition(newX + offsetX, newY + offsetY);*/
-        }
-
         float newX = positionComponent.getX();
         float newY = positionComponent.getY();
 

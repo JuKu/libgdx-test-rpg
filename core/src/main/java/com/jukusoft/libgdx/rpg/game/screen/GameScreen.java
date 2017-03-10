@@ -156,7 +156,7 @@ public class GameScreen extends BaseScreen {
         game.getSharedData().put(SharedDataConst.ENTITY_COMPONENT_SYSTEM, this.ecs);
 
         //create an entity for dummy NPC
-        /*Entity npcEntity = NPCFactory.createDummyNPC(this.ecs, this.characterTexture, this.cursorImage, 400, 400);
+        Entity npcEntity = NPCFactory.createDummyNPC(this.ecs, this.characterTexture, this.cursorImage, 400, 400);
         this.ecs.addEntity(npcEntity);
 
         //create an entity for dummy NPC
@@ -173,7 +173,7 @@ public class GameScreen extends BaseScreen {
 
         //create particle effect
         Entity fireParticleEffectEntity = AnimatedEnvObjectFactory.createParticlesEntity(this.ecs, this.fireParticleEffectFile, this.lightMap, 100, 100);
-        this.ecs.addEntity(fireParticleEffectEntity);*/
+        this.ecs.addEntity(fireParticleEffectEntity);
 
         //create projectile spawner and add to shared data
         this.projectileSpawner = new ProjectileSpawner(this.ecs);

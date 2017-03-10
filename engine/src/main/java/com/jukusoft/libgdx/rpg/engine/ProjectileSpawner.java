@@ -43,7 +43,7 @@ public class ProjectileSpawner {
         //get direction
         Direction direction = moveComponent.getDirection();
 
-        System.out.println("spawn projectile into direction: " + direction.name());
+        //System.out.println("spawn projectile into direction: " + direction.name());
 
         //get attachment point and x and y coordinate
         AttachmentPoint attachmentPoint = attachmentPointsComponent.getAttachmentPoint(direction);

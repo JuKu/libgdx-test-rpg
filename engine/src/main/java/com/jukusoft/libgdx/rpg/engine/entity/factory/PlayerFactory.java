@@ -1,11 +1,9 @@
 package com.jukusoft.libgdx.rpg.engine.entity.factory;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
-import com.jukusoft.libgdx.rpg.engine.world.ShadowEnv;
 
 /**
  * Created by Justin on 10.02.2017.
@@ -34,6 +32,9 @@ public class PlayerFactory {
 
         //add animation component
         playerEntity.addComponent(new AtlasAnimationComponent(atlasPath, startAnimationName, 1f), AtlasAnimationComponent.class);
+
+        //add component to get mouse position relative to entity
+        playerEntity.addComponent(new RelativeMousePositionComponent(), RelativeMousePositionComponent.class);
 
         //add component to control movement animations
         playerEntity.addComponent(new BasicMovementAnimationControlComponent(), BasicMovementAnimationControlComponent.class);

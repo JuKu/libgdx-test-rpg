@@ -13,9 +13,15 @@ import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 public class TextureLighting extends BaseLighting {
 
     protected Texture lightMapTexture = null;
-    protected boolean lightOscillate = false;
+    protected boolean lightOscillate = true;
     protected float lightSize = 100;
     protected float zAngle = 0;
+
+    public TextureLighting (Texture lightMap, float x, float y, boolean lightOscillate) {
+        super(x, y);
+        this.lightMapTexture = lightMap;
+        this.lightOscillate = lightOscillate;
+    }
 
     public TextureLighting (Texture lightMap, float x, float y) {
         super(x, y);
@@ -23,13 +29,17 @@ public class TextureLighting extends BaseLighting {
     }
 
     @Override public void update(BaseGame game, float lightSize, float zAngle, GameTime time) {
+        if (!lightOscillate) {
+            return;
+        }
+
         //we dont want to calculate this values for every lighting, so we set them only
         this.lightSize = lightSize;
         this.zAngle = zAngle;
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
-        batch.draw(this.lightMapTexture, getX() - lightSize * 0.5f + 0.5f, getY() + 0.5f - lightSize*0.5f, lightSize, lightSize);
+        batch.draw(this.lightMapTexture, getX() - (lightSize * 0.5f) + 0.5f, getY() + 0.5f - (lightSize * 0.5f), lightSize, lightSize);
     }
 
     public float getLightSize () {

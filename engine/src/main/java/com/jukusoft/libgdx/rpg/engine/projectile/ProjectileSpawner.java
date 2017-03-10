@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.engine;
+package com.jukusoft.libgdx.rpg.engine.projectile;
 
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;

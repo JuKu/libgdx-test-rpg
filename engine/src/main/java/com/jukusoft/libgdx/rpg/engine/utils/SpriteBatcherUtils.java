@@ -117,10 +117,6 @@ public class SpriteBatcherUtils {
             //draw one pixel
             pixmap.setColor(1, 1, 1, 1);
             pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
-            //pixmap.fill();
-            //pixmap.fillRectangle(0, 0, 1, 1);
-
-            System.out.println("pixmap width: " + pixmap.getWidth() + ", pixmap height: " + pixmap.getHeight());
 
             pixelTexture = new Texture(pixmap);
 

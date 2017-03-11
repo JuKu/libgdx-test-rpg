@@ -32,6 +32,7 @@ import com.jukusoft.libgdx.rpg.engine.lighting.LightingEnvironment;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.utils.DevMode;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
 import com.jukusoft.libgdx.rpg.engine.hud.HUD;
 import com.jukusoft.libgdx.rpg.engine.hud.FilledIconBar;
@@ -557,6 +558,26 @@ public class HUDOverlayScreen extends BaseScreen {
             return true;
         });
         verticalGroup.addActor(shadowAngleSlider);*/
+
+        //add checkbox to enable lighting
+        CheckBox drawHitboxesCheckBox = new CheckBox("Draw Hitboxes enabled", this.uiSkin);
+        drawHitboxesCheckBox.addCaptureListener(new EventListener() {
+            @Override public boolean handle(Event event) {
+                if (drawHitboxesCheckBox.isChecked()) {
+                    DevMode.setDrawHitboxEnabled(true);
+                } else {
+                    DevMode.setDrawHitboxEnabled(false);
+                }
+
+                return false;
+            }
+        });
+
+        if (DevMode.isDrawHitboxEnabled()) {
+            drawHitboxesCheckBox.setChecked(true);
+        }
+
+        verticalGroup.addActor(drawHitboxesCheckBox);
 
         Label lerpLabel = new Label("Smooth Camera Factor: 1.0", this.uiSkin);
         verticalGroup.addActor(lerpLabel);

@@ -35,7 +35,7 @@ public class HitBoxesComponent extends BaseComponent implements IUpdateComponent
     protected Rectangle mainHitbox = null;
     protected boolean autoUpdateHixbox = false;
 
-    protected boolean drawHitBoxes = true;
+    protected boolean drawHitBoxes = false;
     protected Color hitboxColor = Color.RED;
     protected float thickness = 1;
 

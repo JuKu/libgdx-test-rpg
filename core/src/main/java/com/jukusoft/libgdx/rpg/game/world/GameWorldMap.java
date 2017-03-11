@@ -1,9 +1,13 @@
 package com.jukusoft.libgdx.rpg.game.world;
 
 import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -15,11 +19,15 @@ import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.exception.MapNotFoundException;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.utils.DevMode;
 import com.jukusoft.libgdx.rpg.engine.utils.RectanglePoolPrototypeFactory;
+import com.jukusoft.libgdx.rpg.engine.utils.SpriteBatcherUtils;
 import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Justin on 09.02.2017.
@@ -43,6 +51,12 @@ public class GameWorldMap extends BaseMap {
 
     //rectangle pool
     protected Pool<Rectangle> rectPool = null;
+
+    //list with all collision layers
+    protected List<MapLayer> collisionLayers = new ArrayList<>();
+
+    //list with all collision objects
+    protected List<Rectangle> collisionRectangles = new ArrayList<>();
 
     public GameWorldMap (BaseGame game, SectorCoord coord) {
         this.game = game;
@@ -106,7 +120,31 @@ public class GameWorldMap extends BaseMap {
         float unitScale = 1f;//1 / 32f;
         this.mapRenderer = new OrthogonalTiledMapRenderer(this.tiledMap, unitScale);
 
-        //load collision layers
+        //clear list
+        this.collisionLayers.clear();
+
+        //find collision layers
+        for (MapLayer collisionLayer : this.tiledMap.getLayers()) {
+            if (collisionLayer.getName().contains("collision")) {
+                //add layer to list
+                this.collisionLayers.add(collisionLayer);
+            }
+        }
+
+        //find collision rectangles
+        for (MapLayer collisionLayer : this.collisionLayers) {
+            System.out.println("collision layer.");
+
+            //get all map objects on layer
+            for (RectangleMapObject rectangleObject : collisionLayer.getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rectangle = rectangleObject.getRectangle();
+
+                System.out.println("rectangle");
+
+                //add rectangle to list
+                this.collisionRectangles.add(rectangle);
+            }
+        }
     }
 
     public void load () throws MapNotFoundException {
@@ -130,6 +168,14 @@ public class GameWorldMap extends BaseMap {
 
         //TODO: render only specific layers which arent water
         this.mapRenderer.render();
+    }
+
+    public void drawHitboxes (GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        //draw hitboxes
+        for (Rectangle rectangle : this.collisionRectangles) {
+            //draw hitbox
+            SpriteBatcherUtils.drawRect(batch, rectangle, 1, Color.RED);
+        }
     }
 
     public void drawWater (GameTime time, CameraWrapper camera, SpriteBatch batch) {

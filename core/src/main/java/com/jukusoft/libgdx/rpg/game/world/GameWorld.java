@@ -222,16 +222,16 @@ public class GameWorld {
         //TODO: check, if user walk to near maps, if so, load near maps to draw queue
     }
 
-    public void draw (GameTime time, CameraWrapper CameraWrapper, ShaderProgram shader, SpriteBatch batch) {
+    public void draw (GameTime time, CameraWrapper cameraWrapper, ShaderProgram shader, SpriteBatch batch) {
         //batch.draw(testTexture, 0, 0);
 
         //first draw water
-        this.drawWater(time, CameraWrapper, batch);
+        this.drawWater(time, cameraWrapper, batch);
 
         batch.end();
 
         //set default shader
-        batch.setProjectionMatrix(CameraWrapper.getCombined());
+        batch.setProjectionMatrix(cameraWrapper.getCombined());
         batch.setShader(this.currentShader);
         batch.begin();
 
@@ -240,17 +240,17 @@ public class GameWorld {
             this.skyBox.draw(time, batch);
         }
 
-        batch.setProjectionMatrix(CameraWrapper.getCombined());
+        batch.setProjectionMatrix(cameraWrapper.getCombined());
         batch.setShader(this.currentShader);
 
         //render all maps which are visible
         this.visibleMaps.stream().forEach(map -> {
             //check, if map is visible in viewport
-            if (map.isMapVisibleInViewPort(CameraWrapper)) {
+            if (map.isMapVisibleInViewPort(cameraWrapper)) {
                 //only draw map if map is visible in viewport
 
                 //draw map
-                map.draw(time, CameraWrapper, this.currentShader, batch);
+                map.draw(time, cameraWrapper, this.currentShader, batch);
             }
         });
     }
@@ -307,6 +307,19 @@ public class GameWorld {
 
         //tilemap.render(batch, 0, dt);
         batch.flush();
+    }
+
+    public void drawHitboxes (GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        //render all maps which are visible
+        this.visibleMaps.stream().forEach(map -> {
+            //check, if map is visible in viewport
+            if (map.isMapVisibleInViewPort(camera)) {
+                //only draw map if map is visible in viewport
+
+                //draw map
+                map.drawHitboxes(time, camera, batch);
+            }
+        });
     }
 
     public void dispose () {

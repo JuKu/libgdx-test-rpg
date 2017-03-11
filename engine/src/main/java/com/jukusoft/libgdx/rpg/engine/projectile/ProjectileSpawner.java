@@ -3,10 +3,7 @@ package com.jukusoft.libgdx.rpg.engine.projectile;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.factory.ProjectileFactory;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.AttachmentPointsComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.MoveComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.TimedAutoRemoveComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 import com.jukusoft.libgdx.rpg.engine.points.AttachmentPoint;
 import com.jukusoft.libgdx.rpg.engine.utils.Direction;
 import com.jukusoft.libgdx.rpg.engine.utils.SpeedUtils;
@@ -55,6 +52,38 @@ public class ProjectileSpawner {
 
         //create projectile entity
         Entity projectileEntity = ProjectileFactory.createBasicProjectile(this.ecs, atlasFile, direction, x, y, speedX, speedY);
+
+        DrawTextureRegionComponent textureRegionComponent = projectileEntity.getComponent(DrawTextureRegionComponent.class);
+
+        if (textureRegionComponent != null) {
+            float normSpeedX = speedX / Math.abs(speedX);
+            float normSpeedY = speedY / Math.abs(speedY);
+
+            if (speedX == 0) {
+                normSpeedX = 0;
+            }
+
+            if (speedY == 0) {
+                normSpeedY = 0;
+            }
+
+            System.out.println("normSpeedX: " + normSpeedX + ", normSpeedY: " + normSpeedY);
+
+            //correct position
+            if (speedY > 0) {
+                x -= normSpeedY * (textureRegionComponent.getTextureRegion().getRegionWidth() / 2);
+            } else {
+                x += normSpeedY * (textureRegionComponent.getTextureRegion().getRegionWidth() / 2);
+            }
+
+            if (speedX > 0) {
+                y -= normSpeedX * (textureRegionComponent.getTextureRegion().getRegionHeight() / 2);
+            } else {
+                y += normSpeedX * (textureRegionComponent.getTextureRegion().getRegionHeight() / 2);
+            }
+        }
+
+        projectileEntity.getComponent(PositionComponent.class).setPosition(x, y);
 
         //add auto remove component
         projectileEntity.addComponent(new TimedAutoRemoveComponent(ttl), TimedAutoRemoveComponent.class);

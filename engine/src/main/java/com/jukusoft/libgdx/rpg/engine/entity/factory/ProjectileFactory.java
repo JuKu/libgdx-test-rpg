@@ -36,10 +36,6 @@ public class ProjectileFactory {
         //add hitbox component
         entity.addComponent(new HitBoxesComponent(true), HitBoxesComponent.class);
 
-        //correct position
-        float x1 = entity.getComponent(PositionComponent.class).getMiddleX();
-        float y1 = entity.getComponent(PositionComponent.class).getMiddleY();
-
         //add shadow component
         entity.addComponent(new BlobShadowComponent(10, 32), BlobShadowComponent.class);
 

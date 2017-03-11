@@ -7,6 +7,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.IDrawComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.IUpdateComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.DirectionChangedListener;
+import com.jukusoft.libgdx.rpg.engine.entity.listener.MoveListener;
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -37,6 +38,9 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent, ID
 
     //list with direction changed listener for example for animation system
     protected List<DirectionChangedListener> directionChangedListenerList = new ArrayList<>();
+
+    //list with all move listener hooks, for example for collision system
+    protected List<MoveListener> moveListenerList = new ArrayList<>();
 
     public MoveComponent (float speedX, float speedY) {
         this.speedX = speedX;
@@ -76,6 +80,16 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent, ID
         //calculate new entity position
         float newX = positionComponent.getX() + (this.speedX * dt * 100);
         float newY = positionComponent.getY() + (this.speedY * dt * 100);
+
+        //check, if entity can move (per hooks, for example for collision system)
+        for (MoveListener listener : this.moveListenerList) {
+            if (!listener.canMove(positionComponent.getX(), positionComponent.getY(), newX, newY)) {
+                this.isMoving = false;
+
+                //an hook doesnt allow, that entity move
+                return;
+            }
+        }
 
         //set new position
         positionComponent.setPosition(newX, newY);
@@ -218,6 +232,14 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent, ID
 
     public void removeDirectionChangedListener (DirectionChangedListener listener) {
         this.directionChangedListenerList.remove(listener);
+    }
+
+    public void addMoveHook (MoveListener listener) {
+        this.moveListenerList.add(listener);
+    }
+
+    public void removeMoveHook (MoveListener listener) {
+        this.moveListenerList.remove(listener);
     }
 
     @Override public void draw(GameTime time, CameraWrapper camera, SpriteBatch batch) {

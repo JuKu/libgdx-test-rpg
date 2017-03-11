@@ -3,6 +3,7 @@ package com.jukusoft.libgdx.rpg.game.world;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Rectangle;
 import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.exception.MapNotFoundException;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
@@ -320,6 +321,22 @@ public class GameWorld {
                 map.drawHitboxes(time, camera, batch);
             }
         });
+    }
+
+    public boolean isColliding (Rectangle rectangle) {
+        //get sector of rectangle
+        float x = rectangle.getX();
+        float y = rectangle.getY();
+
+        for (GameWorldMap map : this.visibleMaps) {
+            if (map.isInnerMap(rectangle)) {
+                if (map.isColliding(rectangle)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public void dispose () {

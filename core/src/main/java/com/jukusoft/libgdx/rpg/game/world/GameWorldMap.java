@@ -49,9 +49,6 @@ public class GameWorldMap extends BaseMap {
     //map renderer
     OrthogonalTiledMapRenderer mapRenderer = null;
 
-    //rectangle pool
-    protected Pool<Rectangle> rectPool = null;
-
     //list with all collision layers
     protected List<MapLayer> collisionLayers = new ArrayList<>();
 
@@ -59,6 +56,8 @@ public class GameWorldMap extends BaseMap {
     protected List<Rectangle> collisionRectangles = new ArrayList<>();
 
     public GameWorldMap (BaseGame game, SectorCoord coord) {
+        super(0, 0);
+
         this.game = game;
         this.coord = coord;
 
@@ -69,9 +68,6 @@ public class GameWorldMap extends BaseMap {
         if (mapLoader == null) {
             mapLoader = new TmxMapLoader();
         }
-
-        //create new rectangle pool
-        this.rectPool = RectanglePoolPrototypeFactory.createRectanglePool();
 
         //load map information (water, collision, NPCs and so on)
     }
@@ -170,6 +166,10 @@ public class GameWorldMap extends BaseMap {
         this.mapRenderer.render();
     }
 
+    public void drawWater (GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        //TODO: render layers with water
+    }
+
     public void drawHitboxes (GameTime time, CameraWrapper camera, SpriteBatch batch) {
         //draw hitboxes
         for (Rectangle rectangle : this.collisionRectangles) {
@@ -178,8 +178,14 @@ public class GameWorldMap extends BaseMap {
         }
     }
 
-    public void drawWater (GameTime time, CameraWrapper camera, SpriteBatch batch) {
-        //TODO: render layers with water
+    public boolean isColliding (Rectangle rectangle) {
+        for (Rectangle collisionRectangle : this.collisionRectangles) {
+            if (rectangle.overlaps(collisionRectangle)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public SectorCoord getSectorCoord () {

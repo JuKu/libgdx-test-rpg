@@ -2,11 +2,14 @@ package com.jukusoft.libgdx.rpg.game.world;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.utils.Pool;
 import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.utils.RectanglePoolPrototypeFactory;
 
 /**
  * Created by Justin on 09.02.2017.
@@ -25,11 +28,18 @@ public abstract class BaseMap {
     protected float rows = 30;
 
     protected BoundingBox boundingBox = null;
+    protected Rectangle boundingRectangle = null;
 
     protected MapPositionChangedListener changedListener = null;
 
-    public BaseMap () {
+    //rectangle pool
+    protected Pool<Rectangle> rectPool = null;
+
+    public BaseMap (float x, float y) {
         this.boundingBox = new BoundingBox(new Vector3(x, y, 0), new Vector3(x + getWidthInPixels(), y + getHeightInPixels(), 0));
+
+        //create new rectangle pool
+        this.rectPool = RectanglePoolPrototypeFactory.createRectanglePool();
     }
 
     public float getX () {
@@ -82,6 +92,15 @@ public abstract class BaseMap {
         }
 
         return false;
+    }
+
+    public boolean isInnerMap (Rectangle rectangle) {
+        if (this.boundingRectangle == null) {
+            this.boundingRectangle = this.rectPool.obtain();
+            this.boundingRectangle.set(x, y, getWidthInPixels(), getHeightInPixels());
+        }
+
+        return rectangle.overlaps(this.boundingRectangle);
     }
 
     /**

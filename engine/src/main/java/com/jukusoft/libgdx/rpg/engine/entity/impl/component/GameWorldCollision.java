@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.game.component;
+package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;

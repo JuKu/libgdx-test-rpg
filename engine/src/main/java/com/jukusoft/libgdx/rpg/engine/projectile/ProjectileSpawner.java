@@ -7,6 +7,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 import com.jukusoft.libgdx.rpg.engine.points.AttachmentPoint;
 import com.jukusoft.libgdx.rpg.engine.utils.Direction;
 import com.jukusoft.libgdx.rpg.engine.utils.SpeedUtils;
+import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
 
 /**
  * Created by Justin on 09.03.2017.
@@ -14,9 +15,11 @@ import com.jukusoft.libgdx.rpg.engine.utils.SpeedUtils;
 public class ProjectileSpawner {
 
     protected EntityManager ecs = null;
+    protected GameWorld gameWorld = null;
 
-    public ProjectileSpawner (EntityManager ecs) {
+    public ProjectileSpawner (EntityManager ecs, GameWorld gameWorld) {
         this.ecs = ecs;
+        this.gameWorld = gameWorld;
     }
 
     public void spawn (Entity ownerEntity, String atlasFile, float speed, long ttl) {
@@ -51,7 +54,7 @@ public class ProjectileSpawner {
         float speedY = SpeedUtils.getSpeedY(direction, speed);
 
         //create projectile entity
-        Entity projectileEntity = ProjectileFactory.createBasicProjectile(this.ecs, atlasFile, direction, x, y, speedX, speedY);
+        Entity projectileEntity = ProjectileFactory.createBasicProjectile(this.ecs, this.gameWorld, atlasFile, direction, x, y, speedX, speedY);
 
         DrawTextureRegionComponent textureRegionComponent = projectileEntity.getComponent(DrawTextureRegionComponent.class);
 

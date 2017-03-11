@@ -5,13 +5,14 @@ import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 import com.jukusoft.libgdx.rpg.engine.utils.Direction;
+import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
 
 /**
  * Created by Justin on 09.03.2017.
  */
 public class ProjectileFactory {
 
-    public static Entity createBasicProjectile (EntityManager ecs, String atlasPath, Direction direction, float x, float y, float speedX, float speedY) {
+    public static Entity createBasicProjectile (EntityManager ecs, GameWorld gameWorld, String atlasPath, Direction direction, float x, float y, float speedX, float speedY) {
         //create new entity
         Entity entity = new Entity(ecs);
 
@@ -35,6 +36,9 @@ public class ProjectileFactory {
 
         //add hitbox component
         entity.addComponent(new HitBoxesComponent(true), HitBoxesComponent.class);
+
+        //add gameworld collision component
+        entity.addComponent(new GameWorldCollision(gameWorld), GameWorldCollision.class);
 
         //add shadow component
         entity.addComponent(new BlobShadowComponent(10, 32), BlobShadowComponent.class);

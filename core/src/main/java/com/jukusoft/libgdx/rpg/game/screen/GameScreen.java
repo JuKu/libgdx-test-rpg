@@ -24,7 +24,9 @@ import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skybox.SimpleSkyBox;
 import com.jukusoft.libgdx.rpg.engine.skybox.SkyBox;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.utils.DevMode;
 import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
+import com.jukusoft.libgdx.rpg.game.component.GameWorldCollision;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
 import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
@@ -144,6 +146,7 @@ public class GameScreen extends BaseScreen {
         //create an entity for player
         this.playerEntity = PlayerFactory.createPlayer(this.ecs, this.character2AtlasFile, "standDown", 200, 200);
         this.playerEntity.addComponent(new LightMapComponent(this.lightMap, 0, 0, false), LightMapComponent.class);
+        this.playerEntity.addComponent(new GameWorldCollision(this.gameWorld), GameWorldCollision.class);
         this.ecs.addEntity(this.playerEntity);
         game.getSharedData().put(SharedDataConst.PLAYER_ENTITY, this.playerEntity);
 
@@ -169,6 +172,9 @@ public class GameScreen extends BaseScreen {
         //create particle effect
         Entity fireParticleEffectEntity = AnimatedEnvObjectFactory.createParticlesEntity(this.ecs, this.fireParticleEffectFile, this.lightMap, 100, 100);
         this.ecs.addEntity(fireParticleEffectEntity);
+
+        //enable hitbox drawing
+        DevMode.setDrawHitboxEnabled(true);
 
         //create projectile spawner and add to shared data
         this.projectileSpawner = new ProjectileSpawner(this.ecs);
@@ -291,6 +297,11 @@ public class GameScreen extends BaseScreen {
         batch.end();
         batch.begin();
         batch.setProjectionMatrix(game.getCamera().getCombined());
+
+        if (DevMode.isDrawHitboxEnabled()) {
+            //draw hitboxes
+            this.gameWorld.drawHitboxes(time, game.getCamera(), batch);
+        }
 
         //draw entities
         this.ecs.draw(time, game.getCamera(), batch);

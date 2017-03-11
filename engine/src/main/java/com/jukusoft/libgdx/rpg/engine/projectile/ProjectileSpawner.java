@@ -67,8 +67,6 @@ public class ProjectileSpawner {
                 normSpeedY = 0;
             }
 
-            System.out.println("normSpeedX: " + normSpeedX + ", normSpeedY: " + normSpeedY);
-
             //correct position
             if (speedY > 0) {
                 x -= normSpeedY * (textureRegionComponent.getTextureRegion().getRegionWidth() / 2);

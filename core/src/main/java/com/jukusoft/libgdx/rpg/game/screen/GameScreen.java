@@ -26,7 +26,7 @@ import com.jukusoft.libgdx.rpg.engine.skybox.SkyBox;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.utils.DevMode;
 import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
-import com.jukusoft.libgdx.rpg.game.component.GameWorldCollision;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.GameWorldCollision;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
 import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
@@ -177,7 +177,7 @@ public class GameScreen extends BaseScreen {
         DevMode.setDrawHitboxEnabled(true);
 
         //create projectile spawner and add to shared data
-        this.projectileSpawner = new ProjectileSpawner(this.ecs);
+        this.projectileSpawner = new ProjectileSpawner(this.ecs, this.gameWorld);
         game.getSharedData().put(SharedDataConst.PROJECTILE_SPAWNER, this.projectileSpawner);
     }
 

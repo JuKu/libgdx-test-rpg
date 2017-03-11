@@ -58,7 +58,7 @@ public class GameWorldCollision extends BaseComponent implements MoveListener {
         }
     }
 
-    @Override public boolean canMove(float oldX, float oldY, float newX, float newY) {
+    @Override public boolean canMove (float oldX, float oldY, float newX, float newY) {
         float dx = newX - oldX;
         float dy = newY - oldY;
 

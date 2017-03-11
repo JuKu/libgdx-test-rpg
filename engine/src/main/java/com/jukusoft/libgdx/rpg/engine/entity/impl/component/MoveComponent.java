@@ -82,13 +82,19 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent, ID
         float newY = positionComponent.getY() + (this.speedY * dt * 100);
 
         //check, if entity can move (per hooks, for example for collision system)
-        for (MoveListener listener : this.moveListenerList) {
-            if (!listener.canMove(positionComponent.getX(), positionComponent.getY(), newX, newY)) {
-                this.isMoving = false;
+        if (!canMove(positionComponent.getX(), positionComponent.getY(), newX, positionComponent.getY())) {
+            this.speedX = 0;
+            newX = positionComponent.getX();
+        }
 
-                //an hook doesnt allow, that entity move
-                return;
-            }
+        //check, if entity can move (per hooks, for example for collision system)
+        if (!canMove(positionComponent.getX(), positionComponent.getY(), positionComponent.getX(), newY)) {
+            this.speedY = 0;
+            newY = positionComponent.getY();
+        }
+
+        if (speedX == 0 && speedY == 0) {
+            this.isMoving = false;
         }
 
         //set new position
@@ -98,6 +104,18 @@ public class MoveComponent extends BaseComponent implements IUpdateComponent, ID
             //update player direction
             this.updateDirection();
         }
+    }
+
+    protected boolean canMove (float oldX, float oldY, float newX, float newY) {
+        //check, if entity can move (per hooks, for example for collision system)
+        for (MoveListener listener : this.moveListenerList) {
+            if (!listener.canMove(positionComponent.getX(), positionComponent.getY(), newX, newY)) {
+                //an hook doesnt allow, that entity move
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override public ECSPriority getUpdateOrder() {

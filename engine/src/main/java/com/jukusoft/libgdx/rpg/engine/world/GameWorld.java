@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.game.world;
+package com.jukusoft.libgdx.rpg.engine.world;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,9 +9,8 @@ import com.jukusoft.libgdx.rpg.engine.exception.MapNotFoundException;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.skybox.SkyBox;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.utils.BaseAssetPathUtils;
 import com.jukusoft.libgdx.rpg.engine.utils.FileUtils;
-import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
-import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by Justin on 09.02.2017.
@@ -91,10 +88,10 @@ public class GameWorld {
         this.currentShader = this.defaultShader;
 
         //read shader programs to string
-        final String vertexShader = FileUtils.readFile(AssetPathUtils.getShaderPath("water/vertexShader.glsl"),
+        final String vertexShader = FileUtils.readFile(BaseAssetPathUtils.getShaderPath("water/vertexShader.glsl"),
             StandardCharsets.ISO_8859_1);
 
-        final String fragmentShader = FileUtils.readFile(AssetPathUtils.getShaderPath("water/defaultPixelShader.glsl"), StandardCharsets.ISO_8859_1);
+        final String fragmentShader = FileUtils.readFile(BaseAssetPathUtils.getShaderPath("water/defaultPixelShader.glsl"), StandardCharsets.ISO_8859_1);
 
         //create water shader program
         this.waterShader = new ShaderProgram(vertexShader, fragmentShader);

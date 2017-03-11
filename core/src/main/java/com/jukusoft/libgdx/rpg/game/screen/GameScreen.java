@@ -30,7 +30,7 @@ import com.jukusoft.libgdx.rpg.game.component.GameWorldCollision;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
 import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
-import com.jukusoft.libgdx.rpg.game.world.GameWorld;
+import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
 
 /**
  * Created by Justin on 07.02.2017.

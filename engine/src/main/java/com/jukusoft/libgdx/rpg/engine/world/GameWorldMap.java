@@ -1,11 +1,10 @@
-package com.jukusoft.libgdx.rpg.game.world;
+package com.jukusoft.libgdx.rpg.engine.world;
 
 import com.badlogic.gdx.assets.loaders.resolvers.AbsoluteFileHandleResolver;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -14,16 +13,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
-import com.badlogic.gdx.utils.Pool;
 import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.exception.MapNotFoundException;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
-import com.jukusoft.libgdx.rpg.engine.utils.DevMode;
-import com.jukusoft.libgdx.rpg.engine.utils.RectanglePoolPrototypeFactory;
+import com.jukusoft.libgdx.rpg.engine.utils.BaseAssetPathUtils;
 import com.jukusoft.libgdx.rpg.engine.utils.SpriteBatcherUtils;
-import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
-import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -62,8 +57,8 @@ public class GameWorldMap extends BaseMap {
         this.coord = coord;
 
         String dirName = "map_" + coord.getX() + "_" + coord.getY() + "_" + coord.getLayer() + "";
-        this.mapDirPath = AssetPathUtils.getMapPath(dirName + "/");
-        this.mapPath = AssetPathUtils.getMapPath(dirName + "/" + dirName + ".tmx");
+        this.mapDirPath = BaseAssetPathUtils.getMapPath(dirName + "/");
+        this.mapPath = BaseAssetPathUtils.getMapPath(dirName + "/" + dirName + ".tmx");
 
         if (mapLoader == null) {
             mapLoader = new TmxMapLoader();

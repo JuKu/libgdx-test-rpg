@@ -1,6 +1,4 @@
-package com.jukusoft.libgdx.rpg.game.world;
-
-import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
+package com.jukusoft.libgdx.rpg.engine.world;
 
 /**
  * Created by Justin on 09.02.2017.

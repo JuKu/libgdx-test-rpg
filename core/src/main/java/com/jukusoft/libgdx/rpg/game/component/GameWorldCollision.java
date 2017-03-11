@@ -1,7 +1,5 @@
 package com.jukusoft.libgdx.rpg.game.component;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
@@ -10,7 +8,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.MoveListener;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.utils.RectanglePoolPrototypeFactory;
-import com.jukusoft.libgdx.rpg.game.world.GameWorld;
+import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
 
 import java.util.List;
 

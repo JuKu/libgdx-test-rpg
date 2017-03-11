@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.game.world;
+package com.jukusoft.libgdx.rpg.engine.world;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;

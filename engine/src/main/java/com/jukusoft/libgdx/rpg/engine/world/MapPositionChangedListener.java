@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.game.world;
+package com.jukusoft.libgdx.rpg.engine.world;
 
 /**
  * Created by Justin on 09.02.2017.

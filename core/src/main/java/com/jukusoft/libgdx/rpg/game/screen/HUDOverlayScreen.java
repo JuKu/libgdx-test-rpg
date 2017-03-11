@@ -39,7 +39,7 @@ import com.jukusoft.libgdx.rpg.engine.hud.FilledIconBar;
 import com.jukusoft.libgdx.rpg.game.input.GameActionsConst;
 import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
-import com.jukusoft.libgdx.rpg.game.world.GameWorld;
+import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;

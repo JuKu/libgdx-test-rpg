@@ -1,11 +1,9 @@
-package com.jukusoft.libgdx.rpg.game.utils;
-
-import com.jukusoft.libgdx.rpg.engine.utils.BaseAssetPathUtils;
+package com.jukusoft.libgdx.rpg.engine.utils;
 
 /**
- * Created by Justin on 06.02.2017.
+ * Created by Justin on 11.03.2017.
  */
-public class AssetPathUtils extends BaseAssetPathUtils {
+public class BaseAssetPathUtils {
 
     public static String getImagePath (String fileName) {
         return "./data/images/" + fileName;

@@ -4,10 +4,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
+import com.jukusoft.libgdx.rpg.engine.entity.IUpdateComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.GameWorldCollisionListener;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.MoveListener;
+import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
+import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.utils.RectanglePoolPrototypeFactory;
 import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
 
@@ -28,6 +31,7 @@ public class GameWorldCollisionComponent extends BaseComponent implements MoveLi
     protected Pool<Rectangle> rectPool = null;
 
     protected List<GameWorldCollisionListener> collisionListenerList = new ArrayList<>();
+    protected List<GameWorldCollisionListener> tempList = new ArrayList<>();
 
     public GameWorldCollisionComponent(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
@@ -80,13 +84,22 @@ public class GameWorldCollisionComponent extends BaseComponent implements MoveLi
                 //recycle rectangle
                 rectPool.free(copiedRectangle);
 
+                //clear temporary list
+                this.tempList.clear();
+
+                //add all list entries to temporary list
+                this.tempList.addAll(this.collisionListenerList);
+
                 //call colliding listeners
-                this.collisionListenerList.stream().forEach(listener -> {
+                for (GameWorldCollisionListener listener : this.tempList) {
                     if (listener != null) {
                         //call colliding listener
                         listener.onGameWorldCollided(this.gameWorld, this.entity);
+                    } else {
+                        //remove listener
+                        this.collisionListenerList.remove(listener);
                     }
-                });
+                }
 
                 return false;
             }
@@ -105,5 +118,4 @@ public class GameWorldCollisionComponent extends BaseComponent implements MoveLi
     public void removeCollidingListener (GameWorldCollisionListener listener) {
         this.collisionListenerList.remove(listener);
     }
-
 }

@@ -40,6 +40,9 @@ public class ProjectileFactory {
         //add gameworld collision component
         entity.addComponent(new GameWorldCollisionComponent(gameWorld), GameWorldCollisionComponent.class);
 
+        //add component to remove entity on gameworld collision
+        entity.addComponent(new RemoveOnGameWorldCollisionComponent(), RemoveOnGameWorldCollisionComponent.class);
+
         //add shadow component
         entity.addComponent(new BlobShadowComponent(10, 32), BlobShadowComponent.class);
 

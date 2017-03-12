@@ -5,17 +5,19 @@ import com.badlogic.gdx.utils.Pool;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
+import com.jukusoft.libgdx.rpg.engine.entity.listener.GameWorldCollisionListener;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.MoveListener;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.utils.RectanglePoolPrototypeFactory;
 import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Justin on 11.03.2017.
  */
-public class GameWorldCollision extends BaseComponent implements MoveListener {
+public class GameWorldCollisionComponent extends BaseComponent implements MoveListener {
 
     protected PositionComponent positionComponent = null;
     protected MoveComponent moveComponent = null;
@@ -25,7 +27,9 @@ public class GameWorldCollision extends BaseComponent implements MoveListener {
 
     protected Pool<Rectangle> rectPool = null;
 
-    public GameWorldCollision (GameWorld gameWorld) {
+    protected List<GameWorldCollisionListener> collisionListenerList = new ArrayList<>();
+
+    public GameWorldCollisionComponent(GameWorld gameWorld) {
         this.gameWorld = gameWorld;
 
         //create new pool for rectangles
@@ -76,11 +80,30 @@ public class GameWorldCollision extends BaseComponent implements MoveListener {
                 //recycle rectangle
                 rectPool.free(copiedRectangle);
 
+                //call colliding listeners
+                this.collisionListenerList.stream().forEach(listener -> {
+                    if (listener != null) {
+                        //call colliding listener
+                        listener.onGameWorldCollided(this.gameWorld, this.entity);
+                    }
+                });
+
                 return false;
             }
+
+            //recycle rectangle
+            rectPool.free(copiedRectangle);
         }
 
         return true;
+    }
+
+    public void addCollidingListener (GameWorldCollisionListener listener) {
+        this.collisionListenerList.add(listener);
+    }
+
+    public void removeCollidingListener (GameWorldCollisionListener listener) {
+        this.collisionListenerList.remove(listener);
     }
 
 }

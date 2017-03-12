@@ -38,7 +38,7 @@ public class ProjectileFactory {
         entity.addComponent(new HitBoxesComponent(true), HitBoxesComponent.class);
 
         //add gameworld collision component
-        entity.addComponent(new GameWorldCollision(gameWorld), GameWorldCollision.class);
+        entity.addComponent(new GameWorldCollisionComponent(gameWorld), GameWorldCollisionComponent.class);
 
         //add shadow component
         entity.addComponent(new BlobShadowComponent(10, 32), BlobShadowComponent.class);

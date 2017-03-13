@@ -278,7 +278,7 @@ public class HUDOverlayScreen extends BaseScreen {
         hud.addWidget(controlGroup);*/
 
         this.verticalGroup = new VerticalGroup();
-        verticalGroup.setPosition(1100, 500);
+        verticalGroup.setPosition(1100, 600);
 
         //add checkbox to enable lighting
         CheckBox checkBox = new CheckBox("Lighting enabled", this.uiSkin);
@@ -578,6 +578,26 @@ public class HUDOverlayScreen extends BaseScreen {
         }
 
         verticalGroup.addActor(drawHitboxesCheckBox);
+
+        //add checkbox to enable no lighting hitboxes
+        CheckBox drawNoLightingHitboxesCheckBox = new CheckBox("Draw No-Lighting Layer enabled", this.uiSkin);
+        drawNoLightingHitboxesCheckBox.addCaptureListener(new EventListener() {
+            @Override public boolean handle(Event event) {
+                if (drawNoLightingHitboxesCheckBox.isChecked()) {
+                    DevMode.setShowNoLightingHitboxEnabled(true);
+                } else {
+                    DevMode.setShowNoLightingHitboxEnabled(false);
+                }
+
+                return false;
+            }
+        });
+
+        if (DevMode.isNoLightingHitboxEnabled()) {
+            drawNoLightingHitboxesCheckBox.setChecked(true);
+        }
+
+        verticalGroup.addActor(drawNoLightingHitboxesCheckBox);
 
         Label lerpLabel = new Label("Smooth Camera Factor: 1.0", this.uiSkin);
         verticalGroup.addActor(lerpLabel);

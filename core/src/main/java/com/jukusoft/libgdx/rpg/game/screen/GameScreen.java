@@ -267,7 +267,7 @@ public class GameScreen extends BaseScreen {
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
         //draw lighting framebuffer first
-        this.lightingSystem.drawFBO(time, game.getCamera(), batch);
+        this.lightingSystem.drawFBO(time, this.gameWorld, game.getCamera(), batch);
 
         batch.setProjectionMatrix(game.getCamera().getCombined());
 
@@ -301,6 +301,11 @@ public class GameScreen extends BaseScreen {
         if (DevMode.isDrawHitboxEnabled()) {
             //draw hitboxes
             this.gameWorld.drawHitboxes(time, game.getCamera(), batch);
+        }
+
+        if (DevMode.isNoLightingHitboxEnabled()) {
+            //draw hitboxes
+            this.gameWorld.drawNoLightingHitboxes(time, game.getCamera(), batch);
         }
 
         //draw entities

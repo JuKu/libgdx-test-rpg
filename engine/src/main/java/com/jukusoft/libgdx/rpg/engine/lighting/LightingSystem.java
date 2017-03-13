@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.shader.ShaderFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.utils.SpriteBatcherUtils;
+import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -130,7 +133,7 @@ public class LightingSystem implements LightingEnvironment {
         });
     }
 
-    public void drawFBO (GameTime time, CameraWrapper camera, SpriteBatch batch) {
+    public void drawFBO (GameTime time, GameWorld gameWorld, CameraWrapper camera, SpriteBatch batch) {
         if (!this.isLightingEnabled()) {
             //we dont have to do anything, because lighting isnt enabled
             return;
@@ -166,6 +169,19 @@ public class LightingSystem implements LightingEnvironment {
 
         //draw lights
         this.drawLights(time, batch);
+
+        //draw no lighting rectangles
+        List<Rectangle> list = gameWorld.listNoLightingRectangles(camera);
+
+        //disable blending
+        batch.disableBlending();
+
+        for (Rectangle rectangle : list) {
+            SpriteBatcherUtils.fillRectangle(batch, rectangle.getX(), rectangle.getY(), rectangle.getWidth(), rectangle.getHeight(), Color.BLACK);
+        }
+
+        //enable blending
+        batch.enableBlending();
 
         batch.end();
 

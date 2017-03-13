@@ -9,6 +9,7 @@ public class DevMode {
 
     protected static AtomicBoolean isDevModeEnabled = new AtomicBoolean(false);
     protected static AtomicBoolean showHitboxes = new AtomicBoolean(false);
+    protected static AtomicBoolean showNoLightingHitboxes = new AtomicBoolean(false);
 
     public static boolean isEnabled () {
         return isDevModeEnabled.get();
@@ -24,6 +25,14 @@ public class DevMode {
 
     public static void setDrawHitboxEnabled (boolean drawHitboxEnabled) {
         showHitboxes.set(drawHitboxEnabled);
+    }
+
+    public static boolean isNoLightingHitboxEnabled () {
+        return showNoLightingHitboxes.get();
+    }
+
+    public static void setShowNoLightingHitboxEnabled (boolean drawNoLightingHitboxEnabled) {
+        showNoLightingHitboxes.set(drawNoLightingHitboxEnabled);
     }
 
 }

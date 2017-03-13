@@ -50,6 +50,10 @@ public class GameWorldMap extends BaseMap {
     //list with all collision objects
     protected List<Rectangle> collisionRectangles = new ArrayList<>();
 
+    //list with no lighting rectangles
+    protected List<MapLayer> noLightingLayers = new ArrayList<>();
+    protected List<Rectangle> noLightingRectangles = new ArrayList<>();
+
     public GameWorldMap (BaseGame game, SectorCoord coord) {
         super(0, 0);
 
@@ -111,8 +115,9 @@ public class GameWorldMap extends BaseMap {
         float unitScale = 1f;//1 / 32f;
         this.mapRenderer = new OrthogonalTiledMapRenderer(this.tiledMap, unitScale);
 
-        //clear list
+        //clear lists
         this.collisionLayers.clear();
+        this.noLightingRectangles.clear();
 
         //find collision layers
         for (MapLayer collisionLayer : this.tiledMap.getLayers()) {
@@ -134,6 +139,29 @@ public class GameWorldMap extends BaseMap {
 
                 //add rectangle to list
                 this.collisionRectangles.add(rectangle);
+            }
+        }
+
+        //find no lighting layers
+        for (MapLayer noLightingLayer : this.tiledMap.getLayers()) {
+            if (noLightingLayer.getName().contains("no_lighting")) {
+                //add layer to list
+                this.noLightingLayers.add(noLightingLayer);
+            }
+        }
+
+        //find no lighting rectangles
+        for (MapLayer noLightingLayer : this.noLightingLayers) {
+            System.out.println("no_lighting layer.");
+
+            //get all map objects on layer
+            for (RectangleMapObject rectangleObject : noLightingLayer.getObjects().getByType(RectangleMapObject.class)) {
+                Rectangle rectangle = rectangleObject.getRectangle();
+
+                System.out.println("rectangle");
+
+                //add rectangle to list
+                this.noLightingRectangles.add(rectangle);
             }
         }
     }
@@ -165,12 +193,24 @@ public class GameWorldMap extends BaseMap {
         //TODO: render layers with water
     }
 
+    public void drawNoLightingHitboxes (GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        //draw hitboxes
+        for (Rectangle rectangle : this.noLightingRectangles) {
+            //draw hitbox
+            SpriteBatcherUtils.drawRect(batch, rectangle, 1, Color.YELLOW);
+        }
+    }
+
     public void drawHitboxes (GameTime time, CameraWrapper camera, SpriteBatch batch) {
         //draw hitboxes
         for (Rectangle rectangle : this.collisionRectangles) {
             //draw hitbox
             SpriteBatcherUtils.drawRect(batch, rectangle, 1, Color.RED);
         }
+    }
+
+    public List<Rectangle> listNoLightingRectangles () {
+        return this.noLightingRectangles;
     }
 
     public boolean isColliding (Rectangle rectangle) {

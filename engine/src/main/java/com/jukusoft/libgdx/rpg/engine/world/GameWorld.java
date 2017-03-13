@@ -62,6 +62,8 @@ public class GameWorld {
     protected List<SectorChangedListener> sectorChangedListenerList = new ArrayList<>();
     protected BaseGame game = null;
 
+    protected List<Rectangle> tempRectangleList = new ArrayList<>();
+
     //https://github.com/libgdx/libgdx/wiki/Tile-maps
 
     public GameWorld (BaseGame game, SectorCoord coord, Texture texture) {
@@ -318,6 +320,33 @@ public class GameWorld {
                 map.drawHitboxes(time, camera, batch);
             }
         });
+    }
+
+    public void drawNoLightingHitboxes (GameTime time, CameraWrapper camera, SpriteBatch batch) {
+        //render all maps which are visible
+        this.visibleMaps.stream().forEach(map -> {
+            //check, if map is visible in viewport
+            if (map.isMapVisibleInViewPort(camera)) {
+                //only draw map if map is visible in viewport
+
+                //draw map
+                map.drawNoLightingHitboxes(time, camera, batch);
+            }
+        });
+    }
+
+    public List<Rectangle> listNoLightingRectangles (CameraWrapper camera) {
+        this.tempRectangleList.clear();
+
+        //iterate through all maps which are visible
+        this.visibleMaps.stream().forEach(map -> {
+            //check, if map is visible in viewport
+            if (map.isMapVisibleInViewPort(camera)) {
+                this.tempRectangleList.addAll(map.listNoLightingRectangles());
+            }
+        });
+
+        return this.tempRectangleList;
     }
 
     public boolean isColliding (Rectangle rectangle) {

@@ -15,7 +15,7 @@ import com.jukusoft.libgdx.rpg.engine.utils.DevMode;
 public class TimedAutoRemoveComponent extends BaseComponent implements IUpdateComponent {
 
     protected long startTime = 0;
-    protected float ttl = 0;
+    protected long ttl = 0;
 
     public TimedAutoRemoveComponent (long TTL) {
         this.ttl = TTL;
@@ -46,6 +46,14 @@ public class TimedAutoRemoveComponent extends BaseComponent implements IUpdateCo
 
     @Override public ECSPriority getUpdateOrder() {
         return ECSPriority.NORMAL;
+    }
+
+    public long getTTL () {
+        return this.ttl;
+    }
+
+    public void setTTL (long ttl) {
+        this.ttl = ttl;
     }
 
 }

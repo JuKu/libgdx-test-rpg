@@ -48,6 +48,14 @@ public class TimedAutoRemoveComponent extends BaseComponent implements IUpdateCo
         return ECSPriority.NORMAL;
     }
 
+    public long getStartTime () {
+        return this.startTime;
+    }
+
+    public void setStartTime (long startTime) {
+        this.startTime = startTime;
+    }
+
     public long getTTL () {
         return this.ttl;
     }

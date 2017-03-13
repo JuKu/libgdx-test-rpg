@@ -19,7 +19,7 @@ import com.jukusoft.libgdx.rpg.engine.projectile.ProjectileSpawner;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake1CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.SmoothFollowCameraComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.camera.SmoothFollowCameraComponent;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;

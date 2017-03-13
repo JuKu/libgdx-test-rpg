@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
+package com.jukusoft.libgdx.rpg.engine.entity.impl.component.input;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.entity.*;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.DrawTextureComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.DrawTextureRegionComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;

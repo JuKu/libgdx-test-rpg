@@ -4,6 +4,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.camera.SmoothFollowCameraComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.HoverComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.MoveInputComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.RelativeMousePositionComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.shadow.BlobShadowComponent;
 
 /**
  * Created by Justin on 10.02.2017.

@@ -65,9 +65,6 @@ public class GameScreen extends BaseScreen {
     //lighting system
     LightingSystem lightingSystem = null;
 
-    //lightings
-    Lighting testLighting = null;
-
     protected CameraZoomListener zoomListener = null;
 
     protected EntityManager ecs = null;

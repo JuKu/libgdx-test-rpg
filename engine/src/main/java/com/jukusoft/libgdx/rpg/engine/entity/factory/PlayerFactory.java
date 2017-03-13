@@ -5,6 +5,8 @@ import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.camera.SmoothFollowCameraComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.BasicMovementAnimationControlComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureRegionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.HoverComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.MoveInputComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.RelativeMousePositionComponent;

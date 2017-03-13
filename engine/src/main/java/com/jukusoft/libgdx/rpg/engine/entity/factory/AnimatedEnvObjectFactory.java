@@ -4,6 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.BasicAnimationComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawParticlesComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureRegionComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.LightMapComponent;
 
 /**
  * Created by Justin on 15.02.2017.

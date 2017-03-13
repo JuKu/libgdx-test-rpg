@@ -1,8 +1,9 @@
-package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
+package com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.PositionChangedListener;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.lighting.Lighting;

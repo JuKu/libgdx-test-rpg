@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.CursorComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.HoverComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.shadow.BlobShadowComponent;

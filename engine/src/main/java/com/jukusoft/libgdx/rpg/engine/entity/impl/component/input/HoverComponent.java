@@ -9,13 +9,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.entity.*;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.DrawTextureComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.DrawTextureRegionComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureRegionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
-import com.jukusoft.libgdx.rpg.engine.utils.MouseUtils;
 
 /**
  * Created by Justin on 12.02.2017.

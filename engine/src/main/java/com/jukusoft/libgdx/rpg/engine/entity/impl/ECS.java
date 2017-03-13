@@ -2,7 +2,7 @@ package com.jukusoft.libgdx.rpg.engine.entity.impl;
 
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.IComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.LightMapComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.LightMapComponent;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.lighting.LightingSystem;
 

@@ -1,6 +1,5 @@
 package com.jukusoft.libgdx.rpg.engine.entity.impl.component.shadow;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -10,16 +9,13 @@ import com.jukusoft.libgdx.rpg.engine.camera.CameraWrapper;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.IDrawComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.DrawTextureComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.DrawTextureRegionComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureRegionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.listener.TextureChangedListener;
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
-import com.jukusoft.libgdx.rpg.engine.utils.ByteUtils;
 import com.jukusoft.libgdx.rpg.engine.utils.FastMath;
-import com.jukusoft.libgdx.rpg.engine.world.ShadowEnv;
 
 /**
  * Created by Justin on 11.02.2017.

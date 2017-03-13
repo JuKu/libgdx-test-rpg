@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
+package com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;

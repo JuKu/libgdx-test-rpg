@@ -1,11 +1,8 @@
 package com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.IUpdateComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.AtlasAnimationComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.MoveComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;

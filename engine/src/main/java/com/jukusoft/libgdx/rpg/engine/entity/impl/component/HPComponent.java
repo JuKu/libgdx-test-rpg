@@ -58,4 +58,12 @@ public class HPComponent extends BaseComponent {
         updatePercent();
     }
 
+    public void addHP (float hp) {
+        setCurrentHP(getCurrentHP() + hp);
+    }
+
+    public void subHP (float hp) {
+        setCurrentHP(getCurrentHP() - hp);
+    }
+
 }

@@ -58,7 +58,7 @@ public class PlayerFactory {
         playerEntity.addComponent(new HoverComponent(Color.BLUE), HoverComponent.class);
 
         //add HPComponent
-        playerEntity.addComponent(new HPComponent(60, 100), HPComponent.class);
+        playerEntity.addComponent(new HPComponent(100, 100), HPComponent.class);
 
         //add component to draw HP bar
         playerEntity.addComponent(new DrawHPBarComponent(64, -32, 32, 5), DrawHPBarComponent.class);

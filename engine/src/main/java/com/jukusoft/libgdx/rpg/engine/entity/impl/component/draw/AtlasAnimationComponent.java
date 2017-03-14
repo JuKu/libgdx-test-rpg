@@ -139,6 +139,9 @@ public class AtlasAnimationComponent extends BaseComponent implements IUpdateCom
         //get animation
         this.currentAnimation = this.getAnimationByName(animationName);
 
+        //reset elapsed time
+        this.elapsed = 0;
+
         this.onAnimationStateChanged(oldAnimationName, animationName);
     }
 

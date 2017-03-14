@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawHPBarComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.CursorComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.HoverComponent;
@@ -35,6 +36,12 @@ public class NPCFactory {
         //add specific attack cursor
         npcEntity.addComponent(new CursorComponent(cursor), CursorComponent.class);
 
+        //add HPComponent
+        npcEntity.addComponent(new HPComponent(100, 100), HPComponent.class);
+
+        //add component to draw HP bar
+        npcEntity.addComponent(new DrawHPBarComponent(64, -32, 32, 5), DrawHPBarComponent.class);
+
         //add shadow component
         //npcEntity.addComponent(new ShadowComponent(), ShadowComponent.class);
 
@@ -62,6 +69,12 @@ public class NPCFactory {
 
         //add shadow component
         npcEntity.addComponent(new BlobShadowComponent(10), BlobShadowComponent.class);
+
+        //add HPComponent
+        npcEntity.addComponent(new HPComponent(100, 100), HPComponent.class);
+
+        //add component to draw HP bar
+        npcEntity.addComponent(new DrawHPBarComponent(0, 10, 32, 5), DrawHPBarComponent.class);
 
         return npcEntity;
     }

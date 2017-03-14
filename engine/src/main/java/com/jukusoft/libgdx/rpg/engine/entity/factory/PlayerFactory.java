@@ -7,6 +7,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.camera.SmoothFollowCameraComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.AtlasAnimationComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.BasicMovementAnimationControlComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawHPBarComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureRegionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.HoverComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.MoveInputComponent;
@@ -55,6 +56,12 @@ public class PlayerFactory {
 
         //add hover component
         playerEntity.addComponent(new HoverComponent(Color.BLUE), HoverComponent.class);
+
+        //add HPComponent
+        playerEntity.addComponent(new HPComponent(60, 100), HPComponent.class);
+
+        //add component to draw HP bar
+        playerEntity.addComponent(new DrawHPBarComponent(64, -32, 32, 5), DrawHPBarComponent.class);
 
         //add shadow component
         //playerEntity.addComponent(new ShadowComponent(), ShadowComponent.class);

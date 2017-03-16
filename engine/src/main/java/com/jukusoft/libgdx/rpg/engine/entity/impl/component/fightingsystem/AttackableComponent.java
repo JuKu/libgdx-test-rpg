@@ -62,12 +62,6 @@ public class AttackableComponent extends BaseComponent {
         //attack
         action.attack(attackerEntity, this.entity, this.hpComponent);
 
-        //calculate damage
-        //float damage = this.calculateDamage(attackerEntity, action);
-
-        //reduce HP by damage
-        //this.hpComponent.subHP(damage);
-
         //call listeners
         this.notifyAttackedListeners(attackerEntity, this.entity, action);
     }

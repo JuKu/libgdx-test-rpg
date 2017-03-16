@@ -8,6 +8,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawHPBarComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.fightingsystem.AttackableComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.CursorComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.input.HoverComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.shadow.BlobShadowComponent;
@@ -42,6 +43,9 @@ public class NPCFactory {
         //add component to draw HP bar
         npcEntity.addComponent(new DrawHPBarComponent(64, -32, 32, 5), DrawHPBarComponent.class);
 
+        //add support to attackable entity
+        npcEntity.addComponent(new AttackableComponent(), AttackableComponent.class);
+
         //add shadow component
         //npcEntity.addComponent(new ShadowComponent(), ShadowComponent.class);
 
@@ -75,6 +79,9 @@ public class NPCFactory {
 
         //add component to draw HP bar
         npcEntity.addComponent(new DrawHPBarComponent(0, 10, 32, 5), DrawHPBarComponent.class);
+
+        //add support to attackable entity
+        npcEntity.addComponent(new AttackableComponent(), AttackableComponent.class);
 
         return npcEntity;
     }

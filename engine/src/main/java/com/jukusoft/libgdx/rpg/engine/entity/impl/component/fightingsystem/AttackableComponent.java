@@ -59,19 +59,22 @@ public class AttackableComponent extends BaseComponent {
             throw new IllegalStateException("attack action doesnt exists.");
         }
 
+        //attack
+        action.attack(attackerEntity, this.entity, this.hpComponent);
+
         //calculate damage
-        float damage = this.calculateDamage(attackerEntity, action);
+        //float damage = this.calculateDamage(attackerEntity, action);
 
         //reduce HP by damage
-        this.hpComponent.subHP(damage);
+        //this.hpComponent.subHP(damage);
 
         //call listeners
         this.notifyAttackedListeners(attackerEntity, this.entity, action);
     }
 
-    protected float calculateDamage (Entity attackerEntity, AttackAction action) {
+    /*protected float calculateDamage (Entity attackerEntity, AttackAction action) {
         throw new UnsupportedOperationException("method isnt implemented yet.");
-    }
+    }*/
 
     protected void notifyAttackedListeners (Entity attackerEntity, Entity entity, AttackAction action) {
         this.attackedListenerList.stream().forEach(listener -> {

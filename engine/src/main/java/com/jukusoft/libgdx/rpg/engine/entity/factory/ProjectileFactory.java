@@ -7,6 +7,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.AtlasAnimationComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.BasicMovementAnimationControlComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureRegionComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.fightingsystem.AttackComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.shadow.BlobShadowComponent;
 import com.jukusoft.libgdx.rpg.engine.utils.Direction;
 import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
@@ -46,6 +47,9 @@ public class ProjectileFactory {
 
         //add component to remove entity on gameworld collision
         entity.addComponent(new RemoveOnGameWorldCollisionComponent(), RemoveOnGameWorldCollisionComponent.class);
+
+        //add attack component
+        entity.addComponent(new AttackComponent(), AttackComponent.class);
 
         //add shadow component
         entity.addComponent(new BlobShadowComponent(10, 32), BlobShadowComponent.class);

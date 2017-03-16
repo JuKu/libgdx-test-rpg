@@ -72,10 +72,6 @@ public class AttackableComponent extends BaseComponent {
         this.notifyAttackedListeners(attackerEntity, this.entity, action);
     }
 
-    /*protected float calculateDamage (Entity attackerEntity, AttackAction action) {
-        throw new UnsupportedOperationException("method isnt implemented yet.");
-    }*/
-
     protected void notifyAttackedListeners (Entity attackerEntity, Entity entity, AttackAction action) {
         this.attackedListenerList.stream().forEach(listener -> {
             listener.wasAttacked(attackerEntity, entity, action);

@@ -1,4 +1,4 @@
-package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
+package com.jukusoft.libgdx.rpg.engine.entity.impl.component.collision;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,6 +9,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.IDrawComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.IUpdateComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * Created by Justin on 10.03.2017.
  */
-public class HitBoxesComponent extends BaseComponent implements IUpdateComponent, IDrawComponent {
+public class CollisionBoxesComponent extends BaseComponent implements IUpdateComponent, IDrawComponent {
 
     protected PositionComponent positionComponent = null;
 
@@ -42,7 +43,7 @@ public class HitBoxesComponent extends BaseComponent implements IUpdateComponent
     protected float hitboxWidth = 0;
     protected float hitboxHeight = 0;
 
-    public HitBoxesComponent(boolean autoUpdateHixbox, float width, float height) {
+    public CollisionBoxesComponent(boolean autoUpdateHixbox, float width, float height) {
         //create new rectangle pool
         this.rectPool = RectanglePoolPrototypeFactory.createRectanglePool();
 
@@ -58,7 +59,7 @@ public class HitBoxesComponent extends BaseComponent implements IUpdateComponent
         }
     }
 
-    public HitBoxesComponent(boolean autoUpdateHixbox) {
+    public CollisionBoxesComponent(boolean autoUpdateHixbox) {
         this(autoUpdateHixbox, 0, 0);
     }
 

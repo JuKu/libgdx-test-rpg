@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.jukusoft.libgdx.rpg.engine.fightingsystem.HitboxesSystem;
 import com.jukusoft.libgdx.rpg.engine.projectile.ProjectileSpawner;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake2CameraModification;
 import com.jukusoft.libgdx.rpg.engine.camera.impl.Shake3CameraModification;
@@ -25,7 +26,7 @@ import com.jukusoft.libgdx.rpg.engine.skybox.SkyBox;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.utils.DevMode;
 import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.GameWorldCollisionComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.collision.GameWorldCollisionComponent;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
 import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
@@ -64,6 +65,9 @@ public class GameScreen extends BaseScreen {
     //lighting system
     LightingSystem lightingSystem = null;
 
+    //hitboxes system
+    HitboxesSystem hitboxesSystem = null;
+
     protected CameraZoomListener zoomListener = null;
 
     protected EntityManager ecs = null;
@@ -97,6 +101,9 @@ public class GameScreen extends BaseScreen {
         //create new lighting system
         this.lightingSystem = new LightingSystem(game, blackTexture, game.getViewportWidth(), game.getViewportHeight());
 
+        //create new hitboxes system
+        this.hitboxesSystem = new HitboxesSystem();
+
         //create new test lighting
         //this.testLighting = new TextureLighting(this.lightMap, 200, 200);
         //this.lightingSystem.addLighting(this.testLighting);
@@ -109,7 +116,7 @@ public class GameScreen extends BaseScreen {
         game.getInputManager().getGameInputProcessor().addScrollListener(this.zoomListener);
 
         //create new entity component system
-        this.ecs = new ECS(game, this.lightingSystem);
+        this.ecs = new ECS(game, this.lightingSystem, this.hitboxesSystem);
     }
 
     @Override
@@ -173,7 +180,7 @@ public class GameScreen extends BaseScreen {
         DevMode.setDrawHitboxEnabled(true);
 
         //create projectile spawner and add to shared data
-        this.projectileSpawner = new ProjectileSpawner(this.ecs, this.gameWorld);
+        this.projectileSpawner = new ProjectileSpawner(this.ecs, this.gameWorld, this.hitboxesSystem);
         game.getSharedData().put(SharedDataConst.PROJECTILE_SPAWNER, this.projectileSpawner);
     }
 

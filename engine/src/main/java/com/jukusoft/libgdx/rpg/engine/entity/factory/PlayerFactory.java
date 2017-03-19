@@ -5,6 +5,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.camera.SmoothFollowCameraComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.collision.CollisionBoxesComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.AtlasAnimationComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.BasicMovementAnimationControlComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawHPBarComponent;
@@ -49,7 +50,7 @@ public class PlayerFactory {
         playerEntity.addComponent(new BasicMovementAnimationControlComponent(), BasicMovementAnimationControlComponent.class);
 
         //add hitbox component
-        playerEntity.addComponent(new HitBoxesComponent(true, 36, 74), HitBoxesComponent.class);
+        playerEntity.addComponent(new CollisionBoxesComponent(true, 36, 74), CollisionBoxesComponent.class);
 
         //add attachment points component so projectiles can be spawn at entity
         playerEntity.addComponent(new AttachmentPointsComponent(), AttachmentPointsComponent.class);

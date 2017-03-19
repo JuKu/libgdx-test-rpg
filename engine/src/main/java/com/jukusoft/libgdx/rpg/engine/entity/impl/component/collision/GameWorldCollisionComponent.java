@@ -1,16 +1,14 @@
-package com.jukusoft.libgdx.rpg.engine.entity.impl.component;
+package com.jukusoft.libgdx.rpg.engine.entity.impl.component.collision;
 
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Pool;
 import com.jukusoft.libgdx.rpg.engine.entity.BaseComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
-import com.jukusoft.libgdx.rpg.engine.entity.IUpdateComponent;
-import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.MoveComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.GameWorldCollisionListener;
 import com.jukusoft.libgdx.rpg.engine.entity.listener.MoveListener;
-import com.jukusoft.libgdx.rpg.engine.entity.priority.ECSPriority;
 import com.jukusoft.libgdx.rpg.engine.game.BaseGame;
-import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.utils.RectanglePoolPrototypeFactory;
 import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
 
@@ -24,7 +22,7 @@ public class GameWorldCollisionComponent extends BaseComponent implements MoveLi
 
     protected PositionComponent positionComponent = null;
     protected MoveComponent moveComponent = null;
-    protected HitBoxesComponent hitBoxesComponent = null;
+    protected CollisionBoxesComponent collisionBoxesComponent = null;
 
     protected GameWorld gameWorld = null;
 
@@ -46,7 +44,7 @@ public class GameWorldCollisionComponent extends BaseComponent implements MoveLi
 
         this.positionComponent = entity.getComponent(PositionComponent.class);
         this.moveComponent = entity.getComponent(MoveComponent.class);
-        this.hitBoxesComponent = entity.getComponent(HitBoxesComponent.class);
+        this.collisionBoxesComponent = entity.getComponent(CollisionBoxesComponent.class);
 
         if (this.positionComponent == null) {
             throw new IllegalStateException("entity doesnt have an PositionComponent.");
@@ -59,8 +57,8 @@ public class GameWorldCollisionComponent extends BaseComponent implements MoveLi
         //register listener as an hook, so collision component can avoid moving of entity
         this.moveComponent.addMoveHook(this);
 
-        if (this.hitBoxesComponent == null) {
-            throw new IllegalStateException("entity doesnt have an HitBoxesComponent.");
+        if (this.collisionBoxesComponent == null) {
+            throw new IllegalStateException("entity doesnt have an CollisionBoxesComponent.");
         }
     }
 
@@ -69,7 +67,7 @@ public class GameWorldCollisionComponent extends BaseComponent implements MoveLi
         float dy = newY - oldY;
 
         //get all hitboxes
-        List<Rectangle> hitboxes = this.hitBoxesComponent.listAllHitboxes();
+        List<Rectangle> hitboxes = this.collisionBoxesComponent.listAllHitboxes();
 
         for (Rectangle rectangle : hitboxes) {
             //copy rectangle

@@ -5,6 +5,7 @@ import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.factory.ProjectileFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureRegionComponent;
+import com.jukusoft.libgdx.rpg.engine.fightingsystem.HitboxesSystem;
 import com.jukusoft.libgdx.rpg.engine.points.AttachmentPoint;
 import com.jukusoft.libgdx.rpg.engine.utils.Direction;
 import com.jukusoft.libgdx.rpg.engine.utils.SpeedUtils;
@@ -17,10 +18,12 @@ public class ProjectileSpawner {
 
     protected EntityManager ecs = null;
     protected GameWorld gameWorld = null;
+    protected HitboxesSystem hitboxesSystem = null;
 
-    public ProjectileSpawner (EntityManager ecs, GameWorld gameWorld) {
+    public ProjectileSpawner (EntityManager ecs, GameWorld gameWorld, HitboxesSystem hitboxesSystem) {
         this.ecs = ecs;
         this.gameWorld = gameWorld;
+        this.hitboxesSystem = hitboxesSystem;
     }
 
     public void spawn (Entity ownerEntity, String atlasFile, float speed, long ttl) {
@@ -55,7 +58,7 @@ public class ProjectileSpawner {
         float speedY = SpeedUtils.getSpeedY(direction, speed);
 
         //create projectile entity
-        Entity projectileEntity = ProjectileFactory.createBasicProjectile(this.ecs, this.gameWorld, atlasFile, direction, x, y, speedX, speedY);
+        Entity projectileEntity = ProjectileFactory.createBasicProjectile(this.ecs, this.gameWorld, this.hitboxesSystem, atlasFile, direction, x, y, speedX, speedY);
 
         DrawTextureRegionComponent textureRegionComponent = projectileEntity.getComponent(DrawTextureRegionComponent.class);
 

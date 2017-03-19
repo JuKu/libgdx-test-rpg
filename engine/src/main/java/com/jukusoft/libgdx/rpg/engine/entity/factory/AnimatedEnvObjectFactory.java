@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.collision.CollisionBoxesComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.BasicAnimationComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawParticlesComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureRegionComponent;
@@ -32,7 +33,7 @@ public class AnimatedEnvObjectFactory {
         entity.addComponent(new BasicAnimationComponent(texture, duration, rows, cols), BasicAnimationComponent.class);
 
         //add hitbox component
-        entity.addComponent(new HitBoxesComponent(true), HitBoxesComponent.class);
+        entity.addComponent(new CollisionBoxesComponent(true), CollisionBoxesComponent.class);
 
         //add shadow component
         //entity.addComponent(new ShadowComponent(), ShadowComponent.class);
@@ -58,7 +59,7 @@ public class AnimatedEnvObjectFactory {
         entity.addComponent(new BasicAnimationComponent(texture, duration, rows, cols), BasicAnimationComponent.class);
 
         //add hitbox component
-        entity.addComponent(new HitBoxesComponent(true), HitBoxesComponent.class);
+        entity.addComponent(new CollisionBoxesComponent(true), CollisionBoxesComponent.class);
 
         //add lighting component
         entity.addComponent(new LightMapComponent(lightMap, 0, 0), LightMapComponent.class);

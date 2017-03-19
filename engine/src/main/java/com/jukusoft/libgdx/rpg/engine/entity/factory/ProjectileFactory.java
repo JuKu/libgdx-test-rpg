@@ -4,11 +4,15 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.collision.CollisionBoxesComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.collision.GameWorldCollisionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.AtlasAnimationComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.BasicMovementAnimationControlComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureRegionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.fightingsystem.AttackComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.shadow.BlobShadowComponent;
+import com.jukusoft.libgdx.rpg.engine.fightingsystem.AttackAction;
+import com.jukusoft.libgdx.rpg.engine.fightingsystem.HitboxesSystem;
 import com.jukusoft.libgdx.rpg.engine.utils.Direction;
 import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
 
@@ -17,7 +21,7 @@ import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
  */
 public class ProjectileFactory {
 
-    public static Entity createBasicProjectile (EntityManager ecs, GameWorld gameWorld, String atlasPath, Direction direction, float x, float y, float speedX, float speedY) {
+    public static Entity createBasicProjectile (EntityManager ecs, GameWorld gameWorld, HitboxesSystem hitboxesSystem, String atlasPath, Direction direction, float x, float y, float speedX, float speedY) {
         //create new entity
         Entity entity = new Entity(ecs);
 
@@ -40,7 +44,7 @@ public class ProjectileFactory {
         entity.addComponent(new BasicMovementAnimationControlComponent(), BasicMovementAnimationControlComponent.class);
 
         //add hitbox component
-        entity.addComponent(new HitBoxesComponent(true), HitBoxesComponent.class);
+        entity.addComponent(new CollisionBoxesComponent(true), CollisionBoxesComponent.class);
 
         //add gameworld collision component
         entity.addComponent(new GameWorldCollisionComponent(gameWorld), GameWorldCollisionComponent.class);
@@ -49,7 +53,7 @@ public class ProjectileFactory {
         entity.addComponent(new RemoveOnGameWorldCollisionComponent(), RemoveOnGameWorldCollisionComponent.class);
 
         //add attack component
-        entity.addComponent(new AttackComponent(), AttackComponent.class);
+        entity.addComponent(new AttackComponent(hitboxesSystem, new AttackAction(10, 0)), AttackComponent.class);
 
         //add shadow component
         entity.addComponent(new BlobShadowComponent(10, 32), BlobShadowComponent.class);

@@ -21,6 +21,12 @@ public class DesktopLauncher {
         config.width = 1280;
         config.addIcon("./data/images/general/icon.png", Files.FileType.Absolute);
 
+        for (String param : args) {
+            if (param.contains("--fullscreen")) {
+                config.fullscreen = true;
+            }
+        }
+
         try {
             //start game
             new LwjglApplication(new Game(), config);

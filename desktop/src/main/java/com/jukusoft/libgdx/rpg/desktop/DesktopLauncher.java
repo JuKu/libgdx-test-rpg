@@ -24,6 +24,16 @@ public class DesktopLauncher {
         for (String param : args) {
             if (param.contains("--fullscreen")) {
                 config.fullscreen = true;
+            } else if (param.startsWith("--width=")) {
+                String str = param.replace("--width=", "");
+                int width = Integer.parseInt(str);
+
+                config.width = width;
+            } else if (param.startsWith("--height=")) {
+                String str = param.replace("--height=", "");
+                int height = Integer.parseInt(str);
+
+                config.height = height;
             }
         }
 

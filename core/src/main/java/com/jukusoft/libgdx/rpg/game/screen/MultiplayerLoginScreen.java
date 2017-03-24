@@ -21,6 +21,7 @@ import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
+import com.jukusoft.libgdx.rpg.engine.utils.SpriteBatcherUtils;
 import com.jukusoft.libgdx.rpg.game.ui.ImageButton;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
 
@@ -216,6 +217,8 @@ public class MultiplayerLoginScreen extends BaseScreen {
 
         //draw background image
         batch.draw(this.backgroundTexture, 0, 0);
+
+        SpriteBatcherUtils.fillRectangle(batch, 580, 610, 240, 30, Color.WHITE);
 
         //draw back button
         this.backButton.draw(time, batch);

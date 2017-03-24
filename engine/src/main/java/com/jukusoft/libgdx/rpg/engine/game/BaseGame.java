@@ -315,6 +315,18 @@ public abstract class BaseGame extends ApplicationAdapter {
         return this.getSettings().getFloat("Music", "volume");
     }
 
+    public float getVolume (float addVolume) {
+        float volume = this.getSettings().getFloat("Music", "volume");
+
+        volume += addVolume;
+
+        if (volume > 1) {
+            volume = 1;
+        }
+
+        return volume;
+    }
+
     public String getLang () {
         return this.getSettings().getOrDefault("Game", "lang", "en");
     }

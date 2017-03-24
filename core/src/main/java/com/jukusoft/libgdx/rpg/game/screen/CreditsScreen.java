@@ -84,7 +84,7 @@ public class CreditsScreen extends BaseScreen {
         assetManager.finishLoading();
 
         this.backgroundMusic = assetManager.get(MUSIC_PATH, Music.class);
-        this.backgroundMusic.setVolume(game.getVolume());
+        this.backgroundMusic.setVolume(game.getVolume(0.2f));
         this.backgroundMusic.play();
     }
 

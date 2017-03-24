@@ -129,7 +129,7 @@ public class MultiplayerLoginScreen extends BaseScreen {
         this.loginButton.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                //
+                tryLogin();
             }
         });
         this.stage.addActor(this.loginButton);
@@ -233,7 +233,7 @@ public class MultiplayerLoginScreen extends BaseScreen {
         //
     }
 
-    protected void validateForm () {
+    protected boolean validateForm () {
         boolean valide = true;
         String errorText = "";
 
@@ -268,6 +268,20 @@ public class MultiplayerLoginScreen extends BaseScreen {
         this.loginButton.setDisabled(!valide);
         errorLabel.setVisible(!valide);
         errorLabel.setText(errorText);
+
+        return valide;
+    }
+
+    protected void tryLogin () {
+        if (!validateForm()) {
+            return;
+        }
+
+        //TODO: check, if server is available
+
+        //TODO: connect to server
+
+        //TODO: try to login
     }
 
 }

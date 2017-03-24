@@ -31,6 +31,7 @@ public class MainMenuScreen extends BaseScreen {
 
     protected TextButton newGameButton = null;
     protected TextButton loadButton = null;
+    protected TextButton multiplayerButton = null;
     protected TextButton creditsButton = null;
     protected TextButton settingsButton = null;
 
@@ -105,9 +106,22 @@ public class MainMenuScreen extends BaseScreen {
         });
         this.uiStage.addActor(this.loadButton);
 
+        //create multiplayer game button
+        this.multiplayerButton = new TextButton("Multiplayer", this.uiSkin);
+        this.multiplayerButton.setPosition(startX, 240);
+        this.multiplayerButton.setWidth(400);
+        this.multiplayerButton.setHeight(50);
+        this.multiplayerButton.addListener(new ClickListener() {
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                game.getScreenManager().leaveAllAndEnter("multiplayer_login");
+            }
+        });
+        this.uiStage.addActor(this.multiplayerButton);
+
         //create credits button
         this.creditsButton = new TextButton("Credits", this.uiSkin);
-        this.creditsButton.setPosition(startX, 240);
+        this.creditsButton.setPosition(startX, 160);
         this.creditsButton.setWidth(400);
         this.creditsButton.setHeight(50);
         this.creditsButton.addListener(new ClickListener() {
@@ -120,7 +134,7 @@ public class MainMenuScreen extends BaseScreen {
 
         //create credits button
         this.settingsButton = new TextButton("Settings", this.uiSkin);
-        this.settingsButton.setPosition(startX, 160);
+        this.settingsButton.setPosition(startX, 80);
         this.settingsButton.setWidth(400);
         this.settingsButton.setHeight(50);
         this.settingsButton.addListener(new ClickListener() {

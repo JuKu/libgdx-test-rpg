@@ -34,9 +34,14 @@ import com.jukusoft.libgdx.rpg.engine.utils.DevMode;
 import com.jukusoft.libgdx.rpg.engine.world.GameWorld;
 import com.jukusoft.libgdx.rpg.engine.world.SectorCoord;
 import com.jukusoft.libgdx.rpg.game.client.GameClient;
+import com.jukusoft.libgdx.rpg.game.client.entry.CharacterPosEntry;
 import com.jukusoft.libgdx.rpg.game.data.CharacterData;
 import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Justin on 25.03.2017.
@@ -90,6 +95,11 @@ public class MultiplayerGameScreen extends BaseScreen {
 
     protected PositionComponent playerPositionComponent = null;
     protected MoveComponent playerMoveComponent = null;
+
+    //ony for external characters
+    protected Map<Long,Entity> characterEntityMap = new ConcurrentHashMap<>();
+    protected Map<Long,PositionComponent> positionComponentMap = new ConcurrentHashMap<>();
+    protected Map<Long,MoveComponent> moveComponentMap = new ConcurrentHashMap<>();
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         this.arialFont = BitmapFontFactory
@@ -265,6 +275,40 @@ public class MultiplayerGameScreen extends BaseScreen {
 
         //update player position
         this.client.updatePlayerPos(playerPositionComponent.getX(), playerPositionComponent.getY(), 0, playerMoveComponent.getSpeedX(), playerMoveComponent.getSpeedY());
+
+        //update all external characters (NPCs & other players)
+        List<CharacterPosEntry> characterList = this.client.listAllCharacters();
+
+        for (CharacterPosEntry character : characterList) {
+            if (character.getUserID() == this.userID) {
+                //dont update own user
+                continue;
+            }
+
+            long userID = character.getUserID();
+
+            Entity entity = this.characterEntityMap.get(userID);
+
+            if (entity == null) {
+                //character is new, so we have to create them
+                entity = NPCFactory.createDummyNPC(this.ecs, this.characterTexture, this.cursorImage, character.getX(), character.getY());
+                this.characterEntityMap.put(userID, entity);
+                this.positionComponentMap.put(userID, entity.getComponent(PositionComponent.class));
+                this.moveComponentMap.put(userID, entity.getComponent(MoveComponent.class));
+
+                entity.addComponent(new LightMapComponent(this.lightMap, 0, 0, false), LightMapComponent.class);
+                entity.addComponent(new GameWorldCollisionComponent(this.gameWorld), GameWorldCollisionComponent.class);
+
+                //add character to entity-component-system
+                this.ecs.addEntity(entity);
+            }
+
+            PositionComponent positionComponent = this.positionComponentMap.get(userID);
+            MoveComponent moveComponent = this.moveComponentMap.get(userID);
+
+            positionComponent.setPosition(character.getX(), character.getY());
+            moveComponent.setSpeed(character.getSpeedX(), character.getSpeedY());
+        }
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {
@@ -328,8 +372,10 @@ public class MultiplayerGameScreen extends BaseScreen {
         //reset shader, so default shader is used
         batch.setShader(null);
 
+        batch.setProjectionMatrix(game.getUICamera().combined);
+
         //draw ping
-        this.arialFont.draw(batch, "Ping: " + client.getAttributes().getPing(), 100, 100);
+        this.arialFont.draw(batch, "Ping: " + client.getAttributes().getPing() + "ms", 100, 100);
     }
 
     @Override public void destroy() {

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.jukusoft.libgdx.rpg.engine.entity.Entity;
 import com.jukusoft.libgdx.rpg.engine.entity.EntityManager;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.*;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.collision.CollisionBoxesComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawHPBarComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.DrawTextureComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.fightingsystem.AttackableComponent;
@@ -46,6 +47,12 @@ public class NPCFactory {
         //add support to attackable entity
         npcEntity.addComponent(new AttackableComponent(), AttackableComponent.class);
 
+        //add hitbox component
+        npcEntity.addComponent(new CollisionBoxesComponent(true, 36, 74), CollisionBoxesComponent.class);
+
+        //add attachment points component so projectiles can be spawn at entity
+        npcEntity.addComponent(new AttachmentPointsComponent(), AttachmentPointsComponent.class);
+
         //add shadow component
         //npcEntity.addComponent(new ShadowComponent(), ShadowComponent.class);
 
@@ -82,6 +89,12 @@ public class NPCFactory {
 
         //add support to attackable entity
         npcEntity.addComponent(new AttackableComponent(), AttackableComponent.class);
+
+        //add hitbox component
+        npcEntity.addComponent(new CollisionBoxesComponent(true, 36, 74), CollisionBoxesComponent.class);
+
+        //add attachment points component so projectiles can be spawn at entity
+        npcEntity.addComponent(new AttachmentPointsComponent(), AttachmentPointsComponent.class);
 
         return npcEntity;
     }

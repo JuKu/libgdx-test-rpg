@@ -291,7 +291,7 @@ public class MultiplayerGameScreen extends BaseScreen {
 
             if (entity == null) {
                 //character is new, so we have to create them
-                entity = NPCFactory.createDummyNPC(this.ecs, this.characterTexture, this.cursorImage, character.getX(), character.getY());
+                entity = PlayerFactory.createPlayer(this.ecs, this.character2AtlasFile, "standDown", character.getX(), character.getY());
                 this.characterEntityMap.put(userID, entity);
                 this.positionComponentMap.put(userID, entity.getComponent(PositionComponent.class));
                 this.moveComponentMap.put(userID, entity.getComponent(MoveComponent.class));

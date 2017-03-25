@@ -83,6 +83,9 @@ public class MultiplayerGameScreen extends BaseScreen {
     //network client
     protected GameClient client = null;
 
+    //own userID
+    protected long userID = 0;
+
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         this.arialFont = BitmapFontFactory
             .createFont(AssetPathUtils.getFontPath("arial/arial.ttf"), 26, Color.WHITE);
@@ -148,6 +151,9 @@ public class MultiplayerGameScreen extends BaseScreen {
         if (!this.client.isConnected()) {
             throw new IllegalStateException("client has to be connected.");
         }
+
+        //get own userID
+        this.userID = game.getSharedData().get(SharedDataConst.USERID, Integer.class);
 
         //get current sector
         SectorCoord coord = this.characterData.getCurrentSector();
@@ -312,7 +318,7 @@ public class MultiplayerGameScreen extends BaseScreen {
         batch.setShader(null);
 
         //draw ping
-        this.arialFont.draw(batch, "Ping: " + client.getAttributes().getPing(), 20, 20);
+        this.arialFont.draw(batch, "Ping: " + client.getAttributes().getPing(), 100, 100);
     }
 
     @Override public void destroy() {

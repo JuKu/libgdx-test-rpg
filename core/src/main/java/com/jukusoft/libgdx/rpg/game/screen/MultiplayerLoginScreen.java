@@ -46,6 +46,7 @@ public class MultiplayerLoginScreen extends BaseScreen {
     protected final String ICON_BACK_PATH = AssetPathUtils.getImagePath("icons/back/back_64.png");
 
     public static final int GAME_CLIENT_THREADS = 2;
+    public static final long PING_CHECK_INTERVAL = 2000l;
 
     //assets
     protected Texture backgroundTexture = null;
@@ -72,6 +73,7 @@ public class MultiplayerLoginScreen extends BaseScreen {
     protected TextField passwordField = null;
 
     protected GameClient client = null;
+    protected boolean fixedConnection = false;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         //
@@ -327,7 +329,7 @@ public class MultiplayerLoginScreen extends BaseScreen {
                 }
 
                 //check, if client is already connected
-                if (client.isConnected()) {
+                if (client.isConnected() && !this.fixedConnection) {
                     //close connection
                     client.close();
                 }
@@ -342,57 +344,42 @@ public class MultiplayerLoginScreen extends BaseScreen {
                         this.loginButton.setVisible(false);
                     });
 
-                    //connect to server
-                    ChannelFuture channelFuture = this.client.connectAsync(ip, port);
+                    if (!fixedConnection) {
+                        //connect to server
+                        ChannelFuture channelFuture = this.client.connectAsync(ip, port);
 
-                    channelFuture.addListener(new ChannelFutureListener() {
-                        @Override public void operationComplete(ChannelFuture future) throws Exception {
-                            if (future.isSuccess()) {
-                                game.runOnUIThread(() -> {
-                                    errorLabel.setVisible(true);
-                                    errorLabel.setColor(Color.GREEN);
-                                    errorLabel.setText("Connected!");
-                                });
+                        channelFuture.addListener(new ChannelFutureListener() {
+                            @Override public void operationComplete(ChannelFuture future) throws Exception {
+                                if (future.isSuccess()) {
+                                    game.runOnUIThread(() -> {
+                                        errorLabel.setVisible(true);
+                                        errorLabel.setColor(Color.GREEN);
+                                        errorLabel.setText("Connected!");
+                                    });
 
-                                client.setAuthListener(new AuthListener() {
-                                    @Override public void onAuth(boolean success, int errorCode, long userID,
-                                        String message) {
-                                        if (success) {
-                                            game.runOnUIThread(() -> {
-                                                errorLabel.setVisible(true);
-                                                errorLabel.setColor(Color.GREEN);
-                                                errorLabel.setText("Login successful!");
+                                    fixedConnection = true;
 
-                                                //save userID
-                                                game.getSharedData().put(SharedDataConst.USERID, userID);
+                                    //add ping check every 2 seconds
+                                    client.addTask(PING_CHECK_INTERVAL, () -> {
+                                        client.requestPingCheck();
+                                    });
 
-                                                //enter multiplayer game state
-                                                game.getScreenManager().leaveAllAndEnter("multiplayer_game");
-                                            });
-                                        } else {
-                                            errorLabel.setVisible(true);
-                                            errorLabel.setColor(Color.RED);
-                                            errorLabel.setText("Login failed! " + message);
-                                        }
-                                    }
-                                });
+                                    tryAuth();
+                                } else {
+                                    game.runOnUIThread(() -> {
+                                        errorLabel.setVisible(true);
+                                        errorLabel.setColor(Color.RED);
+                                        errorLabel.setText("Connection failed!");
 
-                                game.getSharedData().put("username", username);
-
-                                //try to authorize
-                                client.authUser(username, password, 2000);
-                            } else {
-                                game.runOnUIThread(() -> {
-                                    errorLabel.setVisible(true);
-                                    errorLabel.setColor(Color.RED);
-                                    errorLabel.setText("Connection failed!");
-
-                                    //disable login button
-                                    loginButton.setVisible(false);
-                                });
+                                        //disable login button
+                                        loginButton.setVisible(false);
+                                    });
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        tryAuth();
+                    }
 
                     return;
                 } catch (Exception e) {
@@ -414,6 +401,39 @@ public class MultiplayerLoginScreen extends BaseScreen {
                 errorLabel.setText(errorText2);
             });
         }).start();
+    }
+
+    protected void tryAuth () {
+        String username = this.usernameField.getText();
+        String password = this.passwordField.getText();
+
+        client.setAuthListener(new AuthListener() {
+            @Override public void onAuth(boolean success, int errorCode, long userID,
+                String message) {
+                if (success) {
+                    game.runOnUIThread(() -> {
+                        errorLabel.setVisible(true);
+                        errorLabel.setColor(Color.GREEN);
+                        errorLabel.setText("Login successful!");
+
+                        //save userID
+                        game.getSharedData().put(SharedDataConst.USERID, userID);
+
+                        //enter multiplayer game state
+                        game.getScreenManager().leaveAllAndEnter("multiplayer_game");
+                    });
+                } else {
+                    errorLabel.setVisible(true);
+                    errorLabel.setColor(Color.RED);
+                    errorLabel.setText("Login failed! " + message);
+                }
+            }
+        });
+
+        game.getSharedData().put("username", username);
+
+        //try to authorize
+        client.authUser(username, password, 2000);
     }
 
 }

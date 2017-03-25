@@ -81,9 +81,6 @@ public class PlayerFactory {
         //add an movement component, so entity can be moved by update() method
         playerEntity.addComponent(new MoveComponent(), MoveComponent.class);
 
-        //add follow camera component, so camera is following player
-        playerEntity.addComponent(new SmoothFollowCameraComponent(), SmoothFollowCameraComponent.class);
-
         //add texture component to draw player
         //playerEntity.addComponent(new DrawTextureComponent(texture), DrawTextureComponent.class);
         playerEntity.addComponent(new DrawTextureRegionComponent(), DrawTextureRegionComponent.class);

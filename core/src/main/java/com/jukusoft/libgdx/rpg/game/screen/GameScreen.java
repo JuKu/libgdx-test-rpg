@@ -57,8 +57,8 @@ public class GameScreen extends BaseScreen {
     protected Texture campfireTexture = null;
     protected String blackTexturePath = AssetPathUtils.getLightMapPath("blackmap/blackmap.png");
     protected Texture blackTexture = null;
-    //protected String character2AtlasFile = AssetPathUtils.getSpritesheetPath("pentaquin/player_walk.atlas");
-    protected String character2AtlasFile = AssetPathUtils.getSpritesheetPath("reinertilesets/T_grey_caveman/output/T_grey_caveman.atlas");
+    protected String character2AtlasFile = AssetPathUtils.getSpritesheetPath("pentaquin/player_walk.atlas");
+    //protected String character2AtlasFile = AssetPathUtils.getSpritesheetPath("reinertilesets/T_grey_caveman/output/T_grey_caveman.atlas");
 
     protected String fireParticleEffectFile = AssetPathUtils.getParticleEffectPath("fire1.p");
 

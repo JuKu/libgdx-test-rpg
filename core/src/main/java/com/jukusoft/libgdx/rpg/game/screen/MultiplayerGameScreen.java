@@ -16,6 +16,8 @@ import com.jukusoft.libgdx.rpg.engine.entity.factory.AnimatedEnvObjectFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.factory.NPCFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.factory.PlayerFactory;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.ECS;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.MoveComponent;
+import com.jukusoft.libgdx.rpg.engine.entity.impl.component.PositionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.collision.GameWorldCollisionComponent;
 import com.jukusoft.libgdx.rpg.engine.entity.impl.component.draw.LightMapComponent;
 import com.jukusoft.libgdx.rpg.engine.fightingsystem.HitboxesSystem;
@@ -85,6 +87,9 @@ public class MultiplayerGameScreen extends BaseScreen {
 
     //own userID
     protected long userID = 0;
+
+    protected PositionComponent playerPositionComponent = null;
+    protected MoveComponent playerMoveComponent = null;
 
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         this.arialFont = BitmapFontFactory
@@ -182,6 +187,9 @@ public class MultiplayerGameScreen extends BaseScreen {
         this.ecs.addEntity(this.playerEntity);
         game.getSharedData().put(SharedDataConst.PLAYER_ENTITY, this.playerEntity);
 
+        this.playerPositionComponent = this.playerEntity.getComponent(PositionComponent.class);
+        this.playerMoveComponent = this.playerEntity.getComponent(MoveComponent.class);
+
         //save current entity component system to shared data
         game.getSharedData().put(SharedDataConst.ENTITY_COMPONENT_SYSTEM, this.ecs);
 
@@ -254,6 +262,9 @@ public class MultiplayerGameScreen extends BaseScreen {
 
         //update lighting system
         this.lightingSystem.update(game, game.getCamera(), time);
+
+        //update player position
+        this.client.updatePlayerPos(playerPositionComponent.getX(), playerPositionComponent.getY(), 0, playerMoveComponent.getSpeedX(), playerMoveComponent.getSpeedY());
     }
 
     @Override public void draw(GameTime time, SpriteBatch batch) {

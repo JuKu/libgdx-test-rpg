@@ -367,7 +367,7 @@ public class MultiplayerLoginScreen extends BaseScreen {
                                                 game.getSharedData().put(SharedDataConst.USERID, userID);
 
                                                 //enter multiplayer game state
-                                                game.getScreenManager().leaveAllAndEnter("multiplayer_play");
+                                                game.getScreenManager().leaveAllAndEnter("multiplayer_game");
                                             });
                                         } else {
                                             errorLabel.setVisible(true);

@@ -153,7 +153,7 @@ public class MultiplayerGameScreen extends BaseScreen {
         }
 
         //get own userID
-        this.userID = game.getSharedData().get(SharedDataConst.USERID, Integer.class);
+        this.userID = game.getSharedData().get(SharedDataConst.USERID, Long.class);
 
         //get current sector
         SectorCoord coord = this.characterData.getCurrentSector();

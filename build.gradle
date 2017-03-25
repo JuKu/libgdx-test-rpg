@@ -16,17 +16,33 @@ ext {
     log4jVersion = '1.2.17'
     ini4jVersion = '0.5.4'
     jsonVersion = '20160810'
+    gameNetworkLibVersion = '1.0.1-SNAPSHOT'
     apacheCommonsLangVersion = '3.5'
 
     mainClassName = "com.jukusoft.libgdx.rpg.desktop.DesktopLauncher"
 }
 
 repositories {
-    mavenCentral()
-
     maven {
         url "https://oss.sonatype.org/content/repositories/snapshots/"
     }
+
+    maven {
+        url "https://oss.sonatype.org/content/repositories/"
+    }
+
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+
+    jcenter()
+    mavenCentral()
+}
+
+//dont cache snapshot builds from maven central and other repositories
+configurations.all {
+    // check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
 dependencies {

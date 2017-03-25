@@ -23,4 +23,8 @@ public class SharedDataConst {
     //projectile spawner
     public static final String PROJECTILE_SPAWNER = "projectile_spawner";
 
+    public static final String NETWORK_CLIENT = "network_client";
+
+    public static final String USERID = "userID";
+
 }

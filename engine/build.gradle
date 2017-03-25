@@ -9,6 +9,12 @@ repositories {
     mavenCentral()
 }
 
+//dont cache snapshot builds from maven central and other repositories
+configurations.all {
+    // check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 

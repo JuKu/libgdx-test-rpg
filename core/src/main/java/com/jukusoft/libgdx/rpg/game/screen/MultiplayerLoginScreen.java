@@ -16,14 +16,23 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.jukusoft.libgdx.rpg.engine.data.SharedData;
 import com.jukusoft.libgdx.rpg.engine.font.BitmapFontFactory;
 import com.jukusoft.libgdx.rpg.engine.game.ScreenBasedGame;
 import com.jukusoft.libgdx.rpg.engine.screen.impl.BaseScreen;
 import com.jukusoft.libgdx.rpg.engine.skin.SkinFactory;
 import com.jukusoft.libgdx.rpg.engine.time.GameTime;
 import com.jukusoft.libgdx.rpg.engine.utils.SpriteBatcherUtils;
+import com.jukusoft.libgdx.rpg.game.client.GameClient;
+import com.jukusoft.libgdx.rpg.game.client.listener.AuthListener;
+import com.jukusoft.libgdx.rpg.game.shared.SharedDataConst;
 import com.jukusoft.libgdx.rpg.game.ui.ImageButton;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
+import com.jukusoft.libgdx.rpg.network.utils.SocketUtils;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+
+import java.io.IOException;
 
 /**
  * Created by Justin on 24.03.2017.
@@ -35,6 +44,8 @@ public class MultiplayerLoginScreen extends BaseScreen {
     protected final String BUTTON_BACK_BG_PATH = AssetPathUtils.getUIWidgetPath("backbutton", "backbutton.png");
     protected final String BUTTON_BACK_HOVER_PATH = AssetPathUtils.getUIWidgetPath("backbutton", "backbutton_hovered.png");
     protected final String ICON_BACK_PATH = AssetPathUtils.getImagePath("icons/back/back_64.png");
+
+    public static final int GAME_CLIENT_THREADS = 2;
 
     //assets
     protected Texture backgroundTexture = null;
@@ -60,6 +71,8 @@ public class MultiplayerLoginScreen extends BaseScreen {
     protected Label passwordLabel = null;
     protected TextField passwordField = null;
 
+    protected GameClient client = null;
+
     @Override protected void onInit(ScreenBasedGame game, AssetManager assetManager) {
         //
     }
@@ -78,6 +91,8 @@ public class MultiplayerLoginScreen extends BaseScreen {
         this.assetManager.load(BUTTON_BACK_BG_PATH, Texture.class);
         this.assetManager.load(BUTTON_BACK_HOVER_PATH, Texture.class);
         this.assetManager.load(ICON_BACK_PATH, Texture.class);
+
+        this.client = game.getSharedData().get(SharedDataConst.NETWORK_CLIENT, GameClient.class);
 
         this.arialFont = BitmapFontFactory
             .createFont(AssetPathUtils.getFontPath("arial/arial.ttf"), 26, Color.WHITE);
@@ -267,21 +282,138 @@ public class MultiplayerLoginScreen extends BaseScreen {
         this.loginButton.setVisible(valide);
         this.loginButton.setDisabled(!valide);
         errorLabel.setVisible(!valide);
+        errorLabel.setColor(Color.RED);
         errorLabel.setText(errorText);
 
         return valide;
     }
 
     protected void tryLogin () {
-        if (!validateForm()) {
-            return;
-        }
+        this.loginButton.setVisible(false);
 
-        //TODO: check, if server is available
+        final String ip = this.serverIPField.getText();
+        final int port = Integer.parseInt(this.serverPortField.getText());
+        final String username = this.usernameField.getText();
+        final String password = this.passwordField.getText();
 
-        //TODO: connect to server
+        new Thread(() -> {
+            boolean valide = true;
+            String errorText = "";
 
-        //TODO: try to login
+            if (!validateForm()) {
+                return;
+            }
+
+            try {
+                if (SocketUtils.checkIfRemotePortAvailable(ip, port, 500)) {
+                    //server is available
+                } else {
+                    valide = false;
+                    errorText = "Server isnt available!";
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                valide = false;
+                errorText = "Server isnt available!";
+            }
+
+            if (valide) {
+                //create new network game client, if neccessary
+                if (this.client == null) {
+                    this.client = new GameClient(GAME_CLIENT_THREADS);
+
+                    //save and share network client with other screens
+                    game.getSharedData().put(SharedDataConst.NETWORK_CLIENT, this.client);
+                }
+
+                //check, if client is already connected
+                if (client.isConnected()) {
+                    //close connection
+                    client.close();
+                }
+
+                try {
+                    game.runOnUIThread(() -> {
+                        errorLabel.setVisible(true);
+                        errorLabel.setColor(Color.GREEN);
+                        errorLabel.setText("Connecting...");
+
+                        //disable login button
+                        this.loginButton.setVisible(false);
+                    });
+
+                    //connect to server
+                    ChannelFuture channelFuture = this.client.connectAsync(ip, port);
+
+                    channelFuture.addListener(new ChannelFutureListener() {
+                        @Override public void operationComplete(ChannelFuture future) throws Exception {
+                            if (future.isSuccess()) {
+                                game.runOnUIThread(() -> {
+                                    errorLabel.setVisible(true);
+                                    errorLabel.setColor(Color.GREEN);
+                                    errorLabel.setText("Connected!");
+                                });
+
+                                client.setAuthListener(new AuthListener() {
+                                    @Override public void onAuth(boolean success, int errorCode, long userID,
+                                        String message) {
+                                        if (success) {
+                                            game.runOnUIThread(() -> {
+                                                errorLabel.setVisible(true);
+                                                errorLabel.setColor(Color.GREEN);
+                                                errorLabel.setText("Login successful!");
+
+                                                //save userID
+                                                game.getSharedData().put(SharedDataConst.USERID, userID);
+
+                                                //enter multiplayer game state
+                                                game.getScreenManager().leaveAllAndEnter("multiplayer_play");
+                                            });
+                                        } else {
+                                            errorLabel.setVisible(true);
+                                            errorLabel.setColor(Color.RED);
+                                            errorLabel.setText("Login failed! " + message);
+                                        }
+                                    }
+                                });
+
+                                game.getSharedData().put("username", username);
+
+                                //try to authorize
+                                client.authUser(username, password, 2000);
+                            } else {
+                                game.runOnUIThread(() -> {
+                                    errorLabel.setVisible(true);
+                                    errorLabel.setColor(Color.RED);
+                                    errorLabel.setText("Connection failed!");
+
+                                    //disable login button
+                                    loginButton.setVisible(false);
+                                });
+                            }
+                        }
+                    });
+
+                    return;
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                    valide = false;
+                    errorText = "Cannot connect to game server!";
+                }
+            }
+
+            final boolean valide2 = valide;
+            final String errorText2 = errorText;
+
+            game.runOnUIThread(() -> {
+                this.loginButton.setVisible(valide2);
+                this.loginButton.setDisabled(!valide2);
+                errorLabel.setVisible(!valide2);
+                errorLabel.setColor(Color.RED);
+                errorLabel.setText(errorText2);
+            });
+        }).start();
     }
 
 }

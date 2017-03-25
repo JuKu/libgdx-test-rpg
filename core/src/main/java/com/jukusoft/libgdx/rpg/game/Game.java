@@ -13,6 +13,7 @@ import com.jukusoft.libgdx.rpg.engine.version.GameVersion;
 import com.jukusoft.libgdx.rpg.game.input.GameActionsConst;
 import com.jukusoft.libgdx.rpg.game.screen.*;
 import com.jukusoft.libgdx.rpg.game.utils.AssetPathUtils;
+import org.apache.log4j.BasicConfigurator;
 
 /**
  * Created by Justin on 06.02.2017.
@@ -21,6 +22,9 @@ public class Game extends ScreenBasedGame {
 
     public Game () {
         super();
+
+        //configure log4j
+        BasicConfigurator.configure();
     }
 
     @Override
@@ -79,6 +83,7 @@ public class Game extends ScreenBasedGame {
         screenManager.addScreen("new_game", new CreateCharacterScreen());
         screenManager.addScreen("load_game", new LoadGameScreen());
         screenManager.addScreen("multiplayer_login", new MultiplayerLoginScreen());
+        screenManager.addScreen("multiplayer_game", new MultiplayerGameScreen());
         screenManager.addScreen("intro_story", new IntroStoryScreen());
         screenManager.addScreen("game", new GameScreen());
         screenManager.addScreen("hud", new HUDOverlayScreen());
